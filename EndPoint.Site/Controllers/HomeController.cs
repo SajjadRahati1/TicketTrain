@@ -1,4 +1,6 @@
 ﻿using EndPoint.Site.Models;
+using Hangfire;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -15,6 +17,7 @@ namespace EndPoint.Site.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
 

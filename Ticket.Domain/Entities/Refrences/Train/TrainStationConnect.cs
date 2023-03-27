@@ -1,6 +1,6 @@
 ﻿using Ticket.Domain.Entities.Common;
 
-namespace Ticket.Domain.Entities.TrainRoute
+namespace Ticket.Domain.Entities.Refrences.Train
 {
     /// <summary>
     /// اتصال بین ایستگاه های قطار 
@@ -11,16 +11,14 @@ namespace Ticket.Domain.Entities.TrainRoute
         /// ایستگاه مقصد
         /// </summary>
         public City TrainStationOrigin { get; set; }
-        public long TrainStationOriginId { get; set; }
+        public TrainStation TrainStationOriginId { get; set; }
         /// <summary>
         /// ایستگاه مبدا
         /// </summary>
-        public City TrainStationDestination { get; set; }
+        public TrainStation TrainStationDestination { get; set; }
         public long TrainStationDestinationId { get; set; }
 
 
     }
-
-
-
 }
+

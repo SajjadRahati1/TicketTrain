@@ -31,6 +31,9 @@ namespace Ticket.Domain.Entities.Users
         /// </summary>
         public string Title { get; set; }
         public string Description { get; set; }
+        /// <summary>
+        /// کد پیگیری بانکی
+        /// </summary>
         public string TrackingCodeBank { get; set; }
 
         /// <summary>
@@ -44,6 +47,12 @@ namespace Ticket.Domain.Entities.Users
         /// </summary>
         public int RefrenceTypeID { get; set; }
         public RefrenceType RefrenceType { get; set; }
+
+        /// <summary>
+        /// اگر تخفیف دریافت کرده است در اینجا مشخص میشود
+        /// </summary>
+        public List<UsedDiscount> Discounts { get; set; }
+        
 
         //نکته : زمانی که فرد بخواهد بلیط را بازگرداند و وجه دریافت کند به صورت خودکار باید به کیف پول
         //فرد اضافه شود در صورتی که خواست میتواند برداشت از کیف پول داشته باشد

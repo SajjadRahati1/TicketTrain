@@ -1,5 +1,16 @@
-write company for airplane
+﻿write company for airplane
 research for company and service providers and type of work alls
 
 
 //https://dbdiagram.io/d/63fd9f9f296d97641d84378c
+
+
+
+
+
+
+//نمونه استفاده از هنگ فایر
+//1.نوع جاب fire and furget
+//BackgroundJob.Enqueue<نام سرویس یا کلاس>(p=>p.متدی از این کلاس که میخواهیم صدا زده بشود);
+//مثال
+//BackgroundJob.Enqueue<IEmailService>(p=>p.Send());

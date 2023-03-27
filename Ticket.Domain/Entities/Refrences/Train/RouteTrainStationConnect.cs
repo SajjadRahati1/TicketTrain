@@ -1,9 +1,10 @@
 ﻿using Ticket.Domain.Entities.Common;
 
-namespace Ticket.Domain.Entities.TrainRoute
+namespace Ticket.Domain.Entities.Refrences.Train
 {
     /// <summary>
     /// اتصال های بین قطار ها که در مسیر قطار هستند
+    /// (مسیر قطار)
     /// </summary>
     public class RouteTrainStationConnect : BaseEntity
     {
@@ -28,7 +29,5 @@ namespace Ticket.Domain.Entities.TrainRoute
         public Train Train { get; set; }
         public long TrainId { get; set; }
     }
-
-
-
 }
+

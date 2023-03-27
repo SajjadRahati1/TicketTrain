@@ -1,6 +1,6 @@
 ﻿using Ticket.Domain.Entities.Common;
 
-namespace Ticket.Domain.Entities.Train
+namespace Ticket.Domain.Entities.Refrences.Train
 {
     /// <summary>
     /// صندلی یا تخت کوپه قطار
@@ -19,4 +19,3 @@ namespace Ticket.Domain.Entities.Train
     }
 }
 
-}

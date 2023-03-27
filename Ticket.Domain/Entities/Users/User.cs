@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Ticket.Domain.Entities.Common;
+using Ticket.Domain.Entities.Refrences.Flight.DomesticFlight;
+using Ticket.Domain.Entities.Refrences.Flight.InternationalFlight;
 
 namespace Ticket.Domain.Entities.Users
 {
@@ -46,28 +47,17 @@ namespace Ticket.Domain.Entities.Users
         /// آیا این کاربر بلاک شده است یا خیر
         /// </summary>
         public bool IsBlocked { get; set; }
-    }
-    public class Passenger : BaseEntity
-    {
-        /*
-        //اطلاعات پایه
-  PersonID long [ref: - Per.ID]
-  //نام انگلیسی
-  En_FirstName nvarchar(200)
-  En_LastName nvarchar(200)
-  //تاریخ اتمام شماره پاسپورت
-  ExpireDatePassport date
-  //کشور محل تولد
-  CountryBirth long [ref: > Co.ID]
-         */
-        public long PersonId { get; set; }
-        public Person Person { get; set; }
 
-        public string En_FirstName { get; set; }
-        public string En_LastName { get; set; }
+        #region بلیط های خریداری شده
 
-        public DateTime ExpireDatePassport { get; set; }
-
-        public long CountryBirthId { get; set; }
+        /// <summary>
+        /// بلیط های پرواز های داخلی خریداری شده توسط شخص
+        /// </summary>
+        public ICollection<TicketDomesticFlightReservation> TicketDomesticFlights { get; set; }
+        /// <summary>
+        /// بلیط های پرواز خارجی خریداری شده توسط شخص
+        /// </summary>
+        public ICollection<TicketInternationalFlightReservation> TicketInternationalFlights { get; set; }
+        #endregion
     }
 }

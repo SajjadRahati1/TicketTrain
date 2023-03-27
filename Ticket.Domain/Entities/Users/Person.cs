@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ticket.Domain.Entities.Common;
+using Ticket.Domain.Enums;
 
 namespace Ticket.Domain.Entities.Users
 {
@@ -22,6 +23,6 @@ namespace Ticket.Domain.Entities.Users
         public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
         public DateTime BithDate { get; set; }
-        public bool Gender { get; set; }
+        public Gender Gender { get; set; }
     }
 }
