@@ -1,4 +1,5 @@
 ﻿using Ticket.Domain.Entities.Common;
+using Ticket.Domain.Entities.Refrences.Bus.Ticket;
 using Ticket.Domain.Entities.Refrences.Flight.DomesticFlight;
 using Ticket.Domain.Entities.Refrences.Flight.InternationalFlight;
 
@@ -27,7 +28,7 @@ namespace Ticket.Domain.Entities.Users
         #region بلیط های مسافر
         public List<TicketDomesticFlight> TicketDomesticFlights { get; set; }
         public List<TicketInternationalFlight> TicketInternationalFlights { get; set; }
-
+        public List<TicketBusReservation> TicketBusReservations { get; set; }
         #endregion
     }
 }

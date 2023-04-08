@@ -1,4 +1,6 @@
-﻿using Ticket.Application.Interfaces.Contexts;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Ticket.Application.Interfaces.Contexts;
 using Ticket.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
 using Ticket.Domain.Entities.Users;
@@ -6,6 +8,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.OData;
 using Hangfire.AspNetCore;
 using Hangfire;
+using EndPoint.Site.Helpers;
+using Ticket.Common.Interfaces.FacadPatterns;
+using Ticket.Application.Services.Users.FacadPattern;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,15 +24,94 @@ builder.Services.AddControllersWithViews().AddOData(opt=>
 
 
 builder.Services.AddTransient<IDbContext, MyDbContext>();
-builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<MyDbContext>()
-    .AddDefaultTokenProviders();
+//builder.Services.AddScoped<SecurityStampValidator<User>>();
+
 builder.Services
     .AddEntityFrameworkSqlServer()
     .AddDbContext<MyDbContext>(options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("sqlServer"));
+    });
+
+builder.Services.AddIdentity<User, Role>()
+    .AddEntityFrameworkStores<MyDbContext>()//توسط چه فریم ورکی ذخیره شود
+    .AddDefaultTokenProviders()//پرو وایدر برای ایجاد توکن ها
+    .AddRoles<Role>() //role رو باید از لایه های زیر دریافت کرد
+    .AddErrorDescriber<CustomIdentityError>()//نمایش ارور ها را فارسی سازی کنیم
+    .AddPasswordValidator<MyPasswordValidator>();//برای اینکه پسورد را خودمان هم چک کنیم مثلا پسورد های عامیانه نباشد
+
+builder.Services.AddAuthorization(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("sqlServer"));
+    //اینجا باید تکمیل شود
+    options.AddPolicy("HaveNameClaim", policy =>
+    {
+        policy.RequireClaim("Name");
+    });
 });
+
+//تنظمیات Identity
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    //یونیک بودن ایمیل ها
+    options.User.RequireUniqueEmail = true;
+    //کاراکتر هایی که میتواند به عنوان یوزنیم وارد کند
+    //options.User.AllowedUserNameCharacters
+
+    //حداقل تعداد کاراکتر های غیر تکراری
+    options.Password.RequiredUniqueChars = 4;
+    //آیا شامل کاراکتر غیر حروف هم حتما باشد (مثل ادساین)
+    options.Password.RequireNonAlphanumeric = false;
+    //آیا حتما شامل عدد هم باشد
+    options.Password.RequireDigit = true;
+    //آیا حتما شامل حروف کوچک هم باشد
+    options.Password.RequireLowercase = true;
+    //آیا حتما شامل حروف بزرگ هم باشد
+    options.Password.RequireUppercase = true;
+    //حداقل تعداد کاراکتر پسورد
+    options.Password.RequiredLength = 6;
+
+
+    //اگر این تعداد بار اشتباه رمز زد قفل بشه
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    //اگر قفل شد چند دقیقه قفل بمونه بعد باز بشه
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+    //کاربر جدید به صورت خودکار قفل باشه یا نه
+    options.Lockout.AllowedForNewUsers = false;
+
+
+    //فقط یوزر هایی میتونن ساین این شوند که اکانتشان کانفریم شده باشد
+    options.SignIn.RequireConfirmedAccount = false;
+    //مشابه
+    options.SignIn.RequireConfirmedPhoneNumber = false;
+    //مشابه
+    options.SignIn.RequireConfirmedEmail = false;
+
+    //نام کلیم آیدی چی باشه
+    //options.ClaimsIdentity.UserIdClaimType = "Id";
+
+});
+
+//تنظیمات کوکی
+builder.Services.ConfigureApplicationCookie(options =>
+{
+
+    //options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
+    //وقتی کاربری به صفحه ای دسترسی نداره مثل صفحه ادمین که هر کاربری دسترسی نداره به این صفحه میفرستیمش
+    options.AccessDeniedPath = "/Account/AccessDenied";
+
+    //به ازای هر بار استفاده تایم اسپن از نو گرفته شود
+    options.SlidingExpiration = true;
+});
+
+
+//---------Facad Patterns
+builder.Services.AddScoped<IUserFacad, UserFacad>();
+//-----------------------
+
+
 //افزودن دیتابیس برای هنگ فایر و اعمال جاب ها
 builder.Services.AddHangfire(config =>
 {
@@ -62,6 +146,7 @@ app.UseHttpLogging();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
