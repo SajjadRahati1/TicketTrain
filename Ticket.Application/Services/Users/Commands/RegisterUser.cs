@@ -131,7 +131,7 @@ namespace Ticket.Application.Services.Users.Commands
                
                 if (result.Succeeded)
                 {
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return new ResultDto<ResultRegisterUserDto>()
                     {
                         Data = new ResultRegisterUserDto()
