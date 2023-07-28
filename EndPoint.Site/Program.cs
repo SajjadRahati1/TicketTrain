@@ -20,7 +20,7 @@ builder.Services.AddControllersWithViews().AddOData(opt=>
     opt.Select().Filter().OrderBy().Count();
     //for use with attribute in actions:
     //[EnableQuery]
-});
+}).AddRazorRuntimeCompilation();
 
 
 builder.Services.AddTransient<IDbContext, MyDbContext>();
@@ -149,6 +149,9 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapControllerRoute(
+    name: "MyArea",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

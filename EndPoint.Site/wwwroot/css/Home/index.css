@@ -1,0 +1,78 @@
+header .show-big > div {
+    --bs-bg-opacity:0.85 !important;
+}
+.choose-travel .show-big .card {
+    border-radius: 10px !important;
+    min-height: 150px;
+    padding: 0px !important;
+}
+
+    .choose-travel .show-big .card .choose-type {
+        border-bottom: dotted 1px #808080;
+        padding: 10px 40px 0 40px;
+    }
+
+        .choose-travel .show-big .card .choose-type a {
+            text-decoration: none !important;
+            color: black;
+            position: relative;
+            font-size: 23px;
+            padding-bottom: 7px;
+            min-width: 130px;
+            max-width: 130px;
+            transition: all .5s;
+            text-align: center;
+        }
+
+            .choose-travel .show-big .card .choose-type a::after {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                content: " ";
+                background: transparent;
+                height: 5px;
+                width: 0;
+                left: 50%;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                transition: all .5s;
+                text-align: center;
+            }
+
+            .choose-travel .show-big .card .choose-type a.active {
+                color: #2572b1;
+            }
+
+                .choose-travel .show-big .card .choose-type a.active::after {
+                    left: 0;
+                    background: #2572b1;
+                    width: 100%;
+                }
+
+            .choose-travel .show-big .card .choose-type a i {
+                font-size: 30px;
+                /* text-shadow: 1px 2px 3px #666,0 0 1em blue;*/
+                transition: all .3s;
+            }
+
+            .choose-travel .show-big .card .choose-type a:hover i {
+                text-shadow: 1px 2px 3px #666;
+            }
+
+#bg-img {
+    position: relative;
+    width: 100%;
+    padding: 0px !important;
+    margin: 0px !important;
+    height: 200px !important;
+    top: -100px !important;
+    z-index: -1 !important;
+}
+    #bg-img img {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        /*border:2px dotted  black;*/
+        box-shadow: 2px 5px 17px 3px rgb(173 170 170 / 60%);
+        width: 100%;
+        max-height: 600px;
+    }

@@ -32,6 +32,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ticket.Persistance", "Ticke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EndPoint.Site", "EndPoint.Site\EndPoint.Site.csproj", "{0D6E1075-5497-4E51-BCDE-9678295C5BCA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EndPoint.Apis", "EndPoint.Apis\EndPoint.Apis.csproj", "{D2D48144-F9B5-43A9-B1F3-CB28FC5E193D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{0D6E1075-5497-4E51-BCDE-9678295C5BCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D6E1075-5497-4E51-BCDE-9678295C5BCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D6E1075-5497-4E51-BCDE-9678295C5BCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2D48144-F9B5-43A9-B1F3-CB28FC5E193D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2D48144-F9B5-43A9-B1F3-CB28FC5E193D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2D48144-F9B5-43A9-B1F3-CB28FC5E193D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2D48144-F9B5-43A9-B1F3-CB28FC5E193D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,6 +83,7 @@ Global
 		{3E42BD7C-8275-434F-9DFD-56C46463A6EC} = {88F33A70-159C-4ECB-99CA-385F5476667B}
 		{F5F0248E-7AEB-41BB-974A-110601E7CC21} = {88F33A70-159C-4ECB-99CA-385F5476667B}
 		{0D6E1075-5497-4E51-BCDE-9678295C5BCA} = {03E7A058-D34B-4D52-98C7-391AF2854CE2}
+		{D2D48144-F9B5-43A9-B1F3-CB28FC5E193D} = {03E7A058-D34B-4D52-98C7-391AF2854CE2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B53D09E4-552A-4898-B164-ACF1CE079179}

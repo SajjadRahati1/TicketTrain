@@ -1,0 +1,385 @@
+﻿@{
+    ViewData["Title"] = "سفارشات";//از کجا و به کجا هم باید مشخصذباشه
+    ViewData["Account"] = "active";
+}
+@section head{
+    <link rel="stylesheet" href="~/css/Account/account.css" asp-append-version="true" />
+    <link href="~/lib/persian-datepicker/dist/css/persian-datepicker.css" rel="stylesheet" />
+    <link href="~/lib/persian-datepicker/dist/css/persian-datepicker.min.css" rel="stylesheet" />
+    <link href="~/css/datapicker-style.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/lib/Select2/css/select2.min.css" rel="stylesheet" />
+
+}
+
+<div class="row container-fluid m-0 mt-3">
+    <div class="col-lg-4 col-md-5 col-12 list-group bg-white  px-4">
+        <div class="card border-0 shadow user-menu">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="" asp-controller="Account" asp-action="Index">
+                        <i class="la la-user"></i>
+                        <p class="text"> حساب کاربری</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Account" asp-action="Orders">
+                        <i class="la la-map-o"></i>
+                        <p class="text">   سفرهای من</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="active" href="#">
+                        <i class="la la-group"></i>
+                        <p class="text">   لیست مسافران</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="" asp-controller="Account" asp-action="Transactions">
+                        <i class="la 	la-money"></i>
+                        <p class="text">  موجودی و تراکنشها</p>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-8 col-md-7 col-12 bootstrap-switch-small info m-0 p-0">
+        @*فیلتر ها*@
+        <div class="card shadow border-0 p-4">
+            <div class="filters d-flex flex-row flex-wrap align-items-center">
+
+                <div class="form-group mx-3 mb-3">
+                    <label for="#text-search ">جستجو در مسافران</label>
+                    <div class="m-input-icon m-input-icon--right">
+                        <input type="text" class="m-input form-control" id="text-search" />
+                        <span class="m-input-icon__icon m-input-icon__icon--right">
+                            <span>
+                                <i class="la la-search text-muted"></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="card border-0 mt-4 shadow-lg p-4 ">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4>
+                    <i class="la la-group text-bold" style="font-size:25px;"></i>
+                    <span>لیست مسافران</span>
+                </h4>
+                <button class="btn link-blue px-2" type="button" data-toggle="modal"
+                        data-target="#add-edit-modal" onclick="showAddPassengerModal()">
+                    <i class="la la-plus"></i>
+                    <span>افزودن مسافر جدید</span>
+                </button>
+            </div>
+            <div class="br-new"></div>
+            <div class="d-flex flex-wrap flex-row justify-content-around pt-3 gap-2">
+                <div class="card shadow shadow-info border-0 rounded rounded-0 p-3">
+                    <div class="card-header">
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <h6 class="text-black p-0 m-0">سجاد راحتی</h6>
+                            <p class="text-muted">Sajjad Rahati</p>
+                        </div>
+                    </div>
+                    <div class="br-new"></div>
+                    <div class="card-body br-new">
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <p class="text-bold text-muted ">جنسیت :</p>
+                            <p class="text-black ">مرد</p>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <p class="text-bold text-muted ">کد ملی :</p>
+                            <p class="text-black ">1250635659</p>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <p class="text-bold text-muted ">تاریخ تولد :</p>
+                            <p class="text-black ">مرد</p>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <p class="text-bold text-muted ">شماره پاسپورت :</p>
+                            <p class="text-black "> -- </p>
+                        </div>
+
+                    </div>
+                    <div class="card-fotter pt-2">
+                        <div class="d-flex flex-row justify-content-around gap-3">
+                            <button class="btn rounded-circle border-warning text-warning">
+                                <i class="la la-pen"></i>
+                            </button>
+                            <button class="btn rounded-circle border-danger text-danger">
+                                <i class="la la-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow shadow-info border-0 rounded rounded-0 p-3">
+                    <div class="card-header">
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <h6 class="text-black p-0 m-0">سجاد راحتی</h6>
+                            <p class="text-muted">Sajjad Rahati</p>
+                        </div>
+                    </div>
+                    <div class="br-new"></div>
+                    <div class="card-body br-new">
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <p class="text-bold text-muted ">جنسیت :</p>
+                            <p class="text-black ">مرد</p>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <p class="text-bold text-muted ">کد ملی :</p>
+                            <p class="text-black ">1250635659</p>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <p class="text-bold text-muted ">تاریخ تولد :</p>
+                            <p class="text-black ">مرد</p>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <p class="text-bold text-muted ">شماره پاسپورت :</p>
+                            <p class="text-black "> -- </p>
+                        </div>
+
+                    </div>
+                    <div class="card-fotter pt-2">
+                        <div class="d-flex flex-row justify-content-around gap-3">
+                            <button class="btn rounded-circle border-warning text-warning">
+                                <i class="la la-pen"></i>
+                            </button>
+                            <button class="btn rounded-circle border-danger text-danger">
+                                <i class="la la-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow shadow-info border-0 rounded rounded-0 p-3">
+                    <div class="card-header">
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <h6 class="text-black p-0 m-0">سجاد راحتی</h6>
+                            <p class="text-muted">Sajjad Rahati</p>
+                        </div>
+                    </div>
+                    <div class="br-new"></div>
+                    <div class="card-body br-new">
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <p class="text-bold text-muted ">جنسیت :</p>
+                            <p class="text-black ">مرد</p>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <p class="text-bold text-muted ">کد ملی :</p>
+                            <p class="text-black ">1250635659</p>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <p class="text-bold text-muted ">تاریخ تولد :</p>
+                            <p class="text-black ">مرد</p>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <p class="text-bold text-muted ">شماره پاسپورت :</p>
+                            <p class="text-black "> -- </p>
+                        </div>
+
+                    </div>
+                    <div class="card-fotter pt-2">
+                        <div class="d-flex flex-row justify-content-around gap-3">
+                            <button class="btn rounded-circle border-warning text-warning">
+                                <i class="la la-pen"></i>
+                            </button>
+                            <button class="btn rounded-circle border-danger text-danger">
+                                <i class="la la-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow shadow-info border-0 rounded rounded-0 p-3">
+                    <div class="card-header">
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <h6 class="text-black p-0 m-0">سجاد راحتی</h6>
+                            <p class="text-muted">Sajjad Rahati</p>
+                        </div>
+                    </div>
+                    <div class="br-new"></div>
+                    <div class="card-body br-new">
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <p class="text-bold text-muted ">جنسیت :</p>
+                            <p class="text-black ">مرد</p>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <p class="text-bold text-muted ">کد ملی :</p>
+                            <p class="text-black ">1250635659</p>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <p class="text-bold text-muted ">تاریخ تولد :</p>
+                            <p class="text-black ">مرد</p>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between gap-3">
+                            <p class="text-bold text-muted ">شماره پاسپورت :</p>
+                            <p class="text-black "> -- </p>
+                        </div>
+
+                    </div>
+                    <div class="card-fotter pt-2">
+                        <div class="d-flex flex-row justify-content-around gap-3">
+                            <button class="btn rounded-circle border-warning text-warning">
+                                <i class="la la-pen"></i>
+                            </button>
+                            <button class="btn rounded-circle border-danger text-danger">
+                                <i class="la la-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- edit ot add modal -->
+    <div class="modal fade " id="add-edit-modal" tabindex="-1" role="dialog" aria-labelledby="login-modal title" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-scrollable modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-body h-100" style="min-height: 80vh;">
+                    <button type="button" class="btn btn-shadow close" data-dismiss="modal" aria-label="Close">
+                        <i class="las la-times"></i>
+                    </button>
+                    <h5 class="modal-title text-center">افزودن مسافر جدید</h5>
+                    <br class="pt-3" />
+                    <div class="mx-4">
+                        <h5 class="text-bold">اطلاعات عمومی</h5>
+                        <p class="text-warning">
+                            <i class="la la-info bg-warning text-white rounded-circle"></i>
+                            <span>اطلاعات مسافران باید کاملا منطبق با مدارک شناسایی‌ باشد.</span>
+                        </p>
+                        <div class="d-flex flex-row flex-wrap gap-2 justify-content-between">
+
+                            <div class="input-group">
+                                <input required="" id="passenger-name" type="text" name="passenger-name" autocomplete="off" class="input form-control">
+                                <label class="user-label">نام فارسی (الزامی)</label>
+
+                            </div>
+
+                            <div class="input-group">
+                                <input required="" id="passenger-family" type="text" name="passenger-family" autocomplete="off" class="input form-control">
+                                <label class="user-label">نام خانوادگی فارسی (الزامی)</label>
+
+                            </div>
+
+                            <div class="input-group">
+                                <input required="" id="passenger-birthdate" type="text" name="passenger-birthdate" autocomplete="off" class="passenger-date-input date-input input form-control">
+                                <label class="user-label">تاریخ تولد (الزامی)</label>
+                                <div class="passenger-date date-div"></div>
+                            </div>
+
+
+                            
+                        </div>
+                        <div class="d-flex flex-row flex-wrap gap-2 justify-content-between pt-3">
+                            <div class="input-group">
+                                <input required="" id="passenger-name-en" type="text" name="passenger-name-en" autocomplete="off" class="input form-control">
+                                <label class="user-label">نام لاتین (الزامی)</label>
+
+                            </div>
+
+                            <div class="input-group">
+                                <input required="" id="passenger-family-en" type="text" name="passenger-family-en" autocomplete="off" class="input form-control">
+                                <label class="user-label">نام خانوادگی لاتین (الزامی)</label>
+
+                            </div>
+
+                            <div class="input-group">
+                                <select required="" id="passenger-gender" type="text" 
+                                name="passenger-gender" autocomplete="off" class="select2  input form-control">
+                                    <option value="man">مرد</option>
+                                    <option value="woman">زن</option>
+
+                                </select>
+                                <label class="user-label">جنسیت (الزامی)</label>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mx-4 mt-4">
+                        <h5 class="text-bold">کد ملی</h5>
+                        <p class="text-black-50">
+
+                            <span>کد ملی برای مسافرین ایرانی که قصد سفرهای داخل ایران را دارند مورد نیاز است.</span>
+                        </p>
+                        <div class="d-flex flex-row flex-wrap gap-2">
+
+                            <div class="input-group">
+                                <input required="" id="passenger-national-code" type="text" name="passenger-national-code" autocomplete="off" class="input form-control">
+                                <label class="user-label">کد ملی</label>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="mx-4 mt-4">
+                        <h5 class="text-bold">اطلاعات پاسپورت</h5>
+                        <p class="text-black-50">
+                            <span>اطلاعات پاسپورت برای مسافرین ایرانی که قصد سفر های خارجی را دارند و همچنین مسافرین غیرایرانی که قصد استفاده از هر نوع خدماتی را داشته باشند مورد نیاز است.</span>
+                        </p>
+                        <div class="d-flex flex-row flex-wrap gap-2 justify-content-between">
+
+                            <div class="input-group">
+                                <input required="" id="passenger-passport-number" type="text" name="passenger-passport-number" autocomplete="off" class="input form-control">
+                                <label class="user-label">شماره پاسپورت
+                                </label>
+
+                            </div>
+
+                            <div class="input-group">
+                                <input required="" id="passenger-passport-enddate" type="text" name="passenger-passport-enddate" autocomplete="off" class="from-date-input date-input input form-control">
+                                <label class="user-label">تاریخ انقضای پاسپورت</label>
+                                <div class="from-date date-div"></div>
+                            </div>
+
+                            <div class="input-group">
+                                <select required="" id="passenger-passport-country" 
+                                type="text" name="passenger-passport-country" 
+                                class="select2  input form-control">
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+
+                                </select>
+                                <label class="user-label">کشور صادر کننده پاسپورت</label>
+
+                            </div>
+
+                        </div>
+                        <div class="d-flex flex-row flex-wrap gap-2 justify-content-between pt-3">
+                            <div class="input-group">
+                                <select required=""
+                                    id="passenger-passport-country"
+                                    type="text" name="passenger-passport-country"
+                                    class="select2  input form-control">
+                                    <option value="100">100</option>
+                                    <option value="200">200</option>
+
+                                </select>
+                                <label class="user-label"> کشور محل تولد</label>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    
+                    <button type="button" class="btn btn-outline-primary px-4" data-dismiss="modal">انصراف</button>
+                    <button type="button" id="save-change-passenger" disabled="disabled" class="px-4 btn btn-primary disabled">ذخیره</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts{
+
+        <script src="~/lib/persian-date/dist/persian-date.js" asp-append-version="true"></script>
+
+        <script src="~/lib/persian-datepicker/dist/js/persian-datepicker.js"></script>
+        <script src="~/js/account/passengers.js" asp-append-version="true"></script>
+        <script src="~/lib/Select2/js/select2.min.js"></script>
+        <script src="~/lib/Select2/js/select2.full.min.js"></script>
+        <script src="~/lib/Select2/js/select2.full.min.js"></script>
+    }

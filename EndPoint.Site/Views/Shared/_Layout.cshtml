@@ -1,46 +1,294 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@{
+   
+}
+<!DOCTYPE html>
+<html lang="en" dir="rtl" style="direction:rtl;">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EndPoint.Site</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EndPoint.Site.styles.css" asp-append-version="true" />
+
+    <link href="~/lib/lineawesome/css/line-awesome.min.css" rel="stylesheet" />
+    <link href="~/lib/lineawesome/scss/_icons.scss" rel="stylesheet" />
+    @* <link rel="stylesheet" href="~/css/style.bundle.css" />*@
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Fugaz+One">
+    @await RenderSectionAsync("head")
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EndPoint.Site</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+        <div class="show-big d-sm-block d-none ">
+            <div class=" d-flex justify-content-between align-items-center bg-white shadow box-shadow container-fluid ">
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light ">
+                    <div class="container-fluid ">
+
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                            <div>
+                                amsafar
+                                <img width="33" height="33" src="../illastrations/logo.png" alt="آیکون همسفر" />
+                            </div>
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                            <ul class="navbar-nav flex-grow-1">
+                               @* <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                </li>*@
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="d-flex" dir="ltr">
+                    <button class="btn btn-header mx-2" type="button" data-toggle="modal" data-target="#login-modal" onclick="showLoginModal()">
+                        <div class="p-2">
+                            <span>
+                                ورود یا ثبت نام
+                            </span>
+                            <i class="las la-user"></i>
+                        </div>
+                    </button>
+                    <button class="btn btn-header mx-2">
+                        <div class="p-2">
+                            <span>
+                                سفر های من
+                            </span>
+                            <i class="las la-suitcase-rolling"></i>
+                        </div>
+                    </button>
+
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+        </div>
+        @if (ViewData["IsHome"] != "true")
+        {
+            <div class="show-small d-sm-none d-block">
+                <div class="card-glass d-flex justify-content-between align-items-center bg-white shadow box-shadow container-fluid ">
+                    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light ">
+                        <div class="container-fluid ">
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - EndPoint.Site - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                                <div>
+                                    amsafar
+                                    <img width="33" height="33" src="../illastrations/logo.png" alt="آیکون همسفر" />
+                                </div>
+                            </a>
+
+                            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                    <div style="font-size: 20px;font-weight: 700;">
+                        @*عنوان صفحه*@
+                        @ViewData["Title"]
+                    </div>
+                    <div class="d-flex" dir="ltr">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-header mx-2" type="button" >
+                            <div class="p-2">
+                                <i style="font-size:16px !important;" class="las la la-mail-reply"></i>
+                                <span>
+                                    بازگشت
+
+                                </span>
+                            </div>
+                        </a>
+
+
+                    </div>
+                </div>
+            </div>
+        }
+
+    </header>
+    @*<div class="container">*@
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+    @*</div>*@
+
+    <footer class="footer text-muted">
+        @* <div class="container">
+        &copy; 2022 - EndPoint.Site - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>*@
+        @if (ViewData["ShowFooter"] != "false")
+        {
+            <div class="show-big d-sm-block d-none ">
+                <div class="text-center text-lg-start bg-white text-muted">
+
+                    <!-- Section: Links  -->
+                    <section class="">
+                        <div class="container text-center text-md-start mt-5">
+                            <!-- Grid row -->
+                            <div class="row mt-3">
+
+                                <!-- Grid column -->
+                                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4 " style="direction: ltr;">
+
+                                    <!-- Links -->
+                                    <h6 class="text-uppercase text-black fw-bold mb-4">راه های ارتباطی :</h6>
+                                    <p><i class="las la-home"></i> دانشگاه کاشان</p>
+                                    <p>
+                                        <i class="las la-envelope"></i>
+                                        sajadrahaty2@gmail.com
+                                    </p>
+                                    <p><i class="las la-mobile"></i> + 98 933 979 93 17</p>
+                                    <p><i class="las la-phone"></i> + 01 234 567 89</p>
+                                </div>
+                                <!-- Grid column -->
+                                <!-- Grid column -->
+                                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4" style="direction: ltr;">
+                                    <!-- Links -->
+                                    <h6 class="text-uppercase text-black fw-bold mb-4">
+                                        خدمات مشتریان
+                                    </h6>
+                                    <p>
+                                        <a href="#!" class="text-reset"> پشتیبانی آنلاین</a>
+                                    </p>
+                                    <p>
+                                        <a href="#!" class="text-reset">راهنمای خرید</a>
+                                    </p>
+                                    <p>
+                                        <a href="#!" class="text-reset">راهنمای استرداد</a>
+                                    </p>
+                                    <p>
+                                        <a href="#!" class="text-reset">پرسش و پاسخ</a>
+                                    </p>
+                                </div>
+                                <!-- Grid column -->
+                                <!-- Grid column -->
+                                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4" style="direction: ltr;">
+                                    <!-- Links -->
+                                    <h6 class="text-uppercase text-black fw-bold mb-4">
+                                        همسفر
+                                    </h6>
+                                    <p>
+                                        <a href="#!" class="text-reset">درباره ما</a>
+                                    </p>
+                                    <p>
+                                        <a href="#!" class="text-reset">تماس با ما</a>
+                                    </p>
+                                    <p>
+                                        <a href="#!" class="text-reset">چرا همسفر</a>
+                                    </p>
+                                </div>
+                                <!-- Grid column -->
+                                <!-- Grid column -->
+                                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                                    <!-- Content -->
+
+                                    <a asp-area="" asp-controller="Home" asp-action="Index" class="hamsafar-logo ext-uppercase fw-bold mb-4" style="direction: rtl;">
+                                        amsafar
+                                        <img width="33" height="33" src="../illastrations/logo.png" alt="آیکون همسفر" />
+                                    </a>
+
+                                    <p>
+                                        سفری راحت با همسفر خوب.
+                                    </p>
+                                </div>
+                                <!-- Grid column -->
+                            </div>
+                            <!-- Grid row -->
+                        </div>
+                    </section>
+                    <!-- Section: Links  -->
+                    <!-- Section: Social media -->
+                    <section class="d-flex justify-content-center justify-content-lg-between p-4 ">
+                        <!-- Left -->
+                        <div class="me-5 d-none d-lg-block">
+                            <span>با ما در ارتباط باشید :</span>
+                        </div>
+                        <!-- Left -->
+                        <!-- Right -->
+                        <div class="d-flex">
+                            <a href="" class="social-media telegram">
+                                <i class="lab la-telegram"></i>
+                            </a>
+                            <a href="" class="social-media twitter">
+                                <i class="lab la-twitter"></i>
+                            </a>
+                            <a href="" class="social-media instagram">
+                                <i class="lab la-instagram"></i>
+                            </a>
+                            <a href="" class="social-media linkedin">
+                                <i class="lab la-linkedin-in"></i>
+                            </a>
+                            <a href="" class="social-media github">
+                                <i class="lab la-github"></i>
+                            </a>
+                        </div>
+                        <!-- Right -->
+                    </section>
+                    <!-- Section: Social media -->
+                    <!-- Copyright -->
+                    @* <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
+                © 2021 Copyright:
+                <a class="text-reset fw-bold" href="https://hamsafar.com/">hamsafar.com</a>
+                </div>*@
+                    <!-- Copyright -->
+                </div>
+
+            </div>
+        }
+        <div class="show-small d-sm-none d-block border-top box-shadow bg-white">
+            <div class="row">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="col-4 btn-footer pt-2 @ViewData["Home"]">
+                    @*<img src="../icons/home.svg" width="25" height="25" />*@
+                    <i class="la la-home"></i>
+                    <p>خانه</p>
+                </a>
+                <a class="col-4 btn-footer pt-2">
+                    <i class="las la-suitcase-rolling"></i>
+                    <p>سفر ها</p>
+                </a>
+                <a asp-area="" asp-controller="Account" asp-action="Index" class="col-4 btn-footer pt-2 @ViewData["Account"]">
+                    <i class="las la-user-circle"></i>
+                    <p>حساب کاربری</p>
+
+                </a>
+            </div>
         </div>
     </footer>
+
+    <!-- login Modal -->
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="login-modal title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn btn-shadow close" data-dismiss="modal" aria-label="Close">
+                        <i class="las la-times"></i>
+                    </button>
+                    <h5 class="modal-title text-center" id="login-modal-title">ورود یا ثبت نام</h5>
+                    <p class="text-muted mt-2">برای ادامه شماره موبایل خود را وارد کنید</p>
+                    <div>
+
+                        <div class="input-group">
+                            <input required="" type="text" name="text" autocomplete="off" class="input form-control">
+                            <label class="user-label">First Name</label>
+                            <span class="basic-input">+98</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @*
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>*@
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "سفارشات";//از کجا و به کجا هم باید مشخصذباشه
+    ViewData["Account"] = "active";
+}
+@section head{
+    <link rel="stylesheet" href="~/css/Account/account.css" asp-append-version="true" />
+    <link href="~/lib/persian-datepicker/dist/css/persian-datepicker.css" rel="stylesheet" />
+    <link href="~/lib/persian-datepicker/dist/css/persian-datepicker.min.css" rel="stylesheet" />
+    <link href="~/css/datapicker-style.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/lib/Select2/css/select2.min.css" rel="stylesheet" />
+
+}
+
+<div class="row container-fluid m-0 mt-3">
+    <div class="col-lg-4 col-md-5 col-12 list-group bg-white  px-4">
+        <div class="card border-0 shadow user-menu">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="" asp-controller="Account" asp-action="Index">
+                        <i class="la la-user"></i>
+                      <p class="text">   حساب کاربری</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a  asp-controller="Account" asp-action="Orders">
+                        <i class="la la-map-o"></i>
+                       <p class="text">  سفرهای من</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="" asp-controller="Account" asp-action="Passengers">
+                        <i class="la la-group"></i>
+                      <p class="text">   لیست مسافران</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="active" href="#">
+                        <i class="la 	la-money"></i>
+                       <p class="text">  موجودی و تراکنشها</p>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-8 col-md-7 col-12 bootstrap-switch-small info m-0 p-0">
+       
+    </div>
+</div>

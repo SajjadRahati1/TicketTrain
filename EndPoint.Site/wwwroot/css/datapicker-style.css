@@ -1,0 +1,79 @@
+﻿div#plotId {
+    border-radius: 10px;
+    border: none;
+    min-width: min(500px,100%);
+    width: 300px;
+    height: 368px;
+    padding: 0;
+}
+
+    div#plotId .datepicker-plot-area .datepicker-navigator {
+        display: flex;
+        width: 100%;
+        float: left;
+        align-items: center;
+    }
+    div#plotId .datepicker-navigator {
+        background: #354e7c;
+        height: 70px;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        margin: 0;
+    }
+    div#plotId .datepicker-plot-area .datepicker-navigator .pwt-btn-next, .datepicker-plot-area .datepicker-navigator .pwt-btn-switch, .datepicker-plot-area .datepicker-navigator .pwt-btn-prev {
+        background: none !important;
+        color: white !important;
+        height: 100%;
+        padding-top: 20px;
+    }
+    div#plotId .toolbox {
+        display:none !important;
+    }
+
+.datepicker-plot-area .datepicker-day-view, .datepicker-plot-area .datepicker-month-view, .datepicker-plot-area .datepicker-year-view {
+    height: 295px;
+}
+    .datepicker-plot-area .datepicker-day-view .month-grid-box {
+        height: 285px;
+    }
+
+..datepicker-plot-area .datepicker-day-view .table-days td {
+    height: 42.85px !important;
+}
+.datepicker-plot-area .datepicker-day-view .table-days td span, .datepicker-plot-area .datepicker-year-view .year-item, .datepicker-plot-area .datepicker-month-view .month-item, .datepicker-plot-area .datepicker-day-view .table-days td.disabled span, .datepicker-plot-area .datepicker-year-view .year-item-disable, .datepicker-plot-area .datepicker-month-view .month-item-disable, .datepicker-plot-area .datepicker-time-view > .time-segment, .datepicker-plot-area .datepicker-time-view .down-btn, .datepicker-plot-area .datepicker-time-view .up-btn, .datepicker-plot-area .datepicker-time-view input, .datepicker-plot-area .datepicker-navigator .pwt-btn-next, .datepicker-plot-area .datepicker-navigator .pwt-btn-switch, .datepicker-plot-area .datepicker-navigator .pwt-btn-prev, .datepicker-plot-area .toolbox .pwt-btn-submit, .datepicker-plot-area .toolbox .pwt-btn-calendar, .datepicker-plot-area .toolbox .pwt-btn-today {
+    height: 42.85px;
+    text-align: center;
+    padding-top: 7px;
+}
+.datepicker-plot-area .datepicker-day-view .table-days td {
+    text-align: -webkit-center;
+}
+    .datepicker-plot-area .datepicker-day-view .table-days td.selected span .datepicker-plot-area .datepicker-day-view .table-days td:hover, .datepicker-plot-area .datepicker-day-view .table-days td span:hover, 
+    .datepicker-plot-area .datepicker-day-view .table-days td.today span,
+    .datepicker-plot-area .datepicker-day-view .table-days td.selected span {
+        border-radius: 50px;
+        height: 35px;
+        text-align: center;
+        padding-top: 5px;
+        width: 35px;
+    }
+.datepicker-plot-area .datepicker-month-view .month-item.selected,
+.datepicker-plot-area .datepicker-month-view .month-item:hover,
+.datepicker-plot-area .datepicker-year-view .year-item:hover,
+.datepicker-plot-area .datepicker-year-view .year-item.selected {
+    border-radius: 50px;
+}
+.datepicker-plot-area .datepicker-day-view .table-days td.disabled span, .datepicker-plot-area .datepicker-year-view .year-item-disable, .datepicker-plot-area .datepicker-month-view .month-item-disable {
+    color: #787575;
+}
+.datepicker-plot-area .datepicker-year-view .year-item, .datepicker-plot-area .datepicker-month-view .month-item {
+    height: 70px;
+    line-height: 70px;
+}
+
+.datepicker-plot-area .datepicker-navigator .pwt-btn-next, .datepicker-plot-area .datepicker-navigator .pwt-btn-switch, .datepicker-plot-area .datepicker-navigator .pwt-btn-prev {
+    height: 70px !important;
+    padding-top: 20px !important;
+    background: none !important;
+    color: white !important;
+}

@@ -15,7 +15,7 @@ namespace Ticket.Domain.Entities.Refrences.Train
         /// <summary>
         /// در کدام قسمت کوپه است
         /// </summary>
-        public string Location { get; set; }
+        public short Location { get; set; }
     }
 }
 

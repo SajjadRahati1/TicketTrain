@@ -20,7 +20,23 @@ namespace EndPoint.Site.Controllers
             
             return View();
         }
-
+       
+        public IActionResult DomesticFlight()
+        {
+            return View();
+        }
+        public IActionResult InternationalFlight()
+        {
+            return View();
+        }
+        public IActionResult Train()
+        {
+            return View();
+        }
+        public IActionResult Bus()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

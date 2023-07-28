@@ -1,0 +1,123 @@
+﻿.card-ticket{
+    border-radius:15px;
+}
+.detail-ticket {
+    border-left: dotted 1px #69686899;
+    padding: 20px 50px 0 50px;
+}
+
+.top-titles {
+    margin: 0px 100px 0 0;
+    max-width: calc(100% - 400px );
+}
+
+    .top-titles .top-title {
+        margin: 5px 15px !important;
+        font-size: 17px;
+        font-weight: 700;
+    }
+
+        .top-titles .top-title.badge {
+            background-color: #f6f3f3a6 !important;
+            border-radius: 30px;
+            font-size: 15px;
+            padding: 5px !important;
+            font-weight: 400;
+        }
+
+.provider-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.city-show {
+    font-size: 16px;
+    padding: 0 5px 0 10px;
+}
+
+.time-show {
+    font-size: 18px;
+    font-weight: 800;
+    padding: 0 5px 0 15px;
+}
+
+.show-way .line {
+    min-width: 100px;
+    width: 100px;
+    min-height: 1px;
+    height: 2px !important;
+    background: #8f8a8ade;
+}
+
+.show-way i::before {
+    font-size: 30px;
+}
+
+.links {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: start;
+    flex-direction: row;
+}
+
+.links {
+    padding: 10px 40px 0 40px;
+}
+
+    .links a {
+        text-decoration: none !important;
+        color: black;
+        position: relative;
+        font-size: 17px;
+        padding-bottom: 7px;
+        min-width: 130px;
+        max-width: 130px;
+        transition: all .5s;
+        text-align: center;
+        padding:2px 10px;
+    }
+
+        .links a::after {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            content: " ";
+            background: transparent;
+            height: 5px;
+            width: 100%;
+            left: 50%;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            transition: all .5s;
+            text-align: center;
+        }
+
+        .links a.active {
+            color: #2572b1;
+        }
+
+            .links a.active::after {
+                left: 0;
+                background: #2572b1;
+                width: 100%;
+            }
+.price-ticket {
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+.text-small{
+    font-size:14px;
+}
+.btn.btn-search {
+    min-height: 45px;
+    margin:15px 5px 10px 5px;
+}
+
+
+.text-blue-2{
+    color:#5368da;
+    font-weight:700;
+    font-size:20px;
+}

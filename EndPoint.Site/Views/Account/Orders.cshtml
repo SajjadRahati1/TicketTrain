@@ -1,0 +1,161 @@
+﻿@{
+    ViewData["Title"] = "سفارشات";//از کجا و به کجا هم باید مشخصذباشه
+    ViewData["Account"] = "active";
+}
+@section head{
+    <link rel="stylesheet" href="~/css/Account/account.css" asp-append-version="true" />
+    <link href="~/lib/persian-datepicker/dist/css/persian-datepicker.css" rel="stylesheet" />
+    <link href="~/lib/persian-datepicker/dist/css/persian-datepicker.min.css" rel="stylesheet" />
+    <link href="~/css/datapicker-style.css" rel="stylesheet" />
+    <link href="~/lib/Select2/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .form-group .select2 .select2-selection__arrow {
+            top: calc(0.5rem + -2px) !important;
+        }
+    </style>
+
+}
+
+<div class="row container-fluid m-0 mt-3">
+    <div class="col-lg-4 col-md-5 col-12 list-group bg-white  px-4">
+        <div class="card border-0 shadow user-menu">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="" asp-controller="Account" asp-action="Index">
+                        <i class="la la-user"></i>
+                       <p class="text">  حساب کاربری</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="active" href="#">
+                        <i class="la la-map-o"></i>
+                      <p class="text">   سفرهای من</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="" asp-controller="Account" asp-action="Passengers">
+                        <i class="la la-group"></i>
+                       <p class="text">  لیست مسافران</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="" asp-controller="Account" asp-action="Transactions">
+                        <i class="la 	la-money"></i>
+                       <p class="text">  موجودی و تراکنشها</p>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-8 col-md-7 col-12 bootstrap-switch-small info m-0 p-0">
+        @*سفر های من*@
+        <div class="card shadow border-0 p-4">
+            <div class="filters d-flex flex-row flex-wrap align-items-center">
+
+                <div class="form-group mx-3 mb-3">
+                    <label for="#text-search ">جستجوی سفارش</label>
+                    <div class="m-input-icon m-input-icon--right">
+                        <input type="text" class="m-input form-control" id="text-search" />
+                        <span class="m-input-icon__icon m-input-icon__icon--right">
+                            <span>
+                                <i class="la la-search text-muted"></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group mx-3 mb-3">
+                    <label for="#type-order">نوع سفارش</label>
+                    <div class="input-group">
+                        <select required="" type="text" name="text" autocomplete="off" class="select2  input form-control">
+                            <option value="1">test 1</option>
+                            <option value="2">test 2</option>
+                            <option value="3">test 3</option>
+                            <option value="4">test 4</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group mb-3 mx-3">
+                    <label>تاریخ ثبت سفارش</label>
+                    <div class="d-flex flex-row justify-items-center flex-wrap">
+
+                        <div class="input-group ms-3 mb-2">
+                            <input placeholder="از" required="" type="text" name="text" autocomplete="off" class="w-100 from-date-input date-input input form-control">
+                            <div class="from-date date-div"></div>
+                        </div>
+
+                        <div class="input-group ms-3">
+
+                            <input placeholder="تا" required="" type="text" name="text" autocomplete="off" class="w-100 to-date-input date-input input form-control">
+                            <div class="to-date date-div"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="br-new"></div>
+            <div class="result-order mt-4">
+
+                <div class="card border-1 p-3 bg-light">
+                    <div class="d-flex align-items-start justify-content-between flex-wrap">
+
+                        <div class="show-type-order">
+                            <h5>
+                                <i class="la la-bus"></i>
+                                اتوبوس
+                            </h5>
+                        </div>
+                        <div class="">
+                            <div class="mx-2 badge badge-pill badge-success rounded-pill">
+
+                                تایید شده
+                            </div>
+                        </div>
+                    </div>
+                    <div class="br-new border-secondary">
+                    </div>
+                    <div class="mt-2">
+                        <div class="d-flex flex-row justify-content-between align-items-center flex-wrap">
+                            <div class="row">
+                                <div class="col-6 ">
+                                    <div class="d-flex justify-content-between gap-2 border-start mt-2">
+                                        <p class="text-muted ps-3 "> شماره سفارش</p>
+                                        <p class="h6 mt-3">1051309303</p>
+                                    </div>
+
+                                </div>
+                                <div class="col-6 ">
+                                    <div class="d-flex justify-content-between gap-2 mt-2">
+                                        <p class="text-muted ps-3"> شماره سفارش</p>
+                                        <p class="h6 mt-3">1051309303</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div>
+                                <a class="link-blue d-block d-flex  justify-content-between align-items-center">
+                                    <p class="m-0">جزییات سفارش و استرداد</p>
+                                    <svg viewBox="0 0 24 24" width="1.3em" height="1.3em" fill="currentColor"><path d="M16.698 21.266a.75.75 0 0 1-1.08 1.037l-.066-.069-8.25-9.75a.75.75 0 0 1-.058-.89l.058-.078 8.25-9.75a.75.75 0 0 1 1.202.893l-.056.075L8.858 12l7.84 9.266Z"></path></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    @*
+    <script src="~/lib/persian-datepicker/dist/js/persian-datepicker.min.js"></script>*@
+    <script src="~/lib/persian-date/dist/persian-date.js" asp-append-version="true"></script>
+    @*<script src="~/lib/persian-date/dist/persian-date.min.js"></script>*@
+    <script src="~/lib/persian-datepicker/dist/js/persian-datepicker.js"></script>
+    <script src="~/js/Passenger.js" asp-append-version="true"></script>
+    <script src="~/lib/Select2/js/select2.min.js"></script>
+    <script src="~/lib/Select2/js/select2.full.min.js"></script>
+    <script src="~/lib/Select2/js/select2.full.min.js"></script>
+    <script src="~/js/account/orders.js" asp-append-version="true"></script>
+}
