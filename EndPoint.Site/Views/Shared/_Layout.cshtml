@@ -1,5 +1,5 @@
 ﻿@{
-   
+
 }
 <!DOCTYPE html>
 <html lang="en" dir="rtl" style="direction:rtl;">
@@ -11,9 +11,10 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EndPoint.Site.styles.css" asp-append-version="true" />
 
+    <link href="~/lib/toaster-js/Toaster.css" rel="stylesheet" />
     <link href="~/lib/lineawesome/css/line-awesome.min.css" rel="stylesheet" />
-    <link href="~/lib/lineawesome/scss/_icons.scss" rel="stylesheet" />
-    @* <link rel="stylesheet" href="~/css/style.bundle.css" />*@
+   @* <link href="~/lib/lineawesome/scss/_icons.scss" rel="stylesheet" />
+  *@  @* <link rel="stylesheet" href="~/css/style.bundle.css" />*@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Fugaz+One">
     @await RenderSectionAsync("head")
@@ -37,33 +38,65 @@
                         </button>
                         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                             <ul class="navbar-nav flex-grow-1">
-                               @* <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                @* <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                                 </li>*@
                             </ul>
                         </div>
                     </div>
                 </nav>
                 <div class="d-flex" dir="ltr">
-                    <button class="btn btn-header mx-2" type="button" data-toggle="modal" data-target="#login-modal" onclick="showLoginModal()">
-                        <div class="p-2">
-                            <span>
-                                ورود یا ثبت نام
-                            </span>
-                            <i class="las la-user"></i>
-                        </div>
-                    </button>
-                    <button class="btn btn-header mx-2">
-                        <div class="p-2">
-                            <span>
-                                سفر های من
-                            </span>
-                            <i class="las la-suitcase-rolling"></i>
-                        </div>
-                    </button>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="btn btn-header mx-2" asp-area="" asp-controller="Account" asp-action="Index">
+                            <div class="p-2">
+                                <span>
+                                    مشخصات من
+                                </span>
+                                <i class="las la-user"></i>
+                            </div>
+                        </a>
+                        <a class="btn btn-header mx-2" asp-area="" asp-controller="Account" asp-action="Logout">
+                            <div class="p-2">
+                                <span>
+                                    خروج از حساب
+                                </span>
+                                <i class="las 	la-user-times"></i>
+                            </div>
+                        </a>
+                        <a class="btn btn-header mx-2" asp-area="" asp-controller="Account" asp-action="Orders">
+                            <div class="p-2">
+                                <span>
+                                    سفر های من
+                                </span>
+                                <i class="las la-suitcase-rolling"></i>
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-header mx-2" asp-area="" asp-controller="Account" asp-action="Register">
+                            <div class="p-2">
+                                <span>
+                                    ثبت نام
+                                </span>
+                                <i class="las la-user-plus"></i>
+                            </div>
+                        </a>
+                        <a class="btn btn-header mx-2" asp-area="" asp-controller="Account" asp-action="Login">
+                            <div class="p-2">
+                                <span>
+                                    ورود
+                                </span>
+                                <i class="las la-user"></i>
+                            </div>
+                        </a>
+                    }
+
+
 
                 </div>
             </div>
@@ -96,7 +129,7 @@
                         @ViewData["Title"]
                     </div>
                     <div class="d-flex" dir="ltr">
-                        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-header mx-2" type="button" >
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-header mx-2" type="button">
                             <div class="p-2">
                                 <i style="font-size:16px !important;" class="las la la-mail-reply"></i>
                                 <span>
@@ -249,15 +282,33 @@
                     <i class="la la-home"></i>
                     <p>خانه</p>
                 </a>
-                <a class="col-4 btn-footer pt-2">
-                    <i class="las la-suitcase-rolling"></i>
-                    <p>سفر ها</p>
-                </a>
-                <a asp-area="" asp-controller="Account" asp-action="Index" class="col-4 btn-footer pt-2 @ViewData["Account"]">
-                    <i class="las la-user-circle"></i>
-                    <p>حساب کاربری</p>
 
-                </a>
+                @if (User.Identity.IsAuthenticated)
+                {
+
+                    <a class="col-4 btn-footer pt-2" asp-area="" asp-action="Orders" asp-controller="Account">
+                        <i class="las la-suitcase-rolling"></i>
+                        <p>سفر ها</p>
+                    </a>
+                    <a asp-area="" asp-controller="Account" asp-action="Index" class="col-4 btn-footer pt-2 @ViewData["Account"]">
+                        <i class="las la-user-circle"></i>
+                        <p>حساب کاربری</p>
+
+                    </a>
+                }
+                else
+                {
+                    <a class="col-4 btn-footer pt-2">
+                        <i class="las la-suitcase-rolling"></i>
+                        <p>سفر ها</p>
+                    </a>
+                    <a asp-area="" asp-controller="Account" asp-action="Register" class="col-4 btn-footer pt-2 @ViewData["Account"]">
+                        <i class="las la-user-circle"></i>
+                        <p>ثبت نام</p>
+
+                    </a>
+                }
+
             </div>
         </div>
     </footer>
@@ -291,7 +342,16 @@
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/toaster-js/Toaster.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        const message = `@ViewData["Message"]`;
+        const typeMessage = `@ViewData["MessageType"]`;
+        $(document).ready(function () {
+            if (message)
+                toaster.info(message)
+        })
+    </script>
 </body>
 </html>

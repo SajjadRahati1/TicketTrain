@@ -8,7 +8,7 @@ namespace Ticket.Domain.Entities.Refrences.Flight
     public class FlightTicketRefundRules:BaseEntity
     {
         public string Title { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// مبلغ قابل کسر
@@ -50,5 +50,8 @@ namespace Ticket.Domain.Entities.Refrences.Flight
         public short? EndHour { get; set; }
         //مثال : از زمان صدور بلیط تا 12:00 ظهر 1 روز قبل از پرواز
         //مثال : از 12:00 ظهر 1 روز قبل از پرواز تا 4 ساعت قبل از پرواز
+
+        public GroupFlightTicketRefundRules GroupRules { get; set; }
+        public long GroupRulesId { get; set; }
     }
 }

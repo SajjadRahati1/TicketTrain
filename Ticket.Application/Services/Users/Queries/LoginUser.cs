@@ -5,31 +5,30 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Ticket.Application.Interfaces.Contexts;
 using Ticket.Application.Interfaces.Services;
 using Ticket.Common.Dto;
 using Ticket.Domain.Entities.Users;
 
-namespace Ticket.Application.Services.Users.Commands
+namespace Ticket.Application.Services.Users.Queries
 {
-    public interface ILoginUserService : IPublicService<RequestLoginUserDto, long>
+    public interface ILoginUserService : IPublicService<RequestLoginUserDto, ResultLoginUserDto>
     {
 
     }
     public class LoginUser : ILoginUserService
     {
-       
+
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
         public LoginUser(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            
+
             _userManager = userManager;
             _signInManager = signInManager;
         }
 
-        public async Task<ResultDto<long>> Execute(RequestLoginUserDto request)
+        public async Task<ResultDto<ResultLoginUserDto>> Execute(RequestLoginUserDto request)
         {
 
             await _signInManager.SignOutAsync();
@@ -46,7 +45,7 @@ namespace Ticket.Application.Services.Users.Commands
             if (user == null)
             {
                 var str = request.IsEmailAddress ? "ایمیل" : "نام کاربری";
-                return new ResultDto<long>
+                return new ResultDto<ResultLoginUserDto>
                 {
                     IsSuccess = false,
                     Message = $"کاربری با این {str} یافت نشد"
@@ -61,26 +60,50 @@ namespace Ticket.Application.Services.Users.Commands
 
             if (result.Succeeded)
             {
-                return new ResultDto<long>()
+                return new ResultDto<ResultLoginUserDto>()
                 {
                     IsSuccess = true,
-                    Data = user.Id,
+                    Data = new ResultLoginUserDto()
+                    {
+                        UserId = user.Id,
+                        RedirectAddress = request.ReturnUrl,
+                        IsRedirectAction = false
+                    },
                     Message = $"{user.UserName} عزیز خوش آمدید"
+                };
+            }
+            if (result.RequiresTwoFactor)
+            {
+                return new ResultDto<ResultLoginUserDto>()
+                {
+                    IsSuccess = true,
+                    Data = new ResultLoginUserDto()
+                    {
+                        UserId = user.Id,
+                        RedirectAddress = "TwoFactorLogin",
+                        IsRedirectAction = true,
+                        RedirectValues = new
+                        {
+                            request.Username,
+                            request.IsPersistent
+                        }
+                    },
+                    Message = $"{user.UserName} عزیز خوش آمدید، تایید دو مرحله ای"
                 };
             }
             if (result.IsLockedOut) //کاربر تعداد دفعات رمز اشتباهش زیاد بوده و قفل شده
             {
-                return new ResultDto<long>
+                return new ResultDto<ResultLoginUserDto>
                 {
-                    Data = 0,
+
                     IsSuccess = false,
                     Message = $"تعداد دفعات ارسال رمز عبور اشتباه شما بیش از حد مجاز شده است لطفا " +
                     $"{user.LockoutEnd.Value.Minute} " +
                     $"دقیقه دیگر تلاش کنید"
                 };
-                
+
             }
-            return new ResultDto<long>()
+            return new ResultDto<ResultLoginUserDto>()
             {
                 IsSuccess = false,
                 Message = "لاگین شما با موفقیت نبود",
@@ -105,12 +128,20 @@ namespace Ticket.Application.Services.Users.Commands
         /// <summary>
         /// مرا به خاطر بسپار
         /// </summary>
-
+        [Display(Name = "مرا به خاطر داشته باش")]
         public bool IsPersistent { get; set; } = false;
 
         public string ReturnUrl { get; set; }
     }
 
-
+    public class ResultLoginUserDto
+    {
+        public long UserId { get; set; }
+        public string RedirectAddress { get; set; }
+        public bool IsRedirectAction { get; set; }
+        public object RedirectValues { get; set; }
+    }
     
+    
+
 }

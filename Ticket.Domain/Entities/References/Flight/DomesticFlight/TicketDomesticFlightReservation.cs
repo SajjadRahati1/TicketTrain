@@ -14,13 +14,13 @@ namespace Ticket.Domain.Entities.Refrences.Flight.DomesticFlight
         public User User { get; set; }
 
         public DomesticFlight Flight { get; set; }
+        public long FlightId { get; set; }
 
-
-        public string TicketNumber { get; set; }
+        public string? TicketNumber { get; set; }
         /// <summary>
         /// این شماره رو خود سایت میسازد
         /// </summary>
-        public string OrderNumber { get; set; }
+        public string? OrderNumber { get; set; }
 
 
         /// <summary>
@@ -31,15 +31,15 @@ namespace Ticket.Domain.Entities.Refrences.Flight.DomesticFlight
         /// <summary>
         /// اطلاعات بلیط و اطلاع‌رسانی بعدی به این ادرس ارسال می‌شود.
         /// </summary>
-        public string SendOtherInformationToPhoneNumber { get; set; }
+        public string? SendOtherInformationToPhoneNumber { get; set; }
         /// <summary>
         /// اطلاعات بلیط و اطلاع‌رسانی بعدی به این ادرس ارسال می‌شود.
         /// </summary>
-        public string SendOtherInformationToEmail { get; set; }
+        public string? SendOtherInformationToEmail { get; set; }
 
 
-        public Transaction Transaction { get; set; }
-        public long TransactionId { get; set; }
+        public Transaction? Transaction { get; set; }
+        public long? TransactionId { get; set; }
 
        
     }

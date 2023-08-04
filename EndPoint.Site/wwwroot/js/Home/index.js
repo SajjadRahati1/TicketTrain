@@ -70,3 +70,74 @@ $(document).on('click', '.choose-type>a:not(.active)', function () {
     typeId.replace('-btn', '');
 
 })
+
+//دریافت شهر های پرواز داخلی
+$(document).ready(function () {
+    $.ajax({
+        url: "/Home/SelectCitiesDomesticFlight",
+        Data: "",
+        success: function (result) {
+            if (result.isSuccess) {
+                $('#domestic-flight-show-big .cities').html(addCitiesOptions(result.data));
+                $('#domestic-flight-show-big .cities.select2').select2();
+            }
+        }
+    });
+})
+function addCitiesOptions(vals) {
+    let val = null;
+    let result = ""
+    for (var i = 0; i < vals.length; i++) {
+        val = vals[i]
+        result +=
+            `<option value='${val.cityId}' val-icon='la-map-marker'>
+                <div class='d-flex flex-column gap-3 justify'>
+                    <i class='la la-map-marker'>
+                    <div>
+                        <p class='p-0 m-0 mb-2'>${val.cityName}</p>
+                        <p class='p-0 m-0 mb-2 text-muted'>${val.stateName}</p>
+                    </div>
+                </div>
+            </option>`
+    }
+    return result;
+}
+
+$(document).on('click', '#domestic-flight-show-big .btn-search', function () {
+    let travelType = $(`#domestic-flight-show-big select[name='travel-type']`).val()
+    let fromCity = $(`#domestic-flight-show-big select[name='start-city']`).val()
+    let toCity = $(`#domestic-flight-show-big select[name='end-city']`).val()
+    let fromDate = $(`#domestic-flight-show-big [name='from-date']`).val()
+    let toDate = $(`#domestic-flight-show-big [name='to-date']`).val()
+    travelType = Number(travelType)
+    fromCity = Number(fromCity)
+    toCity = Number(toCity)
+    let req = {
+        fromCity: fromCity,
+        fromDate: fromDate,
+        toCity: toCity,
+        toDate: toDate,
+        travelType: travelType
+    }
+    $.ajax({
+        //contentType: 'application/json; charset=utf-8',
+        //dataType: 'json',
+        dataType: 'json',
+        type: 'POST',
+        url: "/Home/SearchDomesticFlightTravel",
+        async: true,
+        data: {
+            FromCity: fromCity,
+            FromDate: fromDate,
+            toCity: toCity,
+            toDate: toDate,
+            travelType: travelType
+        },
+        success: function (result) {
+            console.log(result)
+        },
+        failure: function (response) {
+            $('#result').html(response);
+        }
+    });
+})

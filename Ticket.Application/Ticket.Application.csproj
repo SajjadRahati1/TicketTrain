@@ -9,7 +9,8 @@
   <ItemGroup>
     <Folder Include="Services\Account\Commands\" />
     <Folder Include="Services\Account\Queries\" />
-    <Folder Include="Services\Users\Queries\" />
+    <Folder Include="Services\Email\Queries\" />
+    <Folder Include="Services\References\Train\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -54,11 +54,9 @@
                     <div id="domestic-flight-show-big" class="py-3 px-5">
                         <div class="mini-selects mt-2 mb-3">
                             <div class="input-group mini-select">
-                                <select required="" type="text" name="text" autocomplete="off" class="select2 input form-control">
-                                    <option value="1">test 1</option>
-                                    <option value="2">test 2</option>
-                                    <option value="3">test 3</option>
-                                    <option value="4">test 4</option>
+                                <select  name="travel-type" autocomplete="off" class="select2  input form-control">
+                                    <option value="1">یک طرفه</option>
+                                    <option value="2">دو طرفه</option>
                                 </select>
                             </div>
                         </div>
@@ -67,7 +65,7 @@
                                 <div class="input-group-start-end">
 
                                     <div class="input-group">
-                                        <select required="" type="text" name="text" autocomplete="off" class="select2  input form-control">
+                                        <select required="required" name="start-city" autocomplete="off" class="select2 cities input form-control">
                                             <option value="1">test 1</option>
                                             <option value="2">test 2</option>
                                             <option value="3">test 3</option>
@@ -79,7 +77,7 @@
                                         <svg viewBox="0 0 24 24" width="1.5em" fill="currentColor"><path d="m16.96 12.157.07.063 3.75 3.75a.757.757 0 0 1 .06.067l-.06-.067a.748.748 0 0 1 .22.53v.025a.728.728 0 0 1-.003.039L21 16.5a.747.747 0 0 1-.147.446l-.01.014-.008.01-.055.06-3.75 3.75a.75.75 0 0 1-1.123-.99l.063-.07 2.469-2.47H8.25a.75.75 0 0 1-.087-1.495l.087-.005h10.189l-2.47-2.47a.75.75 0 0 1-.062-.99l.063-.07a.75.75 0 0 1 .99-.063ZM8.03 3.22a.75.75 0 0 1 .063.99l-.063.07-2.47 2.47h10.19a.75.75 0 0 1 .088 1.495l-.088.005H5.56l2.47 2.47a.75.75 0 0 1 .063.99l-.063.07a.75.75 0 0 1-.99.063l-.07-.063-3.75-3.75-.055-.06a.644.644 0 0 1-.005-.007l.06.067A.756.756 0 0 1 3 7.5v-.014a.47.47 0 0 1 .003-.053L3 7.5a.756.756 0 0 1 .22-.53l3.75-3.75a.75.75 0 0 1 1.06 0Z"></path></svg>
                                     </button>
                                     <div class="input-group">
-                                        <select required="" type="text" name="text" autocomplete="off" class="select2  input form-control">
+                                        <select required="required" name="end-city" autocomplete="off" class="select2 cities input form-control">
                                             <option value="1">test 1</option>
                                             <option value="2">test 2</option>
                                             <option value="3">test 3</option>
@@ -93,13 +91,13 @@
                                 <div class="input-group-start-end">
 
                                     <div class="input-group">
-                                        <input required="" type="text" name="text" autocomplete="off" class="from-date-input date-input input form-control">
+                                        <input required="required" type="text" name="from-date" autocomplete="off" class="from-date-input date-input input form-control">
                                         <label class="user-label">از تاریخ</label>
                                         <div class="from-date date-div"></div>
                                     </div>
 
                                     <div class="input-group">
-                                        <input required="" type="text" name="text" autocomplete="off" class="to-date-input date-input input form-control">
+                                        <input required="required" name="to-date" autocomplete="off" class="to-date-input date-input input form-control">
                                         <label class="user-label">تا تاریخ</label>
                                         <div class="to-date date-div"></div>
                                     </div>
@@ -107,7 +105,7 @@
                             </div>
                             <div class="col-md-6 col-lg-4 col-12 mt-3">
                                 <div class="input-group">
-                                    <input readonly value="1 مسافر" val-big="1" val-avg="0" val-min="0" required="" type="text" name="text" autocomplete="off" class="input form-control count-passanger-input">
+                                    <input readonly value="1 مسافر" val-big="1" val-avg="0" val-min="0" required="" type="text" name="passengers" autocomplete="off" class="input form-control count-passanger-input">
                                     <label class="user-label">مسافران</label>
                                 </div>
                             </div>

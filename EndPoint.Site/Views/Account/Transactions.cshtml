@@ -18,25 +18,25 @@
                 <li class="nav-item">
                     <a class="" asp-controller="Account" asp-action="Index">
                         <i class="la la-user"></i>
-                      <p class="text">   حساب کاربری</p>
+                        <p class="text">   حساب کاربری</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a  asp-controller="Account" asp-action="Orders">
+                    <a asp-controller="Account" asp-action="Orders">
                         <i class="la la-map-o"></i>
-                       <p class="text">  سفرهای من</p>
+                        <p class="text">  سفرهای من</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="" asp-controller="Account" asp-action="Passengers">
                         <i class="la la-group"></i>
-                      <p class="text">   لیست مسافران</p>
+                        <p class="text">   لیست مسافران</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="active" href="#">
                         <i class="la 	la-money"></i>
-                       <p class="text">  موجودی و تراکنشها</p>
+                        <p class="text">  موجودی و تراکنشها</p>
                     </a>
                 </li>
 
@@ -44,6 +44,72 @@
         </div>
     </div>
     <div class="col-lg-8 col-md-7 col-12 bootstrap-switch-small info m-0 p-0">
-       
+        @*فیلتر ها*@
+        <div class="card shadow border-0 p-4">
+            <h5>
+                <svg viewBox="0 0 24 24" width="1.5rem" height="1.5rem" fill="currentColor" class="ml-3 text-grays-500" data-v-b664eb7e=""><path d="M20.25 4.5c1.24 0 2.25 1.01 2.25 2.25v10.5c0 1.24-1.01 2.25-2.25 2.25H3.75c-1.24 0-2.25-1.01-2.25-2.25V6.75c0-1.24 1.01-2.25 2.25-2.25h16.5ZM21 9.75H3v7.5c0 .414.336.75.75.75h16.5a.75.75 0 0 0 .75-.75v-7.5ZM9 13.5A.75.75 0 1 1 9 15H5.25a.75.75 0 1 1 0-1.5H9Zm3 0a.75.75 0 1 1 0 1.5h-.75a.75.75 0 1 1 0-1.5H12Z"></path></svg>
+                <span>موجودی حساب کاربری</span>
+            </h5>
+            <div class="filters d-flex flex-row flex-wrap align-items-center border-left br-new">
+                <h6>موجودی حساب :</h6>
+                <p class="mx-4"><span>0</span> ریال</p>
+            </div>
+            <h5 class="text-success mt-2">افزایش موجودی </h5>
+            <div class="filters d-flex flex-row flex-wrap align-items-center mt-2">
+
+                <div class="input-group">
+                    <input required="" id="money" type="text" name="money" autocomplete="off"
+                           class="input form-control">
+                    <label class="user-label">مبلغ</label>
+
+                </div>
+
+                <button class="btn btn-outline-blue btn-bottom p-3 px-4 mx-2">
+                    افزایش
+                </button>
+            </div>
+
+
+        </div>
+
+        <div class="card border-0 mt-4 shadow-lg p-4 ">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4>
+                    <i class="la la-money text-bold pb-2" style="font-size:25px;"></i>
+                    <span>پرداختی ها</span>
+                </h4>
+
+            </div>
+            <div class="br-new"></div>
+            <div class=" pt-3 gap-2">
+                <table class="table border-3">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">موضوع</th>
+                            <th scope="col">مبلغ</th>
+                            <th scope="col">تاریخ</th>
+                            <th scope="col">توضیحات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>بلیط هواپیما</td>
+                            <td>2000 ریال</td>
+                            <td>1401/01/01</td>
+                            <td>بلیط هواپیما روز جمعه از تهران به اهواز</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>بلیط هواپیما</td>
+                            <td>2000 ریال</td>
+                            <td>1401/01/01</td>
+                            <td>بلیط هواپیما روز جمعه از تهران به اهواز</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

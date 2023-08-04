@@ -15,6 +15,9 @@ namespace EndPoint.Site.Controllers
             List <TicketDto> values = new List<TicketDto> ();
             return View(values);
         }
-
+        public IActionResult Passenger( )
+        {
+            return View();
+        }
     }
 }

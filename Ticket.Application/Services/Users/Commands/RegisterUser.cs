@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -17,7 +19,7 @@ namespace Ticket.Application.Services.Users.Commands
 {
     public interface IRegisterUserService : IPublicService<RequestRegisterUserDto, ResultRegisterUserDto>
     {
-        
+
     }
 
     public class RegisterUserService : IRegisterUserService
@@ -36,107 +38,120 @@ namespace Ticket.Application.Services.Users.Commands
             {
                 #region چک کردن مقادیر ورودی
                 //چون در کلاس Dto مقادیر چک شده است نیاز به چک در اینجا نداریم
-               /* if (string.IsNullOrWhiteSpace(request.Email))
-                {
-                    return new ResultDto<ResultRegisterUserDto>()
-                    {
-                        Data = new ResultRegisterUserDto()
-                        {
-                            UserId = 0,
-                        },
-                        IsSuccess = false,
-                        Message = "پست الکترونیک را وارد نمایید"
-                    };
-                }
+                /* if (string.IsNullOrWhiteSpace(request.Email))
+                 {
+                     return new ResultDto<ResultRegisterUserDto>()
+                     {
+                         Data = new ResultRegisterUserDto()
+                         {
+                             UserId = 0,
+                         },
+                         IsSuccess = false,
+                         Message = "پست الکترونیک را وارد نمایید"
+                     };
+                 }
 
-                if (string.IsNullOrWhiteSpace(request.FirstName))
-                {
-                    return new ResultDto<ResultRegisterUserDto>()
-                    {
-                        Data = new ResultRegisterUserDto()
-                        {
-                            UserId = 0,
-                        },
-                        IsSuccess = false,
-                        Message = "نام را وارد نمایید"
-                    };
-                }
-                if (string.IsNullOrWhiteSpace(request.Password))
-                {
-                    return new ResultDto<ResultRegisterUserDto>()
-                    {
-                        Data = new ResultRegisterUserDto()
-                        {
-                            UserId = 0,
-                        },
-                        IsSuccess = false,
-                        Message = "رمز عبور را وارد نمایید"
-                    };
-                }
-                if (request.Password != request.ConfirmPassword)
-                {
-                    return new ResultDto<ResultRegisterUserDto>()
-                    {
-                        Data = new ResultRegisterUserDto()
-                        {
-                            UserId = 0,
-                        },
-                        IsSuccess = false,
-                        Message = "رمز عبور و تکرار آن برابر نیست"
-                    };
-                }
-                string emailRegex = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9.-]+\.[A-Z]{2,}$";
+                 if (string.IsNullOrWhiteSpace(request.FirstName))
+                 {
+                     return new ResultDto<ResultRegisterUserDto>()
+                     {
+                         Data = new ResultRegisterUserDto()
+                         {
+                             UserId = 0,
+                         },
+                         IsSuccess = false,
+                         Message = "نام را وارد نمایید"
+                     };
+                 }
+                 if (string.IsNullOrWhiteSpace(request.Password))
+                 {
+                     return new ResultDto<ResultRegisterUserDto>()
+                     {
+                         Data = new ResultRegisterUserDto()
+                         {
+                             UserId = 0,
+                         },
+                         IsSuccess = false,
+                         Message = "رمز عبور را وارد نمایید"
+                     };
+                 }
+                 if (request.Password != request.ConfirmPassword)
+                 {
+                     return new ResultDto<ResultRegisterUserDto>()
+                     {
+                         Data = new ResultRegisterUserDto()
+                         {
+                             UserId = 0,
+                         },
+                         IsSuccess = false,
+                         Message = "رمز عبور و تکرار آن برابر نیست"
+                     };
+                 }
+                 string emailRegex = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9.-]+\.[A-Z]{2,}$";
 
-                var match = Regex.Match(request.Email, emailRegex, RegexOptions.IgnoreCase);
-                if (!match.Success)
-                {
-                    return new ResultDto<ResultRegisterUserDto>()
-                    {
-                        Data = new ResultRegisterUserDto()
-                        {
-                            UserId = 0,
-                        },
-                        IsSuccess = false,
-                        Message = "ایمیل خودرا به درستی وارد نمایید"
-                    };
-                }*/
+                 var match = Regex.Match(request.Email, emailRegex, RegexOptions.IgnoreCase);
+                 if (!match.Success)
+                 {
+                     return new ResultDto<ResultRegisterUserDto>()
+                     {
+                         Data = new ResultRegisterUserDto()
+                         {
+                             UserId = 0,
+                         },
+                         IsSuccess = false,
+                         Message = "ایمیل خودرا به درستی وارد نمایید"
+                     };
+                 }*/
 
                 #endregion
 
 
-               /* var passwordHasher = new PasswordHasher();
-                var hashedPassword = passwordHasher.HashPassword(request.Password);
-                */
+                /* var passwordHasher = new PasswordHasher();
+                 var hashedPassword = passwordHasher.HashPassword(request.Password);
+                 */
                 Person person = new Person()
                 {
                     FirstName = request.FirstName,
                     LastName = request.LastName,
-                    EmailAddress = request.Email
+                    EmailAddress = request.Email,
+                    PhoneNumber = request.PhoneNumber,
+                    BirthDate = DateTime.MinValue,
+                    Gender = Domain.Enums.Gender.Man,
+                    IsRemoved = false,
+                    NationalCode = "",
+                    RemoveTime = null
                 };
                 Wallet wallet = new Wallet()
                 {
-                   
                     Balance = 0
-                };
-                User user = new User()
-                {
-                  Person = person,
-                  Email = request.Email,
-                  Wallet = wallet
-                  //PasswordHash = hashedPassword
                 };
                 _context.People.Add(person);
                 _context.Wallets.Add(wallet);
-                var result =await _userManager.CreateAsync(user,request.Password);
                
+                User user = new User()
+                {
+                    UserName = request.Username,
+                    Person = person,
+                    Email = request.Email,
+                    Wallet = wallet,
+                    PhoneNumber = request.PhoneNumber
+                    //PasswordHash = hashedPassword
+                };
+                
+                var result = await _userManager.CreateAsync(user, request.Password);
+
                 if (result.Succeeded)
                 {
-                    await _context.SaveChangesAsync();
+                    //var ress=await _context.SaveChangesAsync();
+                    var token = _userManager.GenerateEmailConfirmationTokenAsync(user).Result;
+
+
                     return new ResultDto<ResultRegisterUserDto>()
                     {
                         Data = new ResultRegisterUserDto()
                         {
                             UserId = user.Id,
+                            Token = token
                         },
                         IsSuccess = true,
                         Message = "ثبت نام کاربر انجام شد",
@@ -144,7 +159,7 @@ namespace Ticket.Application.Services.Users.Commands
                 }
                 else if (result.Errors.Any())
                 {
-                    string errorMessages="";
+                    string errorMessages = "";
                     foreach (var error in result.Errors)
                     {
                         errorMessages += error.Description + Environment.NewLine;
@@ -152,16 +167,16 @@ namespace Ticket.Application.Services.Users.Commands
                     }
                     return new ResultDto<ResultRegisterUserDto>()
                     {
-                        
-                        IsSuccess = true,
-                        Message = "مشکلی در ثبت نام کاربر به وجود آمده",
+
+                        IsSuccess = false,
+                        Message = "مشکلی در ثبت نام کاربر به وجود آمده :" + Environment.NewLine + errorMessages,
                     };
                 }
 
-                return  new ResultDto<ResultRegisterUserDto>()
+                return new ResultDto<ResultRegisterUserDto>()
                 {
 
-                    IsSuccess = true,
+                    IsSuccess = false,
                     Message = "خطای ناشناخته",
                 };
 
@@ -199,13 +214,16 @@ namespace Ticket.Application.Services.Users.Commands
         [DataType(DataType.Password)]
         [Required]
         public string ConfirmPassword { get; set; }
-       
+        [Required]
+        [MinLength(11,ErrorMessage ="شماره همراه وارد شده معتبر نمیباشد")]
+        public string PhoneNumber { get; set; }
     }
 
-  
+
     public class ResultRegisterUserDto
     {
         public long UserId { get; set; }
+        public string Token { get; set; }
     }
 
 

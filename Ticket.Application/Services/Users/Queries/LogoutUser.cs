@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using Ticket.Application.Interfaces.Services;
 using Ticket.Common.Dto;
 using Ticket.Domain.Entities.Users;
 
-namespace Ticket.Application.Services.Users.Commands
+namespace Ticket.Application.Services.Users.Queries
 {
     public interface ILogoutUserService : IPublicService
     {
@@ -36,7 +37,8 @@ namespace Ticket.Application.Services.Users.Commands
                 //create log
 
             }
-           
+
         }
     }
+    
 }

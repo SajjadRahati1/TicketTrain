@@ -58,6 +58,10 @@ namespace Ticket.Domain.Entities.Refrences.Flight
         /// تاریخ حرکت
         /// </summary>
         public DateTime StartMoving { get; set; }
+        /// <summary>
+        /// تاریخ پایان
+        /// </summary>
+        public DateTime EndMoving { get; set; }
 
         /// <summary>
         /// ایا به صورت چارتری هست یا خیر
@@ -81,5 +85,13 @@ namespace Ticket.Domain.Entities.Refrences.Flight
 
         public Discount? Discount { get; set; }
         public long? DiscountId { get; set; }
+
+        public FlightClass Class { get; set; }
+        public long ClassId { get; set; }
+
+        public string? Description { get; set; }
+
+        public Pricing Pricing { get; set; }
+        public long PricingId { get; set; }
     }
 }

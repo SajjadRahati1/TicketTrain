@@ -14,8 +14,9 @@ namespace Ticket.Domain.Entities.Users
         public long PersonId { get; set; }
         public Person Person { get; set; }
 
-        public string En_FirstName { get; set; }
-        public string En_LastName { get; set; }
+        public string? En_FirstName { get; set; }
+        public string? En_LastName { get; set; }
+        public string? PassportNumber { get; set; }
         /// <summary>
         /// تاریخ اتمام شماره پاسپورت
         /// </summary>
@@ -30,5 +31,8 @@ namespace Ticket.Domain.Entities.Users
         public List<TicketInternationalFlight> TicketInternationalFlights { get; set; }
         public List<TicketBusReservation> TicketBusReservations { get; set; }
         #endregion
+
+        public User User { get; set; }
+        public long UserId { get; set; }
     }
 }

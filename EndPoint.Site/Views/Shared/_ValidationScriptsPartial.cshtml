@@ -1,2 +1,218 @@
 ﻿<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        var i = function () {
+            $(this).parents(".form-group").fadeOut(300, function () {
+                $(this).remove()
+            })
+        },
+            n = function () {
+                var e = $(this).parents(".form-group"),
+                    r = e.clone().insertAfter(e).hide().fadeIn(300),
+                    a = r.find(".remove-the-input");
+                0 == a.length && (a = $('<span class="ti-minus ti-2x remove-the-input"></span>').appendTo(r.find(".input-group-text"))), a.click(i), r.find(".add-the-input").click(n)
+            };
+        $(".add-the-input").click(n), jQuery.validator.addMethod("nationalcodeval", function (e, r, i) {
+            var n = e.length;
+            if (n < 8 || 0 == parseInt(e, 10)) return !1;
+            if (e = ("0000" + e).substr(n + 4 - 10), 0 == parseInt(e.substr(3, 6), 10)) return !1;
+            for (var a = parseInt(e.substr(9, 1), 10), s = 0, t = 0; t < 9; t++) s += parseInt(e.substr(t, 1), 10) * (10 - t);
+            return (s %= 11) < 2 && a == s || s >= 2 && a == 11 - s
+        }, "شماره ملی وارد شده اشتباه است."), $.validator.addMethod("regex", function (e, r, i) {
+            var n = new RegExp(i);
+            return this.optional(r) || n.test(e)
+        }, "لطفا صحیح وارد نمایید."),
+            $("#registerform").validate({
+                rules: {
+                    fname1: "required",
+                    lname1: "required",
+                    username: {
+                        required: !0,
+                        minlength: 4
+                    },
+                    personid1: {
+                        required: !0,
+                        minlength: 10,
+                        maxlength: 10,
+                        number: !0
+                    },
+                    email1: {
+                        required: !0,
+                        email: true,
+                        minlength: 2
+                    },
+                    birth1: "required",
+                    edu1: "required",
+                    arts1: "required",
+                    arttype: "required",
+                    genderpart1: "required",
+                    phonenumber1: {
+                        regex: "^(09[01239][0-9]{8})$",
+                        required: !0,
+                        minlength: 11,
+                        number: !0
+                    },
+                    pwd1: {
+                        required: !0,
+                        minlength: 4
+                    },
+                    pwd2: {
+                        required: !0,
+                        equalTo: '#registerform [name="pwd1"]'
+                    }
+                },
+                messages: {
+                    fname1: "نام خود را وارد نمایید",
+                    lname1: "نام خانوادگی خود را وارد نمایید",
+                    username: {
+                        required: "نام کاربری خود را وارد نمایید",
+                        minlength: "نام کاربری می بایستی حداقل 4 حرف باشد"
+                    },
+                    personid1: {
+                        required: "کد ملی خود را وارد نمایید",
+                        minlength: "کدملی وارد شده نامعتبر است",
+                        maxlength: "کدملی وارد شده نامعتبر است",
+                        number: "فقط ارقام کد ملی را وارد نمایید"
+                    },
+                    email1: "ایمیل وارد شده معتبر نمی باشد",
+                    phonenumber1: {
+                        regex: "شماره تلفن همراه خود را صحیح وارد نمایید",
+                        required: "شماره تلفن همراه خود را وارد نمایید",
+                        minlength: "شماره وارد شده نامعتبر است",
+                        number: "شماره وارد شده نامعتبر است"
+                    },
+                    pwd1: {
+                        required: "کلمه عبور خود را وارد نمایید",
+                        minlength: "کلمه ی عبور باید حداقل 4 حرف باشد"
+                    },
+                    pwd2: {
+                        required: "کلمه عبور خود را تکرار کنید",
+                        equalTo: "کلمه عبور و تکرار آن یکسان نیست"
+                    },
+                    birth1: {
+                        required: "سال تولد را وارد کنید",
+                    },
+                    edu1: {
+                        required: "سال تحصیلی شما باید حتما وارد شود",
+                    },
+                    arts1: {
+                        required: "نام اثر باید حتما وارد شود",
+                    },
+                    genderpart1: {
+                        required: "جنسیت خود را مشخص کنید"
+                    },
+                    arttype: {
+                        required: "نوع اثر شما باید مشخص شود",
+                    },
+
+                    artupload: {
+                        required: "فایلتان را ابتدا آپلود کنید",
+                    }
+                },
+                errorElement: "em",
+                errorPlacement: function (error, element) {
+                    // Add the `help-block` class to the error element
+
+                    error.addClass("invalid-feedback");
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.parent("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                    if (element.prop("type") === "file") {
+                        error.insertAfter(".custom-file-label");
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).closest(".form-control").addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).closest(".form-control").addClass("is-valid").removeClass("is-invalid");
+                }
+            }),
+            $("#loginform").validate({
+                rules: {
+                    email321: {
+                        required: !0,
+                        email: true,
+                        minlength: 2
+                    },
+                    pwd211: {
+                        required: !0,
+                        minlength: 4
+                    },
+                },
+                messages: {
+                    email321: "ایمیل وارد شده معتبر نمی باشد",
+                    pwd211: {
+                        required: "کلمه عبور خود را وارد نمایید",
+                        minlength: "کلمه ی عبور باید حداقل 4 حرف باشد"
+                    },
+                },
+                errorElement: "em",
+                errorPlacement: function (error, element) {
+                    // Add the `help-block` class to the error element
+
+                    error.addClass("invalid-feedback");
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.parent("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                    if (element.prop("type") === "file") {
+                        error.insertAfter(".custom-file-label");
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).closest(".form-control").addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).closest(".form-control").addClass("is-valid").removeClass("is-invalid");
+                }
+            }),
+            $("#resetpass").validate({
+                rules: {
+                    email3: {
+                        required: !0,
+                        email: true,
+                        minlength: 2
+                    }
+                },
+                messages: {
+                    email3: "ایمیل وارد شده معتبر نمی باشد"
+                },
+                errorElement: "em",
+                errorPlacement: function (error, element) {
+                    // Add the `help-block` class to the error element
+
+                    error.addClass("invalid-feedback");
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.parent("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                    if (element.prop("type") === "file") {
+                        error.insertAfter(".custom-file-label");
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).closest(".form-control").addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).closest(".form-control").addClass("is-valid").removeClass("is-invalid");
+                }
+            })
+    });
+
+    $('.custom-file-input').on('change', function () {
+        $(this).next('.custom-file-label').addClass("selected").html($(this).val());
+    });
+</script>

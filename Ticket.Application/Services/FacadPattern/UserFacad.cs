@@ -9,6 +9,7 @@ using Ticket.Common.Interfaces.FacadPatterns;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Ticket.Domain.Entities.Users;
+using Ticket.Application.Services.Users.Queries;
 
 namespace Ticket.Application.Services.Users.FacadPattern
 {
@@ -63,5 +64,65 @@ namespace Ticket.Application.Services.Users.FacadPattern
         }
         #endregion
 
+        #region IConfirmEmailService
+
+        private IConfirmEmailService _confirmEmail;
+        public IConfirmEmailService ConfirmEmailService
+        {
+            get
+            {
+                return _confirmEmail = _confirmEmail ?? new ConfirmEmailService(_context,_userManager);
+            }
+        }
+
+        #endregion
+
+        #region ITwoFactorValidService
+        private ITwoFactorValidService _twoFactorValid;
+        public ITwoFactorValidService TwoFactorValidService
+        {
+            get
+            {
+                return _twoFactorValid = _twoFactorValid ?? new TwoFactorValidService(_context, _userManager);
+            }
+        }
+
+        #endregion
+
+        #region IVerifyPhoneNumberService
+        private IVerifyPhoneNumberService _verifyPhoneNumber;
+        public IVerifyPhoneNumberService VerifyPhoneNumberService
+        {
+            get
+            {
+                return _verifyPhoneNumber = _verifyPhoneNumber ?? new VerifyPhoneNumberService( _userManager);
+            }
+        }
+
+        #endregion
+
+        #region ITwoFactorLoginService
+        private ITwoFactorLoginService _twoFactorLogin;
+        public ITwoFactorLoginService TwoFactorLoginService
+        {
+            get
+            {
+                return _twoFactorLogin = _twoFactorLogin ?? new TwoFactorLoginService(_context, _signInManager);
+            }
+        }
+
+        #endregion
+
+        #region IUserInfoService
+        private IUserInfoService _userInfo;
+        public IUserInfoService UserInfoService
+        {
+            get
+            {
+                return _userInfo = _userInfo ?? new UserInfoService(_context,_userManager);
+            }
+        }
+
+        #endregion
     }
 }

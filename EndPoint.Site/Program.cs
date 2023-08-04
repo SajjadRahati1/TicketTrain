@@ -11,17 +11,22 @@ using Hangfire;
 using EndPoint.Site.Helpers;
 using Ticket.Common.Interfaces.FacadPatterns;
 using Ticket.Application.Services.Users.FacadPattern;
+using Ticket.Application.Services.Email.Commands;
+using Ticket.Application.Services.Sms.Commands;
+using Ticket.Application.Services.FacadPattern;
+using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews().AddOData(opt=>
+builder.Services.AddControllersWithViews().AddOData(opt =>
 {
     opt.Select().Filter().OrderBy().Count();
     //for use with attribute in actions:
     //[EnableQuery]
-}).AddRazorRuntimeCompilation();
-
+})
+    .AddRazorRuntimeCompilation();
+    //.AddJsonOptions(option=>option.JsonSerializerOptions.);
 
 builder.Services.AddTransient<IDbContext, MyDbContext>();
 //builder.Services.AddScoped<SecurityStampValidator<User>>();
@@ -58,17 +63,17 @@ builder.Services.Configure<IdentityOptions>(options =>
     //options.User.AllowedUserNameCharacters
 
     //حداقل تعداد کاراکتر های غیر تکراری
-    options.Password.RequiredUniqueChars = 4;
+    options.Password.RequiredUniqueChars = 2;
     //آیا شامل کاراکتر غیر حروف هم حتما باشد (مثل ادساین)
     options.Password.RequireNonAlphanumeric = false;
     //آیا حتما شامل عدد هم باشد
-    options.Password.RequireDigit = true;
+    options.Password.RequireDigit = false;
     //آیا حتما شامل حروف کوچک هم باشد
-    options.Password.RequireLowercase = true;
+    options.Password.RequireLowercase = false;
     //آیا حتما شامل حروف بزرگ هم باشد
-    options.Password.RequireUppercase = true;
+    options.Password.RequireUppercase = false;
     //حداقل تعداد کاراکتر پسورد
-    options.Password.RequiredLength = 6;
+    options.Password.RequiredLength = 4;
 
 
     //اگر این تعداد بار اشتباه رمز زد قفل بشه
@@ -95,7 +100,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.ConfigureApplicationCookie(options =>
 {
 
-    //options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(25);
 
     options.LoginPath = "/Account/Login";
     options.LogoutPath = "/Account/Logout";
@@ -109,6 +114,9 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 //---------Facad Patterns
 builder.Services.AddScoped<IUserFacad, UserFacad>();
+builder.Services.AddScoped<IDomesticFlightFacad, DomesticFlightFacad>();
+builder.Services.AddScoped<ISendEmailService, SendEmailService>();
+builder.Services.AddScoped<ISendSms, SendSms>();
 //-----------------------
 
 

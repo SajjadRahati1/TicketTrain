@@ -10,51 +10,54 @@
     <link href="~/css/home/phonestyle.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/tickets.css" rel="stylesheet" asp-append-version="true" />
 }
-@for (int i = 0; i < 10; i++)
-{
-    <div class="card card-ticket mt-4 mx-3 px-2 pt-2 border-2 shadow-lg ">
-        @*d-flex flex-row justify-content-between*@
-        <div class="row">
-            <div class="detail-ticket col-9">
-                <div class="d-flex flex-row justify-content-start top-titles">
-                    <span class="top-title text-muted badge ">کوپه ای 4 نفره</span>
-                    <span class="top-title text-bold">5 ستاره ایران</span>
-                    <span class="top-title text-bold">رجا</span>
-                </div>
-                <div class="d-flex flex-row justify-content-start align-items-center">
+<div class="mx-4">
+    @for (int i = 0; i < 10; i++)
+    {
+        <div class="card card-ticket mt-4 mx-3 px-2 pt-2 border-2 shadow-lg ">
+            @*d-flex flex-row justify-content-between*@
+            <div class="row">
+                <div class="detail-ticket col-9">
+                    <div class="d-flex flex-row justify-content-start top-titles">
+                        <span class="top-title text-muted badge ">کوپه ای 4 نفره</span>
+                        <span class="top-title text-bold">5 ستاره ایران</span>
+                        <span class="top-title text-bold">رجا</span>
+                    </div>
+                    <div class="d-flex flex-row justify-content-start align-items-center">
 
-                    <img src="~/image/ovalshadow.svg" class="provider-logo" />
-                    <div class="from d-flex flex-row justify-content-start">
-                        <div class="city-show">اصفهان</div>
-                        <div class="time-show">14:30</div>
+                        <img src="~/image/ovalshadow.svg" class="provider-logo" />
+                        <div class="from d-flex flex-row justify-content-start">
+                            <div class="city-show">اصفهان</div>
+                            <div class="time-show">14:30</div>
+                        </div>
+                        <div class="show-way from d-flex flex-row justify-content-start align-items-center">
+                            <i class="las la-bus"></i>
+                            <div class="line"></div>
+                        </div>
+                        <div class="to d-flex flex-row justify-content-start">
+                            <div class="city-show">تهران</div>
+                            <div class="time-show">16:15</div>
+                        </div>
                     </div>
-                    <div class="show-way from d-flex flex-row justify-content-start align-items-center">
-                        <i class="las la-bus"></i>
-                        <div class="line"></div>
-                    </div>
-                    <div class="to d-flex flex-row justify-content-start">
-                        <div class="city-show">تهران</div>
-                        <div class="time-show">16:15</div>
+                    <ul class="links navbar-nav">
+                        <li class='text-blue-1 nav-item'><a @*class="active"*@>test 1</a></li>
+                        <li class='text-blue-1 nav-item'><a>test 2</a></li>
+                        <li class="text-blue-1 nav-item"><a>test 3</a></li>
+                    </ul>
+                    <div>
                     </div>
                 </div>
-                <ul class="links navbar-nav">
-                    <li class='text-blue-1 nav-item'><a @*class="active"*@>test 1</a></li>
-                    <li class='text-blue-1 nav-item'><a>test 2</a></li>
-                    <li class="text-blue-1 nav-item"><a>test 3</a></li>
-                </ul>
-                <div>
-                </div>
-            </div>
-            <div class="price-ticket col-3 d-flex ">
-                <div class="price d-flex align-items-center">
-                    <div class="price-number text-blue-2">2,400,000</div>
-                    <span class="px-2">ریال</span>
-                   
-                </div>
-                <button class="btn text-white btn-search">انتخاب بلیط</button>
-                <span class="mt-2 text-danger text-small">1 صندلی باقی مانده</span>
+                <div class="price-ticket col-3 d-flex ">
+                    <div class="price d-flex align-items-center">
+                        <div class="price-number text-blue-2">2,400,000</div>
+                        <span class="px-2">ریال</span>
 
+                    </div>
+                    <button class="btn text-white btn-search">انتخاب بلیط</button>
+                    <span class="mt-2 text-danger text-small">1 صندلی باقی مانده</span>
+
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
+
+</div>

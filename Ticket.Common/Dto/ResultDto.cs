@@ -17,13 +17,16 @@ namespace Ticket.Common.Dto
     {
         
         public T Data { get; set; }
+        public long OutCount { get; set; }
     }
+  
 
     public enum MessageType
     {
         Success,
         Warning,
         Error,
-        Info
+        Info,
+        BadRequest
     }
 }

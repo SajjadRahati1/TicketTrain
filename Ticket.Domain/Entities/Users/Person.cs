@@ -19,10 +19,10 @@ namespace Ticket.Domain.Entities.Users
       
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string NationalCode { get; set; }
-        public string PhoneNumber { get; set; }
-        public string EmailAddress { get; set; }
-        public DateTime BithDate { get; set; }
+        public string? NationalCode { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? EmailAddress { get; set; }
+        public DateTime? BirthDate { get; set; }
         public Gender Gender { get; set; }
     }
 }

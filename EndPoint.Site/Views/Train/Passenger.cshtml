@@ -1,0 +1,196 @@
+﻿@{
+    ViewData["Title"] = "بلیط قطار";//از کجا و به کجا هم باید مشخصذباشه
+}
+@section head{
+    <link rel="stylesheet" href="~/css/Passenger.css" asp-append-version="true" />
+    <link href="~/lib/persian-datepicker/dist/css/persian-datepicker.css" rel="stylesheet" />
+    <link href="~/lib/persian-datepicker/dist/css/persian-datepicker.min.css" rel="stylesheet" />
+    <link href="~/css/datapicker-style.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/lib/Select2/css/select2.min.css" rel="stylesheet" />
+    <link href="~/css/home/phonestyle.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/tickets.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/wayshow.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/account/account.css" rel="stylesheet" asp-append-version="true" />
+}
+
+<div class="ways border border-0 rounded rounded-3 shadow w-100 pb-2">
+    <div id="show-steps" class="row justify-content-around">
+        <div class=" col-10 step-header d-flex justify-content-between m-4">
+
+            <div class="step-num step-num-1 " onclick="">
+                <div class="icon">
+                    <i class="la 	la-check"></i>
+                </div>
+                <span class="step-title d-none d-lg-inline text-secondary">انتخاب قطار</span>
+            </div>
+            <div class="step-num step-num-2 active" onclick="">
+                <div class="icon">
+                    <i class="la la-group"></i>
+                </div>
+                <span class="step-title d-none d-lg-inline text-secondary">مشخصات مسافران</span>
+            </div>
+            <div class="step-num step-num-3">
+                <div class="icon">
+                    <i class="la la-info"></i>
+                </div>
+                <span class="step-title d-none d-lg-inline text-secondary">تایید اطلاعات</span>
+            </div>
+            <div class="step-num step-num-4 last">
+                <div class="icon">
+                    <i class="la la-money"></i>
+                </div>
+                <span class="step-title d-none d-lg-inline text-secondary">تایید پرداخت
+                </span>
+            </div>
+
+            <div class="step-num step-num-5 last">
+                <div class="icon">
+                    <i class="la la-ticket"></i>
+                </div>
+                <span class="step-title d-none d-lg-inline text-secondary">صدور بلیط</span>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<div class="card border-0 mx-4 p-3 mt-4 shadow">
+    <div class="row">
+        <div class="  border-start col-9">
+            <h5>پنج شنبه،12 مرداد</h5>
+            <br class="mt-4" />
+            <div class="d-flex flex-row justify-content-start top-titles">
+                <span class="top-title text-muted badge ">کوپه ای 4 نفره</span>
+                <span class="top-title text-bold">5 ستاره ایران</span>
+                <span class="top-title text-bold">رجا</span>
+            </div>
+            <div class="d-flex flex-row justify-content-start align-items-center">
+
+                <img src="~/image/ovalshadow.svg" class="provider-logo" />
+                <div class="from d-flex flex-row justify-content-start">
+                    <div class="city-show">اصفهان</div>
+                    <div class="time-show">14:30</div>
+                </div>
+                <div class="show-way from d-flex flex-row justify-content-start align-items-center">
+                    <i class="las la-bus"></i>
+                    <div class="line"></div>
+                </div>
+                <div class="to d-flex flex-row justify-content-start">
+                    <div class="city-show">تهران</div>
+                    <div class="time-show">16:15</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 d-flex flex-column">
+            <button class="btn btn-outline-blue  mx-4 mb-4">تغییر بلیط</button>
+            <div>
+                <div class="all-values br-new">
+                    <div class="d-flex flex-row justify-content-between ">
+                        <p class="text-muted">بزرگسال (1نفر)</p>
+                        <p class="text-black-50">1500000 ریال</p>
+                    </div>
+                </div>
+               <div class="result">
+                    <div class="d-flex flex-row justify-content-between ">
+                        <p class="text-muted">مجموع</p>
+                        <p class="text-black-50">1500000 ریال</p>
+                    </div>
+               </div>
+            </div>
+           
+        </div>
+    </div>
+   
+</div>
+
+<div class="card shadow mx-4 mt-2 p-3">
+    <h3>
+        <i class="la la-users"></i>
+        <span>مشخصات مسافران</span>
+    </h3>
+
+    <div class="passengers mt-4 br-new">
+        <div class="passenger">
+            <div class="" style="height: 30px;">
+                <div class="float-start">
+                    <span class="border-start">
+                    <button class="btn link-blue">
+                        <i class="la la-user"></i>
+                        <span>انتخاب مسافران سابق</span>
+                    </button>
+                    </span>
+                    <button class="btn link-black-50 text-danger">
+                        <i class="la la-trash text-danger"></i>
+                        <span class="text-danger">حذف </span>
+                    </button>
+                </div>
+            </div>
+            <div class="my-2">
+                <div class="d-flex flex-row flex-wrap gap-2 ">
+
+                    <div class="input-group">
+                        <input required="" id="passenger-name" type="text" name="passenger-name" autocomplete="off" class="input form-control">
+                        <label class="user-label">نام فارسی </label>
+
+                    </div>
+
+                    <div class="input-group">
+                        <input required="" id="passenger-family" type="text" name="passenger-family" autocomplete="off" class="input form-control">
+                        <label class="user-label">نام خانوادگی فارسی </label>
+
+                    </div>
+                    <div class="input-group">
+                        <input required="" id="passenger-national-code" type="text" name="passenger-name-en" autocomplete="off" class="input form-control">
+                        <label class="user-label">کدملی</label>
+
+                    </div>
+                    <div class="input-group">
+                        <select required="" id="passenger-gender" type="text"
+                                name="passenger-gender" autocomplete="off" class="select2  input form-control">
+                            <option value="man">مرد</option>
+                            <option value="woman">زن</option>
+
+                        </select>
+                        <label class="user-label">جنسیت</label>
+
+                    </div>
+                    <div class="input-group">
+                        <input required="" id="passenger-birthdate" type="text" name="passenger-birthdate" autocomplete="off" class="passenger-date-input date-input input form-control">
+                        <label class="user-label">تاریخ تولد </label>
+                        <div class="passenger-date date-div"></div>
+                    </div>
+
+
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <br />
+    <button class="btn btn-outline-blue">
+        <i class="la la-plus"></i>
+        <span>اضافه کردن مسافر جدید</span>
+    </button>
+</div>
+
+<div class="card shadow mt-2 mx-4 p-4 gap-3 d-flex flex-row justify-content-between align-items-center">
+    <h5 class="p-0 m-0">با کلیک روی تایید و ادامه خرید با قوانین سایت و دیگر قوانین موافقت کرده‌اید.</h5>
+    <h5 class="p-0 m-0 text-success">1500000 ریال</h5>
+    <a  class="btn btn-outline-blue">
+        <i class="la la-check"></i>
+        <span>تایید و ادامه خرید</span>
+    </a>
+</div>
+@section Scripts{
+
+    <script src="~/lib/persian-date/dist/persian-date.js" asp-append-version="true"></script>
+
+    <script src="~/lib/persian-datepicker/dist/js/persian-datepicker.js"></script>
+    <script src="~/js/account/passengers.js" asp-append-version="true"></script>
+    <script src="~/lib/Select2/js/select2.min.js"></script>
+    <script src="~/lib/Select2/js/select2.full.min.js"></script>
+    <script src="~/lib/Select2/js/select2.full.min.js"></script>
+    }

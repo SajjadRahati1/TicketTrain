@@ -10,5 +10,6 @@ namespace Ticket.Domain.Entities.Refrences.Flight
     {
         public string Title { get; set; }
         public ICollection<FlightTicketRefundRules> TicketRefundRules { get; set; }
+        public ICollection<Flight> Flights { get; set; }
     }
 }

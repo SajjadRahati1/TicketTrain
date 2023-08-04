@@ -1,4 +1,5 @@
-﻿@{
+﻿@model EndPoint.Site.Models.Dto.Account.AccountIndexDto
+@{
     ViewData["Title"] = "حساب کاربری";//از کجا و به کجا هم باید مشخصذباشه
     ViewData["Account"] = "active";
 }
@@ -48,11 +49,11 @@
         <div class="mb-3 card p-3 rounded border-0  shadow d-flex flex-row justify-content-between align-items-center">
             <div class="d-flex flex-row justify-content-start align-items-center">
                 <img src="~/Image/Account/user.png" width="80" height="80" class="rounded-circle ms-3" />
-                <b class="text-bold">09339799317</b>
+                <b class="text-bold">@Model.Username</b>
             </div>
             <div class="d-flex flex-column">
                 <p class="text-muted">موجودی حساب</p>
-                <p class="text-muted text-price"><span class="price text-bold">0</span> ریال</p>
+                <p class="text-muted text-price"><span class="price text-bold">@Model.Money</span> ریال</p>
                 <a class="link-blue">
                     افزایش موجودی
                     <svg viewBox="0 0 24 24" width="1.3em" height="1.3em" fill="currentColor"><path d="M16.698 21.266a.75.75 0 0 1-1.08 1.037l-.066-.069-8.25-9.75a.75.75 0 0 1-.058-.89l.058-.078 8.25-9.75a.75.75 0 0 1 1.202.893l-.056.075L8.858 12l7.84 9.266Z"></path></svg>
@@ -67,24 +68,35 @@
                     <h3 class="mb-4">اطلاعات حساب کاربری</h3>
                     <div class="mt-2 d-flex flex-row justify-content-start flex-wrap align-items-center">
                         <p class="text-muted ps-3 mt-2"> شماره موبایل</p>
-                        <p class="phone-number px-2 mt-2">0939799317</p>
-                       
+                        <p class="phone-number px-2 mt-2">@Model.PhoneNumber</p>
+                        @if (Model.PhoneNumberVerified)
+                        {
+                            <div class="mx-2 badge badge-pill badge-success rounded-pill">
+                                <span class="rounded-circle border-success ms-2">
+                                    <i class="las la-check"></i>
+                                </span>
+                                تایید شده
+                            </div>
+                        }
                         <a class="mx-2 link-blue font-smaller px-3 py-0">ویرایش</a>
                     </div>
 
                     <div class="mt-2 d-flex flex-row justify-content-start flex-wrap align-items-center">
                         <p class="text-muted ps-3 mt-2"> ایمیل</p>
-                        <p class="phone-number px-2 mt-2">sajadrahaty2@gmail.com</p>
-                        <div class="mx-2 badge badge-pill badge-success rounded-pill">
-                            <span class="rounded-circle border-success ms-2">
-                                <i class="las la-check"></i>
+                        <p class="phone-number px-2 mt-2">@Model.EmailAddress</p>
+                        @if (Model.EmailVerified)
+                        {
+                            <div class="mx-2 badge badge-pill badge-success rounded-pill">
+                                <span class="rounded-circle border-success ms-2">
+                                    <i class="las la-check"></i>
                                 </span>
-                            تایید شده
-                        </div>
+                                تایید شده
+                            </div>
+                        }
                         <a class="mx-2 link-blue font-smaller px-3 py-0">ویرایش</a>
                     </div>
                 </div>
-                <div class="d-block parent-btn-bottom" style="    min-height: 130px;
+               @* <div class="d-block parent-btn-bottom" style="    min-height: 130px;
     display: block !important;
     position: relative;
     height: inherit !important;
@@ -93,7 +105,7 @@
     bottom: 0;left: 0;">
                         ویرایش کلمه عبور
                     </button>
-                </div>
+                </div>*@
             </div>
         </div>
         @*اطلاعات شخصی*@
@@ -113,13 +125,13 @@
                         <tbody>
                             <tr>
                                 <th>نام و نام خانوادگی</th>
-                                <td> — </td>
+                                <td>@(Model.Name ??"—") </td>
                                 <th>کد ملی</th>
-                                <td> — </td>
+                                <td> @(Model.NationalCode ??"—") </td>
                             </tr>
                             <tr>
                                 <th>تاریخ تولد</th>
-                                <td> — </td>
+                                <td> @(Model.BrithDate ?? "—") </td>
                             </tr>
                         </tbody>
                     </table>
