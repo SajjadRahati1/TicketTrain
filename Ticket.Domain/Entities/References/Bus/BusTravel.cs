@@ -45,6 +45,7 @@ namespace Ticket.Domain.Entities.Refrences.Bus
         public BusTravelCompany Company { get; set; }
         public long CompanyId { get; set; }
 
+        public string SmallTitle { get; set; }
 
     }
 }

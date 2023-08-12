@@ -83,14 +83,14 @@ builder.Services.Configure<IdentityOptions>(options =>
     //کاربر جدید به صورت خودکار قفل باشه یا نه
     options.Lockout.AllowedForNewUsers = false;
 
-
+    
     //فقط یوزر هایی میتونن ساین این شوند که اکانتشان کانفریم شده باشد
     options.SignIn.RequireConfirmedAccount = false;
     //مشابه
     options.SignIn.RequireConfirmedPhoneNumber = false;
     //مشابه
     options.SignIn.RequireConfirmedEmail = false;
-
+    
     //نام کلیم آیدی چی باشه
     //options.ClaimsIdentity.UserIdClaimType = "Id";
 
@@ -115,6 +115,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 //---------Facad Patterns
 builder.Services.AddScoped<IUserFacad, UserFacad>();
 builder.Services.AddScoped<IDomesticFlightFacad, DomesticFlightFacad>();
+builder.Services.AddScoped<IFinancialFacad, FinancialFacad>();
 builder.Services.AddScoped<ISendEmailService, SendEmailService>();
 builder.Services.AddScoped<ISendSms, SendSms>();
 //-----------------------

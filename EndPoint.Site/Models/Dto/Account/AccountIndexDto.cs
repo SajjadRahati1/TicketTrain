@@ -1,4 +1,7 @@
-﻿namespace EndPoint.Site.Models.Dto.Account
+﻿using Ticket.Application.Services.References.DomesticFlight.Queries;
+using Ticket.Domain.Enums;
+
+namespace EndPoint.Site.Models.Dto.Account
 {
     public class AccountIndexDto
     {

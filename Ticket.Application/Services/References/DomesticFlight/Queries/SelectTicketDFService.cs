@@ -87,6 +87,7 @@ namespace Ticket.Application.Services.References.DomesticFlight.Queries
                         Id = f.Id,
                         IsRemoved = f.IsRemoved,
                         RemoveDateTime = f.RemoveTime,
+                        IsReturned = f.ReturnedId!=null,
                         Flight = new ResultSelectTicketDFlightDto()
                         {
                             FlightNumber = f.Reservation.Flight.Flight.FlightNumber,
@@ -152,7 +153,7 @@ namespace Ticket.Application.Services.References.DomesticFlight.Queries
         public ResultSelectTicketDFUserDto User { get; set; }
         public ResultSelectTicketDFlightDto Flight { get; set; }
 
-
+        public bool IsReturned { get; set; }
         public bool IsRemoved { get; set; }
         public DateTime? RemoveDateTime { get; set; }
     }

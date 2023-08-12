@@ -91,11 +91,11 @@ namespace Ticket.Application.Services.Passengers.Queries
         /// <summary>
         /// تاریخ اتمام شماره پاسپورت
         /// </summary>
-        public DateTime ExpireDatePassport { get; set; }
+        public DateTime? ExpireDatePassport { get; set; }
         /// <summary>
         /// کشور محل تولد
         /// </summary>
-        public long CountryBirthId { get; set; }
+        public long? CountryBirthId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string NationalCode { get; set; }

@@ -21,13 +21,16 @@ using Ticket.Domain.Entities.Refrences;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System.Reflection.Emit;
+using Ticket.Persistance.Config.User;
+using Ticket.Persistance.Config.Flight;
+using Ticket.Persistance.Config.Flight.DomesticFlight;
 
 namespace Ticket.Persistance.Context
 {
-   
-    public class MyDbContext:IdentityDbContext<User,Role,long>, IDbContext
+
+    public class MyDbContext : IdentityDbContext<User, Role, long>, IDbContext
     {
-        public MyDbContext(DbContextOptions options):base(options){}
+        public MyDbContext(DbContextOptions options) : base(options) { }
 
         #region Entites
 
@@ -150,9 +153,9 @@ namespace Ticket.Persistance.Context
 
         public DbSet<Passenger> Passengers { get; set; }
         public DbSet<Person> People { get; set; }
-      /*  public DbSet<Role> Roles { get; set; }
-        public DbSet<User> Users { get; set; }*/
-       
+        /*  public DbSet<Role> Roles { get; set; }
+          public DbSet<User> Users { get; set; }*/
+
         #endregion
 
         #endregion
@@ -160,6 +163,7 @@ namespace Ticket.Persistance.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            #region اجباری
             builder.Entity<UsedDiscount>(ud =>
             {
                 ud.HasOne(ud => ud.Transaction)
@@ -168,144 +172,204 @@ namespace Ticket.Persistance.Context
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
-            builder.Entity<Flight>(fl=>
+            builder.Entity<Flight>(fl =>
             {
-                fl.HasOne(f=> f.OriginTerminal)
+                fl.HasOne(f => f.OriginTerminal)
                 .WithMany()
                 .HasForeignKey("FK_Flights_AirplaneTerminals_OriginTerminalId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
-            builder.Entity<Flight>(fl=>
+            builder.Entity<Flight>(fl =>
             {
-                fl.HasOne(f=> f.DestinationTerminal)
+                fl.HasOne(f => f.DestinationTerminal)
                 .WithMany()
                 .HasForeignKey("FK_Flights_AirplaneTerminals_DestinationTerminalId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
-            builder.Entity<BusTravel>(fl=>
+            builder.Entity<BusTravel>(fl =>
             {
-                fl.HasOne(f=> f.OriginTerminal)
+                fl.HasOne(f => f.OriginTerminal)
                 .WithMany()
                 .HasForeignKey("FK_BusTravels_BusTerminals_OriginTerminalId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
-            builder.Entity<BusTravel>(fl=>
+            builder.Entity<BusTravel>(fl =>
             {
-                fl.HasOne(f=> f.DestinationTerminal)
+                fl.HasOne(f => f.DestinationTerminal)
                 .WithMany()
                 .HasForeignKey("FK_BusTravels_BusTerminals_DestinationTerminalId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
-            builder.Entity<TicketTrainReservation>(fl=>
+            builder.Entity<TicketTrainReservation>(fl =>
             {
-                fl.HasOne(f=> f.TrainStationOrigin)
+                fl.HasOne(f => f.TrainStationOrigin)
                 .WithMany()
                 .HasForeignKey("FK_TicketTrainReservations_TrainStations_TrainStationOriginId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
-            builder.Entity<TicketTrainReservation>(fl=>
+            builder.Entity<TicketTrainReservation>(fl =>
             {
-                fl.HasOne(f=> f.TrainStationDestination)
+                fl.HasOne(f => f.TrainStationDestination)
                 .WithMany()
                 .HasForeignKey("FK_TicketTrainReservations_TrainStations_TrainStationDestinationId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
-            builder.Entity<TicketTrainReservation>(fl=>
+            builder.Entity<TicketTrainReservation>(fl =>
             {
-                fl.HasOne(f=> f.Transaction)
+                fl.HasOne(f => f.Transaction)
                 .WithMany()
                 .HasForeignKey("FK_TicketTrainReservations_Transactions_TransactionId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
-           
-            builder.Entity<TrainStationConnect>(fl=>
+
+            builder.Entity<TrainStationConnect>(fl =>
             {
-                fl.HasOne(f=> f.TrainStationDestination)
+                fl.HasOne(f => f.TrainStationDestination)
                 .WithMany()
                 .HasForeignKey("FK_TrainStationConnects_TrainStations_TrainStationDestinationId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
-            builder.Entity<TrainStationConnect>(fl=>
+            builder.Entity<TrainStationConnect>(fl =>
             {
-                fl.HasOne(f=> f.TrainStationOrigin)
+                fl.HasOne(f => f.TrainStationOrigin)
                 .WithMany()
                 .HasForeignKey("FK_TrainStationConnects_TrainStations_TrainStationOriginId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
-            
-            builder.Entity<TicketBusReservation>(fl=>
+
+            builder.Entity<TicketBusReservation>(fl =>
             {
-                fl.HasOne(f=> f.Supervisor)
-                .WithMany(s=>s.TicketBusReservations)
+                fl.HasOne(f => f.Supervisor)
+                .WithMany(s => s.TicketBusReservations)
                 .HasForeignKey("FK_TicketBusReservations_Passengers_SupervisorId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
-            
-            
-            builder.Entity<TicketBusReservation>(fl=>
+
+
+            builder.Entity<TicketBusReservation>(fl =>
             {
-                fl.HasOne(f=> f.Transaction)
+                fl.HasOne(f => f.Transaction)
                 .WithMany()
                 .HasForeignKey("FK_TicketBusReservations_Transactions_TransactionId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
-            builder.Entity<TicketDomesticFlightReservation>(fl=>
+            builder.Entity<TicketDomesticFlightReservation>(fl =>
             {
-                fl.HasOne(f=> f.Transaction)
+                fl.HasOne(f => f.Transaction)
                 .WithMany()
                 .HasForeignKey("FK_TicketDomesticFlightReservation_Transactions_TransactionId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
-            builder.Entity<TicketInternationalFlightReservation>(fl=>
+            builder.Entity<TicketInternationalFlightReservation>(fl =>
             {
-                fl.HasOne(f=> f.Transaction)
+                fl.HasOne(f => f.Transaction)
                 .WithMany()
                 .HasForeignKey("FK_TicketInternationalFlightReservation_Transactions_TransactionId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
 
-            
-            builder.Entity<TicketDomesticFlight>(fl=>
+
+            builder.Entity<TicketDomesticFlight>(fl =>
             {
-                fl.HasOne(f=> f.Reservation)
-                .WithMany(f=>f.Tickets)
+                fl.HasOne(f => f.Reservation)
+                .WithMany(f => f.Tickets)
                 .HasForeignKey("FK_TicketDomesticFlights_TicketDomesticFlightReservations_ReservationId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
-            builder.Entity<TicketInternationalFlight>(fl=>
+            builder.Entity<TicketInternationalFlight>(fl =>
             {
-                fl.HasOne(f=> f.Reservation)
-                .WithMany(f=>f.Tickets)
+                fl.HasOne(f => f.Reservation)
+                .WithMany(f => f.Tickets)
                 .HasForeignKey("FK_TicketInternationalFlights_TicketInternationalFlightReservations_ReservationId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
-            
-            builder.Entity<TicketTrain>(fl=>
+
+            builder.Entity<TicketTrain>(fl =>
             {
-                fl.HasOne(f=> f.SeatOrBed)
+                fl.HasOne(f => f.SeatOrBed)
                 .WithMany()
                 .HasForeignKey("FK_TicketTrains_SeatOrBeds_SeatOrBedId")
                 .OnDelete(DeleteBehavior.NoAction);
 
             });
+            #endregion
 
 
+            #region IdentityConfig
+            builder.Entity<User>(b =>
+            {
+               
+                b.Property(u => u.Email).IsRequired(false);
+
+                // Indexes for "normalized" username and email, to allow efficient lookups
+                b.HasIndex(u => u.NormalizedUserName).HasName("UserNameIndex").IsUnique();
+                b.HasIndex(u => u.NormalizedEmail).HasName("EmailIndex");
+
+               
+
+                // A concurrency token for use with the optimistic concurrency checking
+                b.Property(u => u.ConcurrencyStamp).IsConcurrencyToken();
+
+                // Limit the size of columns to use efficient database types
+                b.Property(u => u.UserName).HasMaxLength(256);
+                b.Property(u => u.NormalizedUserName).HasMaxLength(256);
+                b.Property(u => u.Email).HasMaxLength(256).IsRequired(false);
+                b.Property(u => u.NormalizedEmail).HasMaxLength(256).IsRequired(false);
+
+               
+
+                b.HasOne(a => a.Wallet)
+                    .WithOne()
+                    .HasForeignKey<Wallet>(c => c.UserId).OnDelete(DeleteBehavior.NoAction); ;
+            });
+
+            #endregion
+
+
+            Config(builder);
             base.OnModelCreating(builder);
+        }
+
+        private static void Config(ModelBuilder builder)
+        {
+            builder.ApplyConfiguration(new PersonConfig());
+            builder.ApplyConfiguration(new RoleConfig());
+            builder.ApplyConfiguration(new IdentityUserRoleConfig());
+            builder.ApplyConfiguration(new PassengerConfig());
+
+
+            builder.ApplyConfiguration(new AirLineCompanyConfig());
+            builder.ApplyConfiguration(new AirLineConfig());
+            builder.ApplyConfiguration(new AirLineContantsConfig());
+            builder.ApplyConfiguration(new AirPlaneConfig());
+            builder.ApplyConfiguration(new AirplaneTerminalConfig());
+            builder.ApplyConfiguration(new AirPlaneTypeConfig());
+            builder.ApplyConfiguration(new AirLineFinancialConfig());
+            builder.ApplyConfiguration(new FlightConfig());
+            builder.ApplyConfiguration(new FlightClassConfig());
+            builder.ApplyConfiguration(new FlightClassTypeConfig());
+            #region DFlight
+            builder.ApplyConfiguration(new DomesticFlightConfig());
+            builder.ApplyConfiguration(new TicketDomesticFlightReturnedConfig());
+            builder.ApplyConfiguration(new TicketDomesticFlightReservationConfig());
+            builder.ApplyConfiguration(new TicketDomesticFlightConfig());
+
+            #endregion
         }
     }
 }

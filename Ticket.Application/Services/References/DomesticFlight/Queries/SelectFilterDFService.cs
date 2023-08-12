@@ -16,11 +16,11 @@ namespace Ticket.Application.Services.References.DomesticFlight.Queries
     {
 
     }
-    public class SelectFilterDF : ISelectFilterDFService
+    public class SelectFilterDFService : ISelectFilterDFService
     {
         private readonly IDbContext _context;
 
-        public SelectFilterDF(IDbContext context)
+        public SelectFilterDFService(IDbContext context)
         {
             _context = context;
         }

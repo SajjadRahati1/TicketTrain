@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Ticket.Domain.Entities.Users;
 using Ticket.Application.Services.Users.Queries;
+using Ticket.Application.Services.Passengers.Queries;
 
 namespace Ticket.Application.Services.Users.FacadPattern
 {
@@ -27,6 +28,32 @@ namespace Ticket.Application.Services.Users.FacadPattern
             _signInManager = signInManager;
         }
 
+        #region IAddPassengerService
+
+        private IAddPassengerService _addPassenger;
+        public IAddPassengerService AddPassengerService
+        {
+            get
+            {
+                return _addPassenger = _addPassenger ?? new AddPassengerService(_context);
+            }
+        }
+
+        #endregion
+        
+        #region IEditPassengerService
+
+        private IEditPassengerService _editPassenger;
+        public IEditPassengerService EditPassengerService
+        {
+            get
+            {
+                return _editPassenger = _editPassenger ?? new EditPassengerService(_context);
+            }
+        }
+
+        #endregion
+        
         #region IRegisterUserService
 
         private IRegisterUserService _registerUser;
@@ -35,6 +62,19 @@ namespace Ticket.Application.Services.Users.FacadPattern
             get
             {
                 return _registerUser = _registerUser ?? new RegisterUserService(_context, _userManager);
+            }
+        }
+
+        #endregion
+
+        #region IConfirmEmailService
+
+        private IConfirmEmailService _confirmEmail;
+        public IConfirmEmailService ConfirmEmailService
+        {
+            get
+            {
+                return _confirmEmail = _confirmEmail ?? new ConfirmEmailService(_context,_userManager);
             }
         }
 
@@ -52,6 +92,30 @@ namespace Ticket.Application.Services.Users.FacadPattern
         }
         #endregion
 
+        #region IPassengerInfoService
+
+        private IPassengerInfoService _passengerInfo;
+        public IPassengerInfoService PassengerInfoService
+        {
+            get
+            {
+                return _passengerInfo = _passengerInfo ?? new PassengerInfoService(_context);
+            }
+        }
+        #endregion
+
+        #region IPassengersListService
+
+        private IPassengersListService _passengersList;
+        public IPassengersListService PassengersListService
+        {
+            get
+            {
+                return _passengersList = _passengersList ?? new PassengersListService(_context);
+            }
+        }
+        #endregion
+
         #region ILogoutUserService
 
         private ILogoutUserService _logoutUser;
@@ -62,19 +126,6 @@ namespace Ticket.Application.Services.Users.FacadPattern
                 return _logoutUser = _logoutUser ?? new LogoutUser(_signInManager);
             }
         }
-        #endregion
-
-        #region IConfirmEmailService
-
-        private IConfirmEmailService _confirmEmail;
-        public IConfirmEmailService ConfirmEmailService
-        {
-            get
-            {
-                return _confirmEmail = _confirmEmail ?? new ConfirmEmailService(_context,_userManager);
-            }
-        }
-
         #endregion
 
         #region ITwoFactorValidService

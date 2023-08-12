@@ -19,5 +19,8 @@ namespace Ticket.Domain.Entities.Financial
         /// مبلغ باقی مانده در کیف پول
         /// </summary>
         public decimal Balance { get; set; }
+
+        public User User { get; set; }
+        public long UserId { get; set; }
     }
 }

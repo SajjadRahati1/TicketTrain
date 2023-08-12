@@ -31,5 +31,8 @@ namespace Ticket.Domain.Entities.Financial.Discount
         /// </summary>
         public long RefrenceId { get; set; }
 
+        public Discount Discount { get; set; }
+        public long DiscountId { get; set; }
+
     }
 }

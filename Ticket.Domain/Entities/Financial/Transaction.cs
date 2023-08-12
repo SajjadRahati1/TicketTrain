@@ -17,6 +17,10 @@ namespace Ticket.Domain.Entities.Financial
         /// آیا پرداختی است یا دریافتی
         /// </summary>
         public bool IsPaid { get; set; }
+        /// <summary>
+        /// عملیات به درستی به اتمام رسیده و پرداخت شده است
+        /// </summary>
+        public bool IsFinished { get; set; }
         public Wallet Wallet { get; set; }
         public long WalletId { get; set; }
         /// <summary>
@@ -26,16 +30,16 @@ namespace Ticket.Domain.Entities.Financial
         /// <summary>
         /// تاریخ پرداخت
         /// </summary>
-        public DateTime PaidDate { get; set; }
+        public DateTime? PaidDate { get; set; }
         /// <summary>
         /// عنوانی که باید بک اند پر کند
         /// </summary>
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
         /// <summary>
         /// کد پیگیری بانکی
         /// </summary>
-        public string TrackingCodeBank { get; set; }
+        public string? TrackingCodeBank { get; set; }
 
         /// <summary>
         /// مبلغ بابت چه چیزی پرداخت یا دریافت شده است

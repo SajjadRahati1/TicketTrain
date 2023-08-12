@@ -9,7 +9,7 @@ namespace Ticket.Domain.Entities.Refrences.Flight.DomesticFlight
     /// </summary>
     public class TicketDomesticFlight : BaseEntity
     {
-        public string? TicketNumber { get; set; }
+        public string TicketNumber { get; set; }
         public long PassengerId { get; set; }
         public Passenger Passenger { get; set; }
 

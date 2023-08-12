@@ -20,11 +20,11 @@ namespace Ticket.Domain.Entities.Users
         /// <summary>
         /// تاریخ اتمام شماره پاسپورت
         /// </summary>
-        public DateTime ExpireDatePassport { get; set; }
+        public DateTime? ExpireDatePassport { get; set; }
         /// <summary>
         /// کشور محل تولد
         /// </summary>
-        public long CountryBirthId { get; set; }
+        public long? CountryBirthId { get; set; }
 
         #region بلیط های مسافر
         public List<TicketDomesticFlight> TicketDomesticFlights { get; set; }

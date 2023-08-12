@@ -90,7 +90,10 @@ namespace Ticket.Domain.Entities.Refrences.Flight
         public long ClassId { get; set; }
 
         public string? Description { get; set; }
-
+        /// <summary>
+        /// یه متن که مشخص میکنه از کجا به کجا هست و ... یه حالت توضیحی داره برای جلوگیری از استفاده از include های زیاد
+        /// </summary>
+        public string? SmallTitle { get; set; }
         public Pricing Pricing { get; set; }
         public long PricingId { get; set; }
     }

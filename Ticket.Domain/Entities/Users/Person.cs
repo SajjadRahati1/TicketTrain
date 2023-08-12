@@ -23,6 +23,6 @@ namespace Ticket.Domain.Entities.Users
         public string? PhoneNumber { get; set; }
         public string? EmailAddress { get; set; }
         public DateTime? BirthDate { get; set; }
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
     }
 }

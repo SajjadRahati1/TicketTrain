@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ticket.Domain.Entities.Common;
+using Ticket.Domain.Enums;
 
 namespace Ticket.Domain.Entities.Refrences
 {
@@ -25,6 +26,6 @@ namespace Ticket.Domain.Entities.Refrences
     public class RefrenceType:BaseEntitySimple<int>
     {
         public string Title { get; set; }
-        public string EntityName { get; set; }
+        public ReferenceType EntityName { get; set; }
     }
 }

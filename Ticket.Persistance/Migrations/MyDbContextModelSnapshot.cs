@@ -134,6 +134,28 @@ namespace Ticket.Persistance.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 2L,
+                            RoleId = 1L
+                        },
+                        new
+                        {
+                            UserId = 2L,
+                            RoleId = 2L
+                        },
+                        new
+                        {
+                            UserId = 3L,
+                            RoleId = 1L
+                        },
+                        new
+                        {
+                            UserId = 3L,
+                            RoleId = 2L
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
@@ -179,22 +201,18 @@ namespace Ticket.Persistance.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("CountryId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("CountryId1")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UrlImage")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -213,7 +231,9 @@ namespace Ticket.Persistance.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("StateId")
@@ -275,6 +295,31 @@ namespace Ticket.Persistance.Migrations
                     b.ToTable("Images");
                 });
 
+            modelBuilder.Entity("Ticket.Domain.Entities.Common.Pricing", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("AdultPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ChildPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TeenagePrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pricing");
+                });
+
             modelBuilder.Entity("Ticket.Domain.Entities.Common.State", b =>
                 {
                     b.Property<long>("Id")
@@ -287,7 +332,6 @@ namespace Ticket.Persistance.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -384,7 +428,7 @@ namespace Ticket.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long?>("DiscountId")
+                    b.Property<long>("DiscountId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("FK_UsedDiscounts_Transactions_NoCacade")
@@ -433,8 +477,10 @@ namespace Ticket.Persistance.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsFinished")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsPaid")
                         .HasColumnType("bit");
@@ -442,7 +488,7 @@ namespace Ticket.Persistance.Migrations
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("PaidDate")
+                    b.Property<DateTime?>("PaidDate")
                         .HasColumnType("datetime2");
 
                     b.Property<long>("RefrenceID")
@@ -455,11 +501,9 @@ namespace Ticket.Persistance.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrackingCodeBank")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("WalletId")
@@ -485,7 +529,18 @@ namespace Ticket.Persistance.Migrations
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId1")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Wallets");
                 });
@@ -615,6 +670,10 @@ namespace Ticket.Persistance.Migrations
 
                     b.Property<DateTime?>("RemoveTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("SmallTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartMoving")
                         .HasColumnType("datetime2");
@@ -888,17 +947,22 @@ namespace Ticket.Persistance.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("LogoUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("Code");
 
                     b.HasIndex("AirLineCompanyId");
 
@@ -915,21 +979,27 @@ namespace Ticket.Persistance.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<string>("SiteUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name");
 
                     b.ToTable("AirLineCompanies");
                 });
@@ -944,26 +1014,31 @@ namespace Ticket.Persistance.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<int>("AirLineId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("Fax")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("WebSite")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.HasKey("Id");
 
@@ -1033,7 +1108,8 @@ namespace Ticket.Persistance.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
@@ -1043,7 +1119,8 @@ namespace Ticket.Persistance.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<short>("Rank")
                         .HasColumnType("smallint");
@@ -1068,9 +1145,13 @@ namespace Ticket.Persistance.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Title")
+                        .IsUnique();
 
                     b.ToTable("AirPlaneTypes");
                 });
@@ -1088,7 +1169,8 @@ namespace Ticket.Persistance.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
@@ -1151,18 +1233,24 @@ namespace Ticket.Persistance.Migrations
                     b.Property<DateTime?>("RemoveTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<long>("ReservationId")
+                        .HasColumnType("bigint");
+
                     b.Property<long?>("ReturnedId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("TicketNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComputedColumnSql("'DF-'+ CONVERT(NVARCHAR(4),YEAR(GETDATE()))+'-'+CONVERT(NVARCHAR(4),MONTH(GETDATE()))+'-'+CONVERT(NVARCHAR(4),DAY(GETDATE()))+'-'+[Id]");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FK_TicketDomesticFlights_TicketDomesticFlightReservations_ReservationId");
+                    b.HasAlternateKey("PassengerId", "ReservationId");
 
-                    b.HasIndex("PassengerId");
+                    b.HasIndex("FK_TicketDomesticFlights_TicketDomesticFlightReservations_ReservationId");
 
                     b.HasIndex("ReturnedId");
 
@@ -1177,7 +1265,7 @@ namespace Ticket.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("FK_TicketDomesticFlightReservation_Transactions_TransactionId")
+                    b.Property<long?>("FK_TicketDomesticFlightReservation_Transactions_TransactionId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("FlightId")
@@ -1187,25 +1275,21 @@ namespace Ticket.Persistance.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("OrderNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("RemoveTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SendOtherInformationToEmail")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SendOtherInformationToPhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TicketNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<long>("TransactionId")
+                    b.Property<long?>("TransactionId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("UserId")
@@ -1216,6 +1300,14 @@ namespace Ticket.Persistance.Migrations
                     b.HasIndex("FK_TicketDomesticFlightReservation_Transactions_TransactionId");
 
                     b.HasIndex("FlightId");
+
+                    b.HasIndex("OrderNumber")
+                        .IsUnique()
+                        .HasFilter("[OrderNumber] IS NOT NULL");
+
+                    b.HasIndex("TicketNumber")
+                        .IsUnique()
+                        .HasFilter("[TicketNumber] IS NOT NULL");
 
                     b.HasIndex("UserId");
 
@@ -1267,14 +1359,27 @@ namespace Ticket.Persistance.Migrations
                     b.Property<int>("AllowableAmountLoad")
                         .HasColumnType("int");
 
+                    b.Property<long>("ClassId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("ClassId1")
+                        .HasColumnType("int");
+
                     b.Property<long>("CompanyId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<long>("DestinationTerminalId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("DiscountId")
                         .HasColumnType("bigint");
+
+                    b.Property<DateTime>("EndMoving")
+                        .HasColumnType("datetime2");
 
                     b.Property<long>("FK_Flights_AirplaneTerminals_DestinationTerminalId")
                         .HasColumnType("bigint");
@@ -1284,7 +1389,8 @@ namespace Ticket.Persistance.Migrations
 
                     b.Property<string>("FlightNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<bool>("IsCharter")
                         .HasColumnType("bit");
@@ -1293,13 +1399,21 @@ namespace Ticket.Persistance.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("MaxNumberPassenger")
+                        .HasMaxLength(1000)
                         .HasColumnType("int");
 
                     b.Property<long>("OriginTerminalId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("PricingId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime?>("RemoveTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("SmallTitle")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("StartMoving")
                         .HasColumnType("datetime2");
@@ -1313,6 +1427,8 @@ namespace Ticket.Persistance.Migrations
 
                     b.HasIndex("AirPlaneId");
 
+                    b.HasIndex("ClassId1");
+
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("DiscountId");
@@ -1321,9 +1437,59 @@ namespace Ticket.Persistance.Migrations
 
                     b.HasIndex("FK_Flights_AirplaneTerminals_OriginTerminalId");
 
+                    b.HasIndex("PricingId");
+
                     b.HasIndex("TicketRefundRulesId");
 
                     b.ToTable("Flights");
+                });
+
+            modelBuilder.Entity("Ticket.Domain.Entities.Refrences.Flight.FlightClass", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClassTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassTypeId");
+
+                    b.ToTable("FlightClass");
+                });
+
+            modelBuilder.Entity("Ticket.Domain.Entities.Refrences.Flight.FlightClassType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FlightClassType");
                 });
 
             modelBuilder.Entity("Ticket.Domain.Entities.Refrences.Flight.FlightCompany", b =>
@@ -1397,7 +1563,6 @@ namespace Ticket.Persistance.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<short?>("EndHour")
@@ -1409,7 +1574,7 @@ namespace Ticket.Persistance.Migrations
                     b.Property<TimeSpan?>("End_BeforeFlight")
                         .HasColumnType("time");
 
-                    b.Property<long?>("GroupFlightTicketRefundRulesId")
+                    b.Property<long>("GroupRulesId")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("IsPercent")
@@ -1436,7 +1601,7 @@ namespace Ticket.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GroupFlightTicketRefundRulesId");
+                    b.HasIndex("GroupRulesId");
 
                     b.ToTable("FlightTicketRefundRules");
                 });
@@ -1675,9 +1840,8 @@ namespace Ticket.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("EntityName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("EntityName")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -1799,9 +1963,8 @@ namespace Ticket.Persistance.Migrations
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<short>("Location")
+                        .HasColumnType("smallint");
 
                     b.Property<int>("Number")
                         .HasColumnType("int");
@@ -2183,6 +2346,10 @@ namespace Ticket.Persistance.Migrations
                     b.Property<DateTime?>("RemoveTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("SmallTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("TrainId")
                         .HasColumnType("bigint");
 
@@ -2224,22 +2391,26 @@ namespace Ticket.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("CountryBirthId")
+                    b.Property<long?>("CountryBirthId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("En_FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("En_LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
-                    b.Property<DateTime>("ExpireDatePassport")
+                    b.Property<DateTime?>("ExpireDatePassport")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
+
+                    b.Property<string>("PassportNumber")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<long>("PersonId")
                         .HasColumnType("bigint");
@@ -2247,9 +2418,18 @@ namespace Ticket.Persistance.Migrations
                     b.Property<DateTime?>("RemoveTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("PassportNumber")
+                        .IsUnique()
+                        .HasFilter("[PassportNumber] IS NOT NULL");
+
                     b.HasIndex("PersonId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Passengers");
                 });
@@ -2262,30 +2442,29 @@ namespace Ticket.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<DateTime>("BithDate")
+                    b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
-                    b.Property<int>("Gender")
+                    b.Property<int?>("Gender")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("NationalCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -2327,6 +2506,18 @@ namespace Ticket.Persistance.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Name = "Customer"
+                        });
                 });
 
             modelBuilder.Entity("Ticket.Domain.Entities.Users.User", b =>
@@ -2404,8 +2595,6 @@ namespace Ticket.Persistance.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.HasIndex("PersonId");
-
-                    b.HasIndex("WalletId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -2584,9 +2773,11 @@ namespace Ticket.Persistance.Migrations
 
             modelBuilder.Entity("Ticket.Domain.Entities.Financial.Discount.UsedDiscount", b =>
                 {
-                    b.HasOne("Ticket.Domain.Entities.Financial.Discount.Discount", null)
+                    b.HasOne("Ticket.Domain.Entities.Financial.Discount.Discount", "Discount")
                         .WithMany("UsedDiscounts")
-                        .HasForeignKey("DiscountId");
+                        .HasForeignKey("DiscountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Ticket.Domain.Entities.Financial.Transaction", "Transaction")
                         .WithMany("Discounts")
@@ -2605,6 +2796,8 @@ namespace Ticket.Persistance.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Discount");
 
                     b.Navigation("RefrenceType");
 
@@ -2630,6 +2823,23 @@ namespace Ticket.Persistance.Migrations
                     b.Navigation("RefrenceType");
 
                     b.Navigation("Wallet");
+                });
+
+            modelBuilder.Entity("Ticket.Domain.Entities.Financial.Wallet", b =>
+                {
+                    b.HasOne("Ticket.Domain.Entities.Users.User", null)
+                        .WithOne("Wallet")
+                        .HasForeignKey("Ticket.Domain.Entities.Financial.Wallet", "UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Ticket.Domain.Entities.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Ticket.Domain.Entities.Refrences.Bus.Bus", b =>
@@ -2895,8 +3105,7 @@ namespace Ticket.Persistance.Migrations
                     b.HasOne("Ticket.Domain.Entities.Financial.Transaction", "Transaction")
                         .WithMany()
                         .HasForeignKey("FK_TicketDomesticFlightReservation_Transactions_TransactionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Ticket.Domain.Entities.Refrences.Flight.DomesticFlight.DomesticFlight", "Flight")
                         .WithMany("Reservations")
@@ -2942,6 +3151,12 @@ namespace Ticket.Persistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Ticket.Domain.Entities.Refrences.Flight.FlightClass", "Class")
+                        .WithMany()
+                        .HasForeignKey("ClassId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Ticket.Domain.Entities.Refrences.Flight.FlightCompany", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
@@ -2964,8 +3179,14 @@ namespace Ticket.Persistance.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Ticket.Domain.Entities.Refrences.Flight.GroupFlightTicketRefundRules", "TicketRefundRules")
+                    b.HasOne("Ticket.Domain.Entities.Common.Pricing", "Pricing")
                         .WithMany()
+                        .HasForeignKey("PricingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ticket.Domain.Entities.Refrences.Flight.GroupFlightTicketRefundRules", "TicketRefundRules")
+                        .WithMany("Flights")
                         .HasForeignKey("TicketRefundRulesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2973,6 +3194,8 @@ namespace Ticket.Persistance.Migrations
                     b.Navigation("AirLine");
 
                     b.Navigation("AirPlane");
+
+                    b.Navigation("Class");
 
                     b.Navigation("Company");
 
@@ -2982,7 +3205,20 @@ namespace Ticket.Persistance.Migrations
 
                     b.Navigation("OriginTerminal");
 
+                    b.Navigation("Pricing");
+
                     b.Navigation("TicketRefundRules");
+                });
+
+            modelBuilder.Entity("Ticket.Domain.Entities.Refrences.Flight.FlightClass", b =>
+                {
+                    b.HasOne("Ticket.Domain.Entities.Refrences.Flight.FlightClassType", "ClassType")
+                        .WithMany()
+                        .HasForeignKey("ClassTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ClassType");
                 });
 
             modelBuilder.Entity("Ticket.Domain.Entities.Refrences.Flight.FlightTag", b =>
@@ -2994,9 +3230,13 @@ namespace Ticket.Persistance.Migrations
 
             modelBuilder.Entity("Ticket.Domain.Entities.Refrences.Flight.FlightTicketRefundRules", b =>
                 {
-                    b.HasOne("Ticket.Domain.Entities.Refrences.Flight.GroupFlightTicketRefundRules", null)
+                    b.HasOne("Ticket.Domain.Entities.Refrences.Flight.GroupFlightTicketRefundRules", "GroupRules")
                         .WithMany("TicketRefundRules")
-                        .HasForeignKey("GroupFlightTicketRefundRulesId");
+                        .HasForeignKey("GroupRulesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GroupRules");
                 });
 
             modelBuilder.Entity("Ticket.Domain.Entities.Refrences.Flight.InternationalFlight.InternationalFlight", b =>
@@ -3339,7 +3579,15 @@ namespace Ticket.Persistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Ticket.Domain.Entities.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Person");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Ticket.Domain.Entities.Users.User", b =>
@@ -3350,15 +3598,7 @@ namespace Ticket.Persistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Ticket.Domain.Entities.Financial.Wallet", "Wallet")
-                        .WithMany()
-                        .HasForeignKey("WalletId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Person");
-
-                    b.Navigation("Wallet");
                 });
 
             modelBuilder.Entity("Ticket.Domain.Entities.Financial.Discount.Discount", b =>
@@ -3431,6 +3671,8 @@ namespace Ticket.Persistance.Migrations
 
             modelBuilder.Entity("Ticket.Domain.Entities.Refrences.Flight.GroupFlightTicketRefundRules", b =>
                 {
+                    b.Navigation("Flights");
+
                     b.Navigation("TicketRefundRules");
                 });
 
@@ -3486,6 +3728,9 @@ namespace Ticket.Persistance.Migrations
                     b.Navigation("TicketInternationalFlights");
 
                     b.Navigation("TicketTrains");
+
+                    b.Navigation("Wallet")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

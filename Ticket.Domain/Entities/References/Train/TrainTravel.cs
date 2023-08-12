@@ -57,7 +57,7 @@ namespace Ticket.Domain.Entities.Refrences.Train
                 /// </summary>
                 public List<Compartment> Compartments { get; set; }*/
 
-
+        public string SmallTitle { get; set; }
     }
 }
 
