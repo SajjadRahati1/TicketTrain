@@ -13,5 +13,6 @@ public class PassengerConfig : IEntityTypeConfiguration<Passenger>
         b.Property(p => p.ExpireDatePassport).IsRequired(false);
         b.Property(p => p.UserId).IsRequired();
         b.HasIndex(p => p.PassportNumber).IsUnique();
+        b.HasOne(p=>p.Person).WithMany(p=>p.Passengers).HasForeignKey(p=>p.PersonId).OnDelete(DeleteBehavior.Restrict);
     }
 }

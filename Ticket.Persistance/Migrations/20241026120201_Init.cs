@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Ticket.Persistance.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,29 +19,14 @@ namespace Ticket.Persistance.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SiteUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
+                    SiteUrl = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AirLineCompanies", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AirLines",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LogoUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AirLines", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -48,7 +35,7 @@ namespace Ticket.Persistance.Migrations
                 {
                     Id = table.Column<short>(type: "smallint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -138,6 +125,19 @@ namespace Ticket.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FlightClassType",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FlightClassType", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FlightCompanies",
                 columns: table => new
                 {
@@ -191,13 +191,13 @@ namespace Ticket.Persistance.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NationalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    NationalCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BithDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Gender = table.Column<int>(type: "int", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -207,13 +207,29 @@ namespace Ticket.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Pricing",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AdultPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TeenagePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ChildPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pricing", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RefrenceTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EntityName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    EntityName = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -243,30 +259,6 @@ namespace Ticket.Persistance.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Trains", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TrainTicketRefundRules",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DeductibleAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IsPercent = table.Column<bool>(type: "bit", nullable: false),
-                    Start_AfterIssuanceTicket = table.Column<TimeSpan>(type: "time", nullable: true),
-                    End_AfterIssuanceTicket = table.Column<TimeSpan>(type: "time", nullable: true),
-                    Start_BeforeFlight = table.Column<TimeSpan>(type: "time", nullable: true),
-                    End_BeforeFlight = table.Column<TimeSpan>(type: "time", nullable: true),
-                    StartHour = table.Column<short>(type: "smallint", nullable: true),
-                    EndHour = table.Column<short>(type: "smallint", nullable: true),
-                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
-                    RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TrainTicketRefundRules", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -312,38 +304,24 @@ namespace Ticket.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Wallets",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Wallets", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AirLineContants",
+                name: "AirLines",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AirLineId = table.Column<int>(type: "int", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Fax = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WebSite = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    LogoUrl = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    AirLineCompanyId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AirLineContants", x => x.Id);
+                    table.PrimaryKey("PK_AirLines", x => x.Id);
+                    table.UniqueConstraint("AK_AirLines_Code", x => x.Code);
                     table.ForeignKey(
-                        name: "FK_AirLineContants_AirLines_AirLineId",
-                        column: x => x.AirLineId,
-                        principalTable: "AirLines",
+                        name: "FK_AirLines_AirLineCompanies_AirLineCompanyId",
+                        column: x => x.AirLineCompanyId,
+                        principalTable: "AirLineCompanies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -354,8 +332,8 @@ namespace Ticket.Persistance.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Rank = table.Column<short>(type: "smallint", nullable: false),
                     MaxNumberPassenger = table.Column<int>(type: "int", nullable: false),
                     AllowableAmountLoad = table.Column<int>(type: "int", nullable: false),
@@ -422,10 +400,10 @@ namespace Ticket.Persistance.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UrlImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CountryId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UrlImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CountryId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CountryId1 = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -445,7 +423,7 @@ namespace Ticket.Persistance.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CountryId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -460,7 +438,60 @@ namespace Ticket.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FlightClass",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ShortName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    ClassTypeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FlightClass", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FlightClass_FlightClassType_ClassTypeId",
+                        column: x => x.ClassTypeId,
+                        principalTable: "FlightClassType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FlightTicketRefundRules",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeductibleAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    IsPercent = table.Column<bool>(type: "bit", nullable: false),
+                    Start_AfterIssuanceTicket = table.Column<TimeSpan>(type: "time", nullable: true),
+                    End_AfterIssuanceTicket = table.Column<TimeSpan>(type: "time", nullable: true),
+                    Start_BeforeFlight = table.Column<TimeSpan>(type: "time", nullable: true),
+                    End_BeforeFlight = table.Column<TimeSpan>(type: "time", nullable: true),
+                    StartHour = table.Column<short>(type: "smallint", nullable: true),
+                    EndHour = table.Column<short>(type: "smallint", nullable: true),
+                    GroupRulesId = table.Column<long>(type: "bigint", nullable: false),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FlightTicketRefundRules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FlightTicketRefundRules_GroupFlightTicketRefundRules_GroupRulesId",
+                        column: x => x.GroupRulesId,
+                        principalTable: "GroupFlightTicketRefundRules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TrainTicketRefundRules",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -475,45 +506,49 @@ namespace Ticket.Persistance.Migrations
                     End_BeforeFlight = table.Column<TimeSpan>(type: "time", nullable: true),
                     StartHour = table.Column<short>(type: "smallint", nullable: true),
                     EndHour = table.Column<short>(type: "smallint", nullable: true),
-                    GroupFlightTicketRefundRulesId = table.Column<long>(type: "bigint", nullable: true),
                     GroupTrainTicketRefundRulesId = table.Column<long>(type: "bigint", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FlightTicketRefundRules", x => x.Id);
+                    table.PrimaryKey("PK_TrainTicketRefundRules", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FlightTicketRefundRules_GroupFlightTicketRefundRules_GroupFlightTicketRefundRulesId",
-                        column: x => x.GroupFlightTicketRefundRulesId,
-                        principalTable: "GroupFlightTicketRefundRules",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_FlightTicketRefundRules_GroupTrainTicketRefundRules_GroupTrainTicketRefundRulesId",
+                        name: "FK_TrainTicketRefundRules_GroupTrainTicketRefundRules_GroupTrainTicketRefundRulesId",
                         column: x => x.GroupTrainTicketRefundRulesId,
                         principalTable: "GroupTrainTicketRefundRules",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Passengers",
+                name: "AspNetUsers",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PersonId = table.Column<long>(type: "bigint", nullable: false),
-                    En_FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    En_LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ExpireDatePassport = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CountryBirthId = table.Column<long>(type: "bigint", nullable: false),
-                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
-                    RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    WalletId = table.Column<long>(type: "bigint", nullable: false),
+                    IsBlocked = table.Column<bool>(type: "bit", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Passengers", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Passengers_People_PersonId",
+                        name: "FK_AspNetUsers_People_PersonId",
                         column: x => x.PersonId,
                         principalTable: "People",
                         principalColumn: "Id",
@@ -561,6 +596,7 @@ namespace Ticket.Persistance.Migrations
                     RefundRulesId = table.Column<long>(type: "bigint", nullable: false),
                     CoupeFacilities = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GeneralTrainFacilities = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SmallTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -582,78 +618,25 @@ namespace Ticket.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
+                name: "AirLineContants",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonId = table.Column<long>(type: "bigint", nullable: false),
-                    WalletId = table.Column<long>(type: "bigint", nullable: false),
-                    IsBlocked = table.Column<bool>(type: "bit", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                    AirLineId = table.Column<int>(type: "int", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Fax = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    WebSite = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.PrimaryKey("PK_AirLineContants", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_People_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "People",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Wallets_WalletId",
-                        column: x => x.WalletId,
-                        principalTable: "Wallets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Transactions",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IsPaid = table.Column<bool>(type: "bit", nullable: false),
-                    WalletId = table.Column<long>(type: "bigint", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PaidDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TrackingCodeBank = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RefrenceID = table.Column<long>(type: "bigint", nullable: false),
-                    RefrenceTypeID = table.Column<int>(type: "int", nullable: false),
-                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
-                    RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Transactions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Transactions_RefrenceTypes_RefrenceTypeID",
-                        column: x => x.RefrenceTypeID,
-                        principalTable: "RefrenceTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Transactions_Wallets_WalletId",
-                        column: x => x.WalletId,
-                        principalTable: "Wallets",
+                        name: "FK_AirLineContants_AirLines_AirLineId",
+                        column: x => x.AirLineId,
+                        principalTable: "AirLines",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -726,7 +709,8 @@ namespace Ticket.Persistance.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ShortName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StateId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -853,6 +837,39 @@ namespace Ticket.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Passengers",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonId = table.Column<long>(type: "bigint", nullable: false),
+                    En_FirstName = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    En_LastName = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    PassportNumber = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    ExpireDatePassport = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CountryBirthId = table.Column<long>(type: "bigint", nullable: true),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Passengers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Passengers_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Passengers_People_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "People",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ServiceProviderAirPlanes",
                 columns: table => new
                 {
@@ -975,128 +992,29 @@ namespace Ticket.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TicketBusReturneds",
+                name: "Wallets",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ReasonForReturned = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReturnDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TransactionId = table.Column<long>(type: "bigint", nullable: false)
+                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UserId1 = table.Column<long>(type: "bigint", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TicketBusReturneds", x => x.Id);
+                    table.PrimaryKey("PK_Wallets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TicketBusReturneds_Transactions_TransactionId",
-                        column: x => x.TransactionId,
-                        principalTable: "Transactions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TicketDomesticFlightReturneds",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ReasonForReturned = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReturnDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TransactionId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TicketDomesticFlightReturneds", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TicketDomesticFlightReturneds_Transactions_TransactionId",
-                        column: x => x.TransactionId,
-                        principalTable: "Transactions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TicketInternationalFlightReturneds",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ReasonForReturned = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReturnDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TransactionId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TicketInternationalFlightReturneds", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TicketInternationalFlightReturneds_Transactions_TransactionId",
-                        column: x => x.TransactionId,
-                        principalTable: "Transactions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TicketTrainReturneds",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ReasonForReturned = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReturnDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TransactionId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TicketTrainReturneds", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TicketTrainReturneds_Transactions_TransactionId",
-                        column: x => x.TransactionId,
-                        principalTable: "Transactions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UsedDiscounts",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FK_UsedDiscounts_Transactions_NoCacade = table.Column<long>(type: "bigint", nullable: false),
-                    TransactionId = table.Column<long>(type: "bigint", nullable: false),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
-                    GetDiscountCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    RefrenceTypeID = table.Column<int>(type: "int", nullable: false),
-                    RefrenceId = table.Column<long>(type: "bigint", nullable: false),
-                    DiscountId = table.Column<long>(type: "bigint", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UsedDiscounts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UsedDiscounts_AspNetUsers_UserId",
+                        name: "FK_Wallets_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Wallets_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UsedDiscounts_Discounts_DiscountId",
-                        column: x => x.DiscountId,
-                        principalTable: "Discounts",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_UsedDiscounts_RefrenceTypes_RefrenceTypeID",
-                        column: x => x.RefrenceTypeID,
-                        principalTable: "RefrenceTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UsedDiscounts_Transactions_FK_UsedDiscounts_Transactions_NoCacade",
-                        column: x => x.FK_UsedDiscounts_Transactions_NoCacade,
-                        principalTable: "Transactions",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1106,7 +1024,7 @@ namespace Ticket.Persistance.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     CityId = table.Column<long>(type: "bigint", nullable: false),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -1189,6 +1107,43 @@ namespace Ticket.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Transactions",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    IsPaid = table.Column<bool>(type: "bit", nullable: false),
+                    IsFinished = table.Column<bool>(type: "bit", nullable: false),
+                    WalletId = table.Column<long>(type: "bigint", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PaidDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrackingCodeBank = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RefrenceID = table.Column<long>(type: "bigint", nullable: false),
+                    RefrenceTypeID = table.Column<int>(type: "int", nullable: false),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transactions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Transactions_RefrenceTypes_RefrenceTypeID",
+                        column: x => x.RefrenceTypeID,
+                        principalTable: "RefrenceTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Transactions_Wallets_WalletId",
+                        column: x => x.WalletId,
+                        principalTable: "Wallets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Flights",
                 columns: table => new
                 {
@@ -1198,17 +1153,23 @@ namespace Ticket.Persistance.Migrations
                     FK_Flights_AirplaneTerminals_OriginTerminalId = table.Column<long>(type: "bigint", nullable: false),
                     DestinationTerminalId = table.Column<long>(type: "bigint", nullable: false),
                     FK_Flights_AirplaneTerminals_DestinationTerminalId = table.Column<long>(type: "bigint", nullable: false),
-                    FlightNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MaxNumberPassenger = table.Column<int>(type: "int", nullable: false),
+                    FlightNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    MaxNumberPassenger = table.Column<int>(type: "int", maxLength: 1000, nullable: false),
                     AllowableAmountLoad = table.Column<int>(type: "int", nullable: false),
                     AirPlaneId = table.Column<long>(type: "bigint", nullable: false),
                     CompanyId = table.Column<long>(type: "bigint", nullable: false),
                     AirLineId = table.Column<long>(type: "bigint", nullable: false),
                     AirLineId1 = table.Column<int>(type: "int", nullable: false),
                     StartMoving = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndMoving = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsCharter = table.Column<bool>(type: "bit", nullable: false),
                     TicketRefundRulesId = table.Column<long>(type: "bigint", nullable: false),
                     DiscountId = table.Column<long>(type: "bigint", nullable: true),
+                    ClassId1 = table.Column<int>(type: "int", nullable: false),
+                    ClassId = table.Column<long>(type: "bigint", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    SmallTitle = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    PricingId = table.Column<long>(type: "bigint", nullable: false),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -1243,6 +1204,12 @@ namespace Ticket.Persistance.Migrations
                         principalTable: "Discounts",
                         principalColumn: "Id");
                     table.ForeignKey(
+                        name: "FK_Flights_FlightClass_ClassId1",
+                        column: x => x.ClassId1,
+                        principalTable: "FlightClass",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Flights_FlightCompanies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "FlightCompanies",
@@ -1252,6 +1219,12 @@ namespace Ticket.Persistance.Migrations
                         name: "FK_Flights_GroupFlightTicketRefundRules_TicketRefundRulesId",
                         column: x => x.TicketRefundRulesId,
                         principalTable: "GroupFlightTicketRefundRules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Flights_Pricing_PricingId",
+                        column: x => x.PricingId,
+                        principalTable: "Pricing",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1270,6 +1243,7 @@ namespace Ticket.Persistance.Migrations
                     AllowableAmountLoad = table.Column<int>(type: "int", nullable: false),
                     BusId = table.Column<int>(type: "int", nullable: false),
                     CompanyId = table.Column<long>(type: "bigint", nullable: false),
+                    SmallTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -1296,6 +1270,102 @@ namespace Ticket.Persistance.Migrations
                         name: "FK_BusTravels_Buses_BusId",
                         column: x => x.BusId,
                         principalTable: "Buses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TrainStationConnects",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FK_TrainStationConnects_TrainStations_TrainStationOriginId = table.Column<long>(type: "bigint", nullable: false),
+                    TrainStationOriginIdId = table.Column<long>(type: "bigint", nullable: false),
+                    FK_TrainStationConnects_TrainStations_TrainStationDestinationId = table.Column<long>(type: "bigint", nullable: false),
+                    TrainStationDestinationId = table.Column<long>(type: "bigint", nullable: false),
+                    SpaceBetween = table.Column<TimeSpan>(type: "time", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TrainStationConnects", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TrainStationConnects_Cities_FK_TrainStationConnects_TrainStations_TrainStationOriginId",
+                        column: x => x.FK_TrainStationConnects_TrainStations_TrainStationOriginId,
+                        principalTable: "Cities",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_TrainStationConnects_TrainStations_FK_TrainStationConnects_TrainStations_TrainStationDestinationId",
+                        column: x => x.FK_TrainStationConnects_TrainStations_TrainStationDestinationId,
+                        principalTable: "TrainStations",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_TrainStationConnects_TrainStations_TrainStationOriginIdId",
+                        column: x => x.TrainStationOriginIdId,
+                        principalTable: "TrainStations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TicketBusReturneds",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReasonForReturned = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReturnDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TransactionId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TicketBusReturneds", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TicketBusReturneds_Transactions_TransactionId",
+                        column: x => x.TransactionId,
+                        principalTable: "Transactions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TicketDomesticFlightReturneds",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReasonForReturned = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReturnDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TransactionId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TicketDomesticFlightReturneds", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TicketDomesticFlightReturneds_Transactions_TransactionId",
+                        column: x => x.TransactionId,
+                        principalTable: "Transactions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TicketInternationalFlightReturneds",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReasonForReturned = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReturnDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TransactionId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TicketInternationalFlightReturneds", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TicketInternationalFlightReturneds_Transactions_TransactionId",
+                        column: x => x.TransactionId,
+                        principalTable: "Transactions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1352,36 +1422,66 @@ namespace Ticket.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TrainStationConnects",
+                name: "TicketTrainReturneds",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FK_TrainStationConnects_TrainStations_TrainStationOriginId = table.Column<long>(type: "bigint", nullable: false),
-                    TrainStationOriginIdId = table.Column<long>(type: "bigint", nullable: false),
-                    FK_TrainStationConnects_TrainStations_TrainStationDestinationId = table.Column<long>(type: "bigint", nullable: false),
-                    TrainStationDestinationId = table.Column<long>(type: "bigint", nullable: false),
-                    SpaceBetween = table.Column<TimeSpan>(type: "time", nullable: false)
+                    ReasonForReturned = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReturnDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TransactionId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TrainStationConnects", x => x.Id);
+                    table.PrimaryKey("PK_TicketTrainReturneds", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TrainStationConnects_Cities_FK_TrainStationConnects_TrainStations_TrainStationOriginId",
-                        column: x => x.FK_TrainStationConnects_TrainStations_TrainStationOriginId,
-                        principalTable: "Cities",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_TrainStationConnects_TrainStations_FK_TrainStationConnects_TrainStations_TrainStationDestinationId",
-                        column: x => x.FK_TrainStationConnects_TrainStations_TrainStationDestinationId,
-                        principalTable: "TrainStations",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_TrainStationConnects_TrainStations_TrainStationOriginIdId",
-                        column: x => x.TrainStationOriginIdId,
-                        principalTable: "TrainStations",
+                        name: "FK_TicketTrainReturneds_Transactions_TransactionId",
+                        column: x => x.TransactionId,
+                        principalTable: "Transactions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UsedDiscounts",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FK_UsedDiscounts_Transactions_NoCacade = table.Column<long>(type: "bigint", nullable: false),
+                    TransactionId = table.Column<long>(type: "bigint", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    GetDiscountCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    RefrenceTypeID = table.Column<int>(type: "int", nullable: false),
+                    RefrenceId = table.Column<long>(type: "bigint", nullable: false),
+                    DiscountId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UsedDiscounts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UsedDiscounts_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UsedDiscounts_Discounts_DiscountId",
+                        column: x => x.DiscountId,
+                        principalTable: "Discounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UsedDiscounts_RefrenceTypes_RefrenceTypeID",
+                        column: x => x.RefrenceTypeID,
+                        principalTable: "RefrenceTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UsedDiscounts_Transactions_FK_UsedDiscounts_Transactions_NoCacade",
+                        column: x => x.FK_UsedDiscounts_Transactions_NoCacade,
+                        principalTable: "Transactions",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1538,29 +1638,6 @@ namespace Ticket.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Compartments",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Number = table.Column<int>(type: "int", nullable: false),
-                    TicketTrainId = table.Column<long>(type: "bigint", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
-                    RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Compartments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Compartments_TicketTrainReservations_TicketTrainId",
-                        column: x => x.TicketTrainId,
-                        principalTable: "TicketTrainReservations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RouteTrainStationConnects",
                 columns: table => new
                 {
@@ -1598,6 +1675,29 @@ namespace Ticket.Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Compartments",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Number = table.Column<int>(type: "int", nullable: false),
+                    TicketTrainId = table.Column<long>(type: "bigint", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsRemoved = table.Column<bool>(type: "bit", nullable: false),
+                    RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Compartments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Compartments_TicketTrainReservations_TicketTrainId",
+                        column: x => x.TicketTrainId,
+                        principalTable: "TicketTrainReservations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TicketDomesticFlightReservations",
                 columns: table => new
                 {
@@ -1605,12 +1705,12 @@ namespace Ticket.Persistance.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     FlightId = table.Column<long>(type: "bigint", nullable: false),
-                    TicketNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OrderNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SendOtherInformationToPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SendOtherInformationToEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FK_TicketDomesticFlightReservation_Transactions_TransactionId = table.Column<long>(type: "bigint", nullable: false),
-                    TransactionId = table.Column<long>(type: "bigint", nullable: false),
+                    TicketNumber = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    OrderNumber = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    SendOtherInformationToPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SendOtherInformationToEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FK_TicketDomesticFlightReservation_Transactions_TransactionId = table.Column<long>(type: "bigint", nullable: true),
+                    TransactionId = table.Column<long>(type: "bigint", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -1717,7 +1817,7 @@ namespace Ticket.Persistance.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Number = table.Column<int>(type: "int", nullable: false),
                     CompartmentId = table.Column<long>(type: "bigint", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Location = table.Column<short>(type: "smallint", nullable: false),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -1738,9 +1838,10 @@ namespace Ticket.Persistance.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TicketNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TicketNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, computedColumnSql: "'DF-'+ CONVERT(NVARCHAR(4),YEAR(GETDATE()))+'-'+CONVERT(NVARCHAR(4),MONTH(GETDATE()))+'-'+CONVERT(NVARCHAR(4),DAY(GETDATE()))+'-'+[Id]"),
                     PassengerId = table.Column<long>(type: "bigint", nullable: false),
                     FK_TicketDomesticFlights_TicketDomesticFlightReservations_ReservationId = table.Column<long>(type: "bigint", nullable: false),
+                    ReservationId = table.Column<long>(type: "bigint", nullable: false),
                     ReturnedId = table.Column<long>(type: "bigint", nullable: true),
                     IsRemoved = table.Column<bool>(type: "bit", nullable: false),
                     RemoveTime = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -1748,6 +1849,7 @@ namespace Ticket.Persistance.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TicketDomesticFlights", x => x.Id);
+                    table.UniqueConstraint("AK_TicketDomesticFlights_PassengerId_ReservationId", x => new { x.PassengerId, x.ReservationId });
                     table.ForeignKey(
                         name: "FK_TicketDomesticFlights_Passengers_PassengerId",
                         column: x => x.PassengerId,
@@ -1839,6 +1941,25 @@ namespace Ticket.Persistance.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { 1L, null, "Admin", null },
+                    { 2L, null, "Customer", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "People",
+                columns: new[] { "Id", "BirthDate", "EmailAddress", "FirstName", "Gender", "IsRemoved", "LastName", "NationalCode", "PhoneNumber", "RemoveTime" },
+                values: new object[] { 1L, new DateTime(2001, 6, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sajadrahaty2@gmail.com", "سجاد", 0, false, "راحتی", "1250635658", "09339799317", null });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AirLineCompanies_Name",
+                table: "AirLineCompanies",
+                column: "Name");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AirLineContants_AirLineId",
                 table: "AirLineContants",
@@ -1857,6 +1978,11 @@ namespace Ticket.Persistance.Migrations
                 column: "BankId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AirLines_AirLineCompanyId",
+                table: "AirLines",
+                column: "AirLineCompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AirPlanes_AirPlaneTypeId",
                 table: "AirPlanes",
                 column: "AirPlaneTypeId");
@@ -1865,6 +1991,12 @@ namespace Ticket.Persistance.Migrations
                 name: "IX_AirplaneTerminals_CityId",
                 table: "AirplaneTerminals",
                 column: "CityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AirPlaneTypes_Title",
+                table: "AirPlaneTypes",
+                column: "Title",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -1902,11 +2034,6 @@ namespace Ticket.Persistance.Migrations
                 name: "IX_AspNetUsers_PersonId",
                 table: "AspNetUsers",
                 column: "PersonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_WalletId",
-                table: "AspNetUsers",
-                column: "WalletId");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
@@ -1986,6 +2113,11 @@ namespace Ticket.Persistance.Migrations
                 column: "FlightId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FlightClass_ClassTypeId",
+                table: "FlightClass",
+                column: "ClassTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Flights_AirLineId1",
                 table: "Flights",
                 column: "AirLineId1");
@@ -1994,6 +2126,11 @@ namespace Ticket.Persistance.Migrations
                 name: "IX_Flights_AirPlaneId",
                 table: "Flights",
                 column: "AirPlaneId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Flights_ClassId1",
+                table: "Flights",
+                column: "ClassId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Flights_CompanyId",
@@ -2016,6 +2153,11 @@ namespace Ticket.Persistance.Migrations
                 column: "FK_Flights_AirplaneTerminals_OriginTerminalId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Flights_PricingId",
+                table: "Flights",
+                column: "PricingId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Flights_TicketRefundRulesId",
                 table: "Flights",
                 column: "TicketRefundRulesId");
@@ -2031,14 +2173,9 @@ namespace Ticket.Persistance.Migrations
                 column: "FlightId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FlightTicketRefundRules_GroupFlightTicketRefundRulesId",
+                name: "IX_FlightTicketRefundRules_GroupRulesId",
                 table: "FlightTicketRefundRules",
-                column: "GroupFlightTicketRefundRulesId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FlightTicketRefundRules_GroupTrainTicketRefundRulesId",
-                table: "FlightTicketRefundRules",
-                column: "GroupTrainTicketRefundRulesId");
+                column: "GroupRulesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Images_AirPlaneId",
@@ -2061,9 +2198,21 @@ namespace Ticket.Persistance.Migrations
                 column: "FlightId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Passengers_PassportNumber",
+                table: "Passengers",
+                column: "PassportNumber",
+                unique: true,
+                filter: "[PassportNumber] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Passengers_PersonId",
                 table: "Passengers",
                 column: "PersonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Passengers_UserId",
+                table: "Passengers",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RouteTrainStationConnects_TrainId",
@@ -2206,6 +2355,20 @@ namespace Ticket.Persistance.Migrations
                 column: "FlightId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TicketDomesticFlightReservations_OrderNumber",
+                table: "TicketDomesticFlightReservations",
+                column: "OrderNumber",
+                unique: true,
+                filter: "[OrderNumber] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TicketDomesticFlightReservations_TicketNumber",
+                table: "TicketDomesticFlightReservations",
+                column: "TicketNumber",
+                unique: true,
+                filter: "[TicketNumber] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TicketDomesticFlightReservations_UserId",
                 table: "TicketDomesticFlightReservations",
                 column: "UserId");
@@ -2219,11 +2382,6 @@ namespace Ticket.Persistance.Migrations
                 name: "IX_TicketDomesticFlights_FK_TicketDomesticFlights_TicketDomesticFlightReservations_ReservationId",
                 table: "TicketDomesticFlights",
                 column: "FK_TicketDomesticFlights_TicketDomesticFlightReservations_ReservationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TicketDomesticFlights_PassengerId",
-                table: "TicketDomesticFlights",
-                column: "PassengerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TicketDomesticFlights_ReturnedId",
@@ -2336,6 +2494,11 @@ namespace Ticket.Persistance.Migrations
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TrainTicketRefundRules_GroupTrainTicketRefundRulesId",
+                table: "TrainTicketRefundRules",
+                column: "GroupTrainTicketRefundRulesId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TrainTravels_RefundRulesId",
                 table: "TrainTravels",
                 column: "RefundRulesId");
@@ -2374,14 +2537,22 @@ namespace Ticket.Persistance.Migrations
                 name: "IX_UsedDiscounts_UserId",
                 table: "UsedDiscounts",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Wallets_UserId",
+                table: "Wallets",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Wallets_UserId1",
+                table: "Wallets",
+                column: "UserId1");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "AirLineCompanies");
-
             migrationBuilder.DropTable(
                 name: "AirLineContants");
 
@@ -2545,13 +2716,16 @@ namespace Ticket.Persistance.Migrations
                 name: "Discounts");
 
             migrationBuilder.DropTable(
+                name: "FlightClass");
+
+            migrationBuilder.DropTable(
                 name: "FlightCompanies");
 
             migrationBuilder.DropTable(
                 name: "GroupFlightTicketRefundRules");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Pricing");
 
             migrationBuilder.DropTable(
                 name: "TrainStations");
@@ -2563,10 +2737,13 @@ namespace Ticket.Persistance.Migrations
                 name: "Transactions");
 
             migrationBuilder.DropTable(
+                name: "AirLineCompanies");
+
+            migrationBuilder.DropTable(
                 name: "AirPlaneTypes");
 
             migrationBuilder.DropTable(
-                name: "People");
+                name: "FlightClassType");
 
             migrationBuilder.DropTable(
                 name: "Cities");
@@ -2587,7 +2764,13 @@ namespace Ticket.Persistance.Migrations
                 name: "States");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "Countries");
+
+            migrationBuilder.DropTable(
+                name: "People");
         }
     }
 }

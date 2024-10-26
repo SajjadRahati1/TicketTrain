@@ -12,8 +12,8 @@ using Ticket.Persistance.Context;
 namespace Ticket.Persistance.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20230811161332_changeFlunet_Api")]
-    partial class changeFlunet_Api
+    [Migration("20241026120201_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -137,28 +137,6 @@ namespace Ticket.Persistance.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 2L,
-                            RoleId = 1L
-                        },
-                        new
-                        {
-                            UserId = 2L,
-                            RoleId = 2L
-                        },
-                        new
-                        {
-                            UserId = 3L,
-                            RoleId = 1L
-                        },
-                        new
-                        {
-                            UserId = 3L,
-                            RoleId = 2L
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
@@ -2479,6 +2457,20 @@ namespace Ticket.Persistance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("People");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            BirthDate = new DateTime(2001, 6, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "Sajadrahaty2@gmail.com",
+                            FirstName = "سجاد",
+                            Gender = 0,
+                            IsRemoved = false,
+                            LastName = "راحتی",
+                            NationalCode = "1250635658",
+                            PhoneNumber = "09339799317"
+                        });
                 });
 
             modelBuilder.Entity("Ticket.Domain.Entities.Users.Role", b =>
@@ -3577,9 +3569,9 @@ namespace Ticket.Persistance.Migrations
             modelBuilder.Entity("Ticket.Domain.Entities.Users.Passenger", b =>
                 {
                     b.HasOne("Ticket.Domain.Entities.Users.Person", "Person")
-                        .WithMany()
+                        .WithMany("Passengers")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Ticket.Domain.Entities.Users.User", "User")
@@ -3720,6 +3712,11 @@ namespace Ticket.Persistance.Migrations
                     b.Navigation("TicketDomesticFlights");
 
                     b.Navigation("TicketInternationalFlights");
+                });
+
+            modelBuilder.Entity("Ticket.Domain.Entities.Users.Person", b =>
+                {
+                    b.Navigation("Passengers");
                 });
 
             modelBuilder.Entity("Ticket.Domain.Entities.Users.User", b =>

@@ -24,5 +24,6 @@ namespace Ticket.Domain.Entities.Users
         public string? EmailAddress { get; set; }
         public DateTime? BirthDate { get; set; }
         public Gender? Gender { get; set; }
+        public ICollection<Passenger> Passengers { get; set; }
     }
 }

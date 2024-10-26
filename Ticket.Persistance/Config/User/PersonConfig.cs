@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Ticket.Common;
 using Ticket.Domain.Entities.Users;
 
 namespace Ticket.Persistance.Config.User
@@ -19,7 +20,18 @@ namespace Ticket.Persistance.Config.User
                 .HasMaxLength(10);
             b.Property(p => p.FirstName).IsRequired(false)
                 .HasMaxLength(250);
-
+            b.HasData(new Person()
+            {
+                EmailAddress = "Sajadrahaty2@gmail.com",
+                BirthDate = "1380/03/31".ToMiladi(),
+                Gender = Domain.Enums.Gender.Man,
+                FirstName = "سجاد",
+                Id = 1,
+                IsRemoved = false,
+                LastName = "راحتی",
+                NationalCode = "1250635658",
+                PhoneNumber = "09339799317"
+            });
         }
     }
 }

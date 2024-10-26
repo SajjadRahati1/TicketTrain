@@ -8,26 +8,7 @@ namespace Ticket.Persistance.Config.User
     {
         public void Configure(EntityTypeBuilder<IdentityUserRole<long>> builder)
         {
-            builder.HasData(new IdentityUserRole<long>
-            {
-                RoleId = 1,
-                UserId = 2
-            });
-            builder.HasData(new IdentityUserRole<long>
-            {
-                RoleId = 2,
-                UserId = 2
-            });
-            builder.HasData(new IdentityUserRole<long>
-            {
-                RoleId = 1,
-                UserId = 3
-            });
-            builder.HasData(new IdentityUserRole<long>
-            {
-                RoleId = 2,
-                UserId = 3
-            });
+           
         }
     }
 }
