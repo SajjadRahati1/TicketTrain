@@ -1,5 +1,6 @@
 ﻿#bg-img-small {
-    position: relative;
+    /*position: relative;*/
+    position: sticky;
     width: 100%;
     padding: 0px !important;
     margin: 0px !important;
@@ -18,8 +19,12 @@
         min-height: 330px;
     }
 .small-choose .card {
-    position: fixed;
-    padding-bottom: 700px;
+    /*position: fixed;
+    padding-bottom: 700px;*/
+    position: sticky;
+    top: 10px;
+    height: 100vh;
+    min-height: 400px;
 }
 .counter-phone {
     margin-left: auto !important;

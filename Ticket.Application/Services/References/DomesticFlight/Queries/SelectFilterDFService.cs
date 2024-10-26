@@ -30,9 +30,8 @@ namespace Ticket.Application.Services.References.DomesticFlight.Queries
             try
             {
                 DateTime fromDate = request?.FromDate?.ToMiladi() ?? DateTime.MinValue;
-                DateTime toDate = request?.ToDate?.ToMiladi() ?? DateTime.MinValue;
+               // DateTime toDate = request?.ToDate?.ToMiladi() ?? DateTime.MinValue;
                 var hasFromDate = fromDate != DateTime.MinValue;
-                var hasToDate = toDate != DateTime.MinValue;
                 var res = await
                     _context
                     .DomesticFlights
@@ -56,7 +55,8 @@ namespace Ticket.Application.Services.References.DomesticFlight.Queries
                         df.Reservations.Count() < df.Flight.MaxNumberPassenger &&
                         df.Flight.OriginTerminal.CityId == request.FromCityId &&
                         df.Flight.DestinationTerminal.CityId == request.ToCityId &&
-                        (!hasFromDate || df.Flight.StartMoving.Date == fromDate.Date)
+                        (!hasFromDate || df.Flight.StartMoving.Date == fromDate.Date) //&&
+                        //(request.FromTime <= df.Flight.StartMoving.Date.Hour)
                     )
                     .Select(df => new ResultSelectFilterDF()
                     {
@@ -94,19 +94,27 @@ namespace Ticket.Application.Services.References.DomesticFlight.Queries
                         Seat = df.Flight.MaxNumberPassenger,
                         Stars = df.Flight.AirPlane.Rank
                     }).ToListAsync();
-
-                res.ForEach(async f =>
+                for (int i = 0; i < res.Count; i++)
                 {
+                    var f = res[i];
                     //محاسبه جای خالی مانده
-                    f.Seat -= await _context
-                                .TicketDomesticFlights
-                                .Include(tf => tf.Reservation)
-                                .CountAsync(tf => 
-                                    !tf.IsRemoved && 
-                                    tf.ReturnedId == null && 
-                                    tf.Reservation.FlightId == f.DomesticFlightId &&
-                                    tf.Reservation.TransactionId!=null //حتما اون هایی که پرداخت داشتن
-                                );
+                    try
+                    {
+                        f.Seat -= await _context
+                               .TicketDomesticFlights
+                               .Include(tf => tf.Reservation)
+                               .CountAsync(tf =>
+                                   !tf.IsRemoved &&
+                                   tf.ReturnedId == null &&
+                                   tf.Reservation.FlightId == f.DomesticFlightId &&
+                                   tf.Reservation.TransactionId != null //حتما اون هایی که پرداخت داشتن
+                               );
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
                     //دریافت قوانین استرداد
                     f.ResultTicketRefundRules = await _context
                                .FlightTicketRefundRules
@@ -129,8 +137,12 @@ namespace Ticket.Application.Services.References.DomesticFlight.Queries
                                    Start_BeforeFlight = r.Start_BeforeFlight,
                                    Title = r.Title
                                }).ToListAsync();
+                }
+                //res.ForEach(async f =>
+                //{
+                   
 
-                });
+                //});
 
                 return new ResultDto<List<ResultSelectFilterDF>>()
                 {
@@ -155,11 +167,11 @@ namespace Ticket.Application.Services.References.DomesticFlight.Queries
         public long FromCityId { get; set; }
         public long ToCityId { get; set; }
         public string FromDate { get; set; }
-        public string ToDate { get; set; }
+        //public string ToDate { get; set; }
         public int CountPassenger { get; set; }
         public string FromTime { get; set; }
         public string ToTime { get; set; }
-        public int TicketType { get; set; }
+       // public int TicketType { get; set; }
 
         ///// <summary>
         ///// تعداد مسافران بزرگسال

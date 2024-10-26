@@ -54,7 +54,7 @@
                     <div id="domestic-flight-show-big" class="py-3 px-5">
                         <div class="mini-selects mt-2 mb-3">
                             <div class="input-group mini-select">
-                                <select  name="travel-type" autocomplete="off" class="select2  input form-control">
+                                <select id="travel-type" name="travel-type" autocomplete="off" class="select2  input form-control">
                                     <option value="1">یک طرفه</option>
                                     <option value="2">دو طرفه</option>
                                 </select>
@@ -62,7 +62,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 col-lg-6 mb-2">
-                                <div class="input-group-start-end">
+                                <div class="input-group-start-end h-100">
 
                                     <div class="input-group">
                                         <select required="required" name="start-city" autocomplete="off" class="select2 cities input form-control">
@@ -87,7 +87,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-lg-6 mb-2">
+                            <div class="col-md-12 col-lg-6 mb-2 duplicate-date-group d-none">
                                 <div class="input-group-start-end">
 
                                     <div class="input-group">
@@ -101,6 +101,13 @@
                                         <label class="user-label">تا تاریخ</label>
                                         <div class="to-date date-div"></div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 mb-2 col-12 date-group">
+                                <div class="input-group">
+                                    <input required="required" type="text" name="just-date" autocomplete="off" class="just-date-input date-input input form-control">
+                                    <label class="user-label">تاریخ</label>
+                                    <div class="just-date date-div"></div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-4 col-12 mt-3">
@@ -330,7 +337,7 @@
             </div>
             <div class="card">
                 <div class="card-body d-flex flex-wrap align-content-stretch p-0">
-                    
+
                     <a asp-area="" asp-controller="Home" asp-action="DomesticFlight" class="col-6 text-center d-flex align-items-center justify-content-center" id="domestic-flight-btn-show-small">
                         <div>
                             <i class="las la-plane"></i>
@@ -363,18 +370,48 @@
                             </span>
                         </div>
                     </a>
-                 
+
                 </div>
             </div>
-           
+
         </div>
-       
+
     </div>
 
 </section>
-<div class="text-center">
-    <h1 class="display-4" style="height:800px !important;">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+    <div class="row w-100 mt-4">
+        <div class="col-12 col-md-6 col-lg-8 px-5 ">
+            <h3 style="font-weight: bold;">سفرهای درون کشوری با هواپیما: کشفی متفاوت و هیجان‌انگیز</h3>
+            <p>
+                هر روزه که گذر می‌کند، تکنولوژی‌های حمل و نقل نیز به سرعت در حال پیشرفت هستند و هواپیماها به عنوان یکی از سریع‌ترین و مطمئن‌ترین وسایل نقلیه در دسترس، فرصتی را برای سفرهای درون کشوری با کمترین زمان و کمترین استرس برای مسافران ایجاد کرده‌اند. سفرهای درون کشوری با هواپیما، فرصتی برای کشف جاذبه‌های طبیعی، فرهنگی و تاریخی مختلف در سراسر کشور فراهم می‌کند.
+            </p>
+            <p>
+                استفاده از هواپیما به عنوان وسیله نقلیه اصلی در سفرهای درون کشوری، مزیت‌های فراوانی دارد. اولین و مهم‌ترین مزیت، صرفه‌جویی در زمان است. سفرهای طولانی و خسته‌کننده با وسایل دیگر تبدیل به تجربه‌ای لذت‌بخش و سرگرم‌کننده می‌شود. همچنین، امکان دسترسی به مقاصد دوردست و ناشناخته در کمترین زمان از دیگر مزیت‌های این نوع سفرهاست.
+            </p>
+            <p>
+
+                هر منطقه از کشور دارای جذب‌های خاص خود است، و هواپیما به مسافران این امکان را می‌دهد تا در کوتاه‌ترین زمان به مقاصد موردنظرشان برسند و به اکتشاف جاذبه‌های منحصربه‌فرد هر منطقه بپردازند. از شهرهای باستانی تا مناظر طبیعی زیبا و از شهرهای مدرن تا روستاهای ساحلی، همه در انتظار کشف توسط مسافران هستند.
+            </p>
+            <p>
+
+                سفرهای درون کشوری با هواپیما، فرصتی برای فراموش کردن استرس‌های مربوط به ترافیک، ترتیبات حمل و نقل و خستگی‌های راه‌پیمایی فراهم می‌کند. با نشستن در صندلی‌های راحت و دسترسی به خدمات رفاهی متنوع در هنگام پرواز، مسافران می‌توانند سفری آسوده و لذت‌بخش را تجربه کنند.
+            </p>
+            <p>
+
+                اگر به دنبال تجربه‌ای متفاوت، سریع و هیجان‌انگیز در سفرهای درون کشوری هستید، هواپیما بهترین انتخاب خواهد بود. این تجربه به شما امکان می‌دهد تا در کمترین زمان به مقصد برسید و لحظاتی خاص را در مسیر با دیدن مناظر خیره‌کننده و تجربه فرهنگ‌های مختلف به خود اختصاص دهید. از راحتی پرواز تا هیجان هر مقصد، سفرهای درون کشوری با هواپیما تجربه‌ای منحصربه‌فرد را در اختیار شما قرار می‌دهند.
+            </p>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <img src="~/Image/travel/travel_pic3.jpg" style="width: 100%;
+    height: auto;
+    position: sticky;
+    top: 50px;
+    max-width:500px;
+z-index:-1;" />
+        </div>
+    </div>
+
 </div>
 
 

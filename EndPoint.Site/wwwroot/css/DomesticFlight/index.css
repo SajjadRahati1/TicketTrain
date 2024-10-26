@@ -1,0 +1,94 @@
+﻿.shadow-lg {
+    box-shadow: 2px 2px 5px 2px #a4a7a947 !important;
+    border: none !important;
+}
+.bg-page {
+    background: url(/Image/travel/Airplane/airplane1.jpg),linear-gradient(180deg, rgba(251, 252, 255, 0.95) 0%, #FBFCFF 48.44%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    min-height: 100vh !important;
+    background-blend-mode: color;
+    z-index: -9999;
+    position: fixed;
+    margin: 0px !important;
+    top:0;
+}
+#no-data {
+    background-image: url(/Image/no_data.jpg);
+    background-size: cover;
+    width: 100%;
+    /* background-attachment: fixed; */
+    /* height: 100%; */
+    background-position-x: inherit;
+    background-position-y: top;
+    min-height: 800px;
+    background-color: #386e9e;
+    background-blend-mode: inherit;
+    padding: 50px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+    padding-top: 250px;
+}
+
+.loading {
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    align-content: center;
+}
+    .loading > span {
+        position: relative;
+    }
+
+        .loading > span::after {
+            content: " ";
+            position: absolute;
+            left: -70px;
+            background: blue;
+            width: 50px;
+            height: 50px;
+            top: -12px;
+            border-radius: 50%;
+            background: #e0c4fc;
+            background: -moz-linear-gradient(to bottom, #e0c4fc 0%,#90c6fd 100%);
+            background: -webkit-linear-gradient(to bottom, #e0c4fc 0%,#90c6fd 100%);
+            background: linear-gradient(to bottom, #e0c4fc 0%,#90c6fd 100%);
+            -webkit-animation: rotate-in-diag-1 1s linear infinite forwards;
+            animation: rotate-in-diag-1 1s linear infinite forwards;
+        }
+
+.rotate-in-diag-1 {
+    -webkit-animation: rotate-in-diag-1 1s linear infinite forwards;
+    animation: rotate-in-diag-1 1s linear infinite forwards;
+}
+@-webkit-keyframes rotate-in-diag-1 {
+    0% {
+        -webkit-transform: rotate3d(1, 1, 0, -360deg);
+        transform: rotate3d(1, 1, 0, -360deg);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-transform: rotate3d(1, 1, 0, 0deg);
+        transform: rotate3d(1, 1, 0, 0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes rotate-in-diag-1 {
+    0% {
+        -webkit-transform: rotate3d(1, 1, 0, -360deg);
+        transform: rotate3d(1, 1, 0, -360deg);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-transform: rotate3d(1, 1, 0, 0deg);
+        transform: rotate3d(1, 1, 0, 0deg);
+        opacity: 1;
+    }
+}

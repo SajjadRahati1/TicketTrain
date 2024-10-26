@@ -1,0 +1,254 @@
+﻿@using EndPoint.Site.Models.Dto.DomesticFlight;
+@using EndPoint.Site.Models.Dto.Home;
+@model ResultShowDto<List<InfoTicket>>
+@{
+    ViewData["Title"] = "اطلاعات بلیط";//از کجا و به کجا هم باید مشخصذباشه
+    bool isFirst = true;
+    var value = Context.Request.Cookies.FirstOrDefault(c => c.Key == "DFRequest");
+    var searchVal = Newtonsoft.Json.JsonConvert.DeserializeObject<SearchTravelDFDto>(value.Value);
+    decimal fullPrice = 0;
+}
+@section head{
+    <link rel="stylesheet" href="~/css/Passenger.css" asp-append-version="true" />
+    <link href="~/lib/persian-datepicker/dist/css/persian-datepicker.css" rel="stylesheet" />
+    <link href="~/lib/persian-datepicker/dist/css/persian-datepicker.min.css" rel="stylesheet" />
+    <link href="~/css/datapicker-style.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/lib/Select2/css/select2.min.css" rel="stylesheet" />
+    <link href="~/css/home/phonestyle.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/tickets.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/Account/account.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/DomesticFlight/index.css" rel="stylesheet" asp-append-version="true" />
+
+
+}
+<div class="bg-page"></div>
+<div class="px-4">
+    @if (!Model.IsSuccess)
+    {
+        <div class="bg-danger w-100 rounded-3 shadow text-white text-bold">
+            @Model.Message
+        </div>
+    }
+    else
+    {
+        @foreach (var item in Model.Data)
+        {
+            decimal price = 0;
+            price += searchVal.SeniorPassengerCount * item.PriceAdult;
+            price += searchVal.TeenagerPassnegerCount * item.PriceTeenage;
+            price += searchVal.BabyPassengerCount * item.PriceChild;
+            fullPrice += price;
+            <div class="card card-ticket mt-4 mx-3 px-2 pt-2 border-2 shadow-lg ">
+
+                <div class="row">
+                    <div class="detail-ticket col-9 pt-0">
+                        <div class="d-flex flex-row justify-content-around mb-3">
+                            <span class="badge-pill badge badge-success rounded-pill">
+
+                                @if (!isFirst)
+                                {
+                                    <span>
+                                        بلیط
+                                        برگشت
+                                    </span>
+                                }
+                                else
+                                {
+                                    isFirst = false;
+                                    <span>بلیط رفت</span>
+                                }
+                            </span>
+                            <span class="h4">@item.StartMovingDateTime.Date.ToShortDateString()</span>
+                        </div>
+                        <div class="d-flex flex-row justify-content-start top-titles">
+                            <span class="top-title text-muted  "><span class="top-title text-muted badge">@item.AirlineCode</span></span>
+                            <span class="top-title text-bold"></span>
+                            <span class="top-title text-bold">@item.ClassTypeName </span>
+                        </div>
+                        <div class="d-flex flex-row justify-content-start align-items-center">
+
+                            <img src="@item.AirlineLogo" class="provider-logo border shadow" />
+                            <div class="from d-flex flex-row justify-content-start">
+                                <div class="city-show">@item.OriginName</div>
+                                <div class="time-show">@item.StartMovingDateTime.ToString("hh:mm")</div>
+                            </div>
+                            <div class="show-way from d-flex flex-row justify-content-start align-items-center">
+                                <i class="las la-plane" style='transform: rotate(-90deg);'></i>
+                                <div class="line"></div>
+                            </div>
+                            <div class="to d-flex flex-row justify-content-start">
+                                <div class="city-show">@item.DestinationName</div>
+                                <div class="time-show">@item.EndMovingDateTime.ToString("hh:mm")</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="price-ticket col-3 d-flex ">
+                        <div class='d-flex flex-row justify-content-between w-100'>
+                            <p>@searchVal.SeniorPassengerCount بزرگسال</p>
+                            <div class="price d-flex align-items-center">
+                                <div class="price-number text-blue-2"> @((item.PriceAdult * searchVal.SeniorPassengerCount).ToString("N0"))</div>
+                                <span class="px-2">ریال</span>
+
+                            </div>
+                        </div>
+                        @if (searchVal.TeenagerPassnegerCount > 0)
+                        {
+                            <div class='d-flex flex-row justify-content-between w-100'>
+                                <p>@searchVal.TeenagerPassnegerCount نوجوان</p>
+                                <div class="price d-flex align-items-center">
+                                    <div class="price-number text-blue-2"> @((item.PriceTeenage * searchVal.TeenagerPassnegerCount).ToString("N0"))</div>
+                                    <span class="px-2">ریال</span>
+
+                                </div>
+                            </div>
+                        }
+                        @if (searchVal.BabyPassengerCount > 0)
+                        {
+                            <div class='d-flex flex-row justify-content-between w-100'>
+                                <p>@searchVal.BabyPassengerCount کودک</p>
+                                <div class="price d-flex align-items-center">
+                                    <div class="price-number text-blue-2">
+                                        @(
+                                            (item.PriceChild * searchVal.BabyPassengerCount).ToString("N0")
+                                            )
+                                    </div>
+                                    <span class="px-2">ریال</span>
+
+                                </div>
+                            </div>
+                        }
+                        <div class='d-flex flex-row justify-content-between w-100 border-top'>
+                            <p>مجموع</p>
+                            <div class="price d-flex align-items-center">
+                                <div class="price-number text-blue-2"> @price.ToString("N0")</div>
+                                <span class="px-2">ریال</span>
+
+                            </div>
+                        </div>
+                        @*${showprice}*@
+                        <a class="btn text-white btn-search select-ticket-btn" asp-action="Index">انتخاب بلیط</a>
+                        <span class="mt-2 @(item.Seat <= 5 ? " text-danger" : "" ) text-small">@item.Seat صندلی باقی مانده</span>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="mt-3 card">
+            <div class=" h3 d-flex flex-row pt-1 px-2 rounded-top ">
+                <i class="la la-group rounded-pill bg-dark text-white font-weight-bold pt-2 px-2 mx-3"></i>
+                <h3>
+                    مشخصات مسافران
+                </h3>
+            </div>
+            <div class="border-top">
+                @for (int i = 0; i < searchVal.BabyPassengerCount + searchVal.TeenagerPassnegerCount + searchVal.SeniorPassengerCount; i++)
+                {
+                    <div class="mx-4 my-2">
+                        @if (i < searchVal.SeniorPassengerCount)
+                        {
+                            <h5>@(i+1).بزرگسال</h5>
+                        }
+                        else if (i < searchVal.SeniorPassengerCount + searchVal.TeenagerPassnegerCount)
+                        {
+                            <h5>@(i + 1).نوجوان</h5>
+                        }
+                        else if (i < searchVal.SeniorPassengerCount + searchVal.TeenagerPassnegerCount)
+                        {
+                            <h5>@(i + 1).کودک</h5>
+                        }
+                        <div class="d-flex flex-row flex-wrap justify-content-start gap-5">
+
+                            <div class="input-group">
+                                <input required="" id="passenger-name-@(i+1)" type="text"
+                                       name="passenger-name-@(i+1)" autocomplete="off" class="passenger-name input form-control">
+                                <label class="user-label">نام فارسی </label>
+
+                            </div>
+
+                            <div class="input-group">
+                                <input required="" id="passenger-family-@(i+1)" type="text"
+                                       name="passenger-family-@(i+1)" autocomplete="off" class="passenger-family input form-control">
+                                <label class="user-label">نام خانوادگی فارسی </label>
+
+                            </div>
+
+                            <div class="input-group">
+                                <input required="" id="passenger-birthdate-@(i+1)" type="text"
+                                       name="passenger-birthdate-@(i+1)" autocomplete="off" class="passenger-birthdate passenger-date-input date-input input form-control">
+                                <label class="user-label">تاریخ تولد </label>
+                                <div class="passenger-date date-div"></div>
+                            </div>
+
+                            <div class="input-group">
+                                <input required="" id="national-code-@(i+1)" type="text" name="national-code-@(i+1)"
+                                       autocomplete="off" class="national-code input form-control">
+                                <label class="user-label">کد ملی </label>
+
+                            </div>
+
+                            <div class="input-group">
+                                <input required="" id="passenger-name-en-@(i+1)" type="text"
+                                       name="passenger-name-en-@(i+1)" autocomplete="off" class="passenger-name-en input form-control">
+                                <label class="user-label">نام لاتین </label>
+
+                            </div>
+
+                            <div class="input-group">
+                                <input required="" id="passenger-family-en-@(i+1)" type="text"
+                                       name="passenger-family-en-@(i+1)" autocomplete="off" class="passenger-family-en input form-control">
+                                <label class="user-label">نام خانوادگی لاتین </label>
+
+                            </div>
+
+                            <div class="input-group">
+                                <select required="" id="passenger-gender-@(i+1)" type="text"
+                                        name="passenger-gender-@(i+1)" autocomplete="off" class="passenger-gender select2  input form-control">
+                                    <option value="man">مرد</option>
+                                    <option value="woman">زن</option>
+
+                                </select>
+                                <label class="user-label">جنسیت </label>
+
+                            </div>
+                        </div>
+                    </div>
+                    @if (i < searchVal.BabyPassengerCount + searchVal.TeenagerPassnegerCount + searchVal.SeniorPassengerCount - 1)
+                    {
+                        <div class="border-bottom"></div>
+                    }
+                }
+            </div>
+
+        </div>
+
+        <div class="card mt-4 p-3 d-flex flex-row justify-content-between align-items-center">
+            <p>با کلیک روی تایید و ادامه خرید با قوانین سایت و قوانین پرواز موافقت کرده‌اید.</p>
+            <div class="d-flex flex-row">
+                <div class="price d-flex align-items-center">
+                    <div class="price-number text-blue-2"> @fullPrice.ToString("N0")</div>
+                    <span class="px-2 text-blue-2">ریال</span>
+
+                </div>
+                <button class="btn text-white btn-search " id="pay-check">تایید و خرید</button>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
+@section Scripts{
+
+    <script src="~/lib/persian-date/dist/persian-date.js" asp-append-version="true"></script>
+
+    <script src="~/lib/persian-datepicker/dist/js/persian-datepicker.js"></script>
+    <script src="~/js/DomesticFlight/DomesticFlightJs.js" asp-append-version="true"></script>
+    <script src="~/lib/Select2/js/select2.min.js"></script>
+    <script src="~/js/Home/index.js" asp-append-version="true"></script>
+    <script src="~/lib/Select2/js/select2.full.min.js"></script>
+    <script src="~/lib/Select2/js/select2.full.min.js"></script>
+}

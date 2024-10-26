@@ -15,6 +15,8 @@ using Ticket.Application.Services.Email.Commands;
 using Ticket.Application.Services.Sms.Commands;
 using Ticket.Application.Services.FacadPattern;
 using Newtonsoft.Json.Serialization;
+using Ticket.Infrastructure.Sms;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +31,7 @@ builder.Services.AddControllersWithViews().AddOData(opt =>
     //.AddJsonOptions(option=>option.JsonSerializerOptions.);
 
 builder.Services.AddTransient<IDbContext, MyDbContext>();
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 //builder.Services.AddScoped<SecurityStampValidator<User>>();
 
 builder.Services
@@ -118,6 +121,7 @@ builder.Services.AddScoped<IDomesticFlightFacad, DomesticFlightFacad>();
 builder.Services.AddScoped<IFinancialFacad, FinancialFacad>();
 builder.Services.AddScoped<ISendEmailService, SendEmailService>();
 builder.Services.AddScoped<ISendSms, SendSms>();
+builder.Services.AddScoped<ISmsPanel, KavenegarSms>();
 //-----------------------
 
 

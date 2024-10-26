@@ -31,16 +31,16 @@ $(document).ready(function () {
         observer: true,
         minDate: new persianDate().valueOf(),
         //maxDate: new persianDate().add('day', 10).valueOf(),
-        onSelect: function (unix) {
-            to.touched = true;
-            if (from && from.options && from.options.maxDate != unix) {
-                var cachedValue = from.getState().selected.unixDate;
-                from.options = { maxDate: unix };
-                if (from.touched) {
-                    from.setDate(cachedValue);
-                }
-            }
-        }
+        //onSelect: function (unix) {
+        //    to.touched = true;
+        //    if (from && from.options && from.options.maxDate != unix) {
+        //        var cachedValue = from.getState().selected.unixDate;
+        //        from.options = { maxDate: unix };
+        //        if (from.touched) {
+        //            from.setDate(cachedValue);
+        //        }
+        //    }
+        //}
     });
     window.from = $(".from-date").persianDatepicker({
         inline: true,
@@ -64,7 +64,32 @@ $(document).ready(function () {
     });
 
 });
+//انتخاب تاریخ :
+$(document).ready(function () {
 
+    window.to = $(".just-date").persianDatepicker({
+        inline: true,
+        altField: '.just-date-input',
+        altFormat: 'YYYY/MM/DD',
+        format: 'YYYY/MM/DD',
+        initialValue: false,
+        observer: true,
+        //minDate: new persianDate().valueOf(),
+        maxDate: new persianDate().valueOf()
+        //onSelect: function (unix) {
+        //    to.touched = true;
+        //    if (from && from.options && from.options.maxDate != unix) {
+        //        var cachedValue = from.getState().selected.unixDate;
+        //        from.options = { maxDate: unix };
+        //        if (from.touched) {
+        //            from.setDate(cachedValue);
+        //        }
+        //    }
+        //}
+    });
+
+
+});
 
 $(document).on('click', '.choose-type>a:not(.active)', function () {
     typeId.replace('-btn', '');
@@ -84,24 +109,6 @@ $(document).ready(function () {
         }
     });
 })
-function addCitiesOptions(vals) {
-    let val = null;
-    let result = ""
-    for (var i = 0; i < vals.length; i++) {
-        val = vals[i]
-        result +=
-            `<option value='${val.cityId}' val-icon='la-map-marker'>
-                <div class='d-flex flex-column gap-3 justify'>
-                    <i class='la la-map-marker'>
-                    <div>
-                        <p class='p-0 m-0 mb-2'>${val.cityName}</p>
-                        <p class='p-0 m-0 mb-2 text-muted'>${val.stateName}</p>
-                    </div>
-                </div>
-            </option>`
-    }
-    return result;
-}
 
 $(document).on('click', '#domestic-flight-show-big .btn-search', function () {
     let travelType = $(`#domestic-flight-show-big select[name='travel-type']`).val()
@@ -109,16 +116,20 @@ $(document).on('click', '#domestic-flight-show-big .btn-search', function () {
     let toCity = $(`#domestic-flight-show-big select[name='end-city']`).val()
     let fromDate = $(`#domestic-flight-show-big [name='from-date']`).val()
     let toDate = $(`#domestic-flight-show-big [name='to-date']`).val()
+    if (travelType == "1") {
+
+        fromDate = $(`#domestic-flight-show-big [name='just-date']`).val()
+    }
+    let seniorPassengerCount = $(`#domestic-flight-show-big [name='passengers']`).attr('val-big')
+    let teenagerPassnegerCount = $(`#domestic-flight-show-big [name='passengers']`).attr('val-avg')
+    let babyPassengerCount = $(`#domestic-flight-show-big [name='passengers']`).attr('val-min')
     travelType = Number(travelType)
     fromCity = Number(fromCity)
     toCity = Number(toCity)
-    let req = {
-        fromCity: fromCity,
-        fromDate: fromDate,
-        toCity: toCity,
-        toDate: toDate,
-        travelType: travelType
-    }
+    seniorPassengerCount = Number(seniorPassengerCount)
+    teenagerPassnegerCount = Number(teenagerPassnegerCount)
+    babyPassengerCount = Number(babyPassengerCount)
+    
     $.ajax({
         //contentType: 'application/json; charset=utf-8',
         //dataType: 'json',
@@ -129,15 +140,37 @@ $(document).on('click', '#domestic-flight-show-big .btn-search', function () {
         data: {
             FromCity: fromCity,
             FromDate: fromDate,
-            toCity: toCity,
-            toDate: toDate,
-            travelType: travelType
+            ToCity: toCity,
+            ToDate: toDate,
+            TravelType: travelType,
+            SeniorPassengerCount: seniorPassengerCount,
+            TeenagerPassnegerCount: teenagerPassnegerCount,
+            BabyPassengerCount: babyPassengerCount,
         },
         success: function (result) {
             console.log(result)
+            if (!result.isSuccess) {
+                toastr.error(result.message);
+                return;
+            }
+
+            window.location.pathname = '/DomesticFlight/Index'
         },
         failure: function (response) {
             $('#result').html(response);
         }
     });
+})
+
+$(document).on('change', '#travel-type', function () {
+    let type = this.value;
+
+    if (type == 1) {
+        $(".duplicate-date-group").addClass("d-none");
+        $(".date-group").removeClass("d-none");
+    } else {
+        $(".duplicate-date-group").removeClass("d-none");
+        $(".date-group").addClass("d-none");
+    }
+
 })

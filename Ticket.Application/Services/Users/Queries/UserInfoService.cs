@@ -38,13 +38,16 @@ namespace Ticket.Application.Services.Users.Queries
                         MessageType = MessageType.Error
                     };
                 }
-                var res = await _context.Users.Where(u => u.Id == user.Id)
+                var r = await _context.Users.Where(u => u.Id == user.Id)
                  .Include(u => u.Person)
                  .Include(u => u.Wallet)
-                 .Select(u => new ResultUserInfoDto()
+                 
+                 .FirstOrDefaultAsync();
+                var u = r;
+                var res =new ResultUserInfoDto()
                  {
                      Name = u.Person.FirstName + " " + u.Person.LastName,
-                     BrithDate = u.Person.BirthDate.Value.ToShamsi(),
+                     BrithDate = u.Person.BirthDate.ToShamsi(),
                      EmailAddress = u.Person.EmailAddress,
                      EmailVerified = u.EmailConfirmed,
                      Money = u.Wallet.Balance,
@@ -52,7 +55,7 @@ namespace Ticket.Application.Services.Users.Queries
                      PhoneNumber = u.PhoneNumber,
                      PhoneNumberVerified = u.PhoneNumberConfirmed,
                      Username = u.UserName
-                 }).FirstOrDefaultAsync();
+                 };
                 if (res != null)
                 {
                     return new ResultDto<ResultUserInfoDto>()

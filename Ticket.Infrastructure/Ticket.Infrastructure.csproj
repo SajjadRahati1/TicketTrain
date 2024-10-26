@@ -9,7 +9,15 @@
   <ItemGroup>
     <Folder Include="Emails\" />
     <Folder Include="Files\" />
-    <Folder Include="Sms\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="kavenegar" Version="1.2.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ticket.Common\Ticket.Common.csproj" />
   </ItemGroup>
 
 </Project>

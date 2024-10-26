@@ -1,0 +1,134 @@
+﻿@using EndPoint.Site.Models.Dto.Home;
+@model SearchTravelDFDto
+@{
+    ViewData["Title"] = "بلیط هواپیما";//از کجا و به کجا هم باید مشخصذباشه
+}
+@section head{
+    <link rel="stylesheet" href="~/css/Passenger.css" asp-append-version="true" />
+    <link href="~/lib/persian-datepicker/dist/css/persian-datepicker.css" rel="stylesheet" />
+    <link href="~/lib/persian-datepicker/dist/css/persian-datepicker.min.css" rel="stylesheet" />
+    <link href="~/css/datapicker-style.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/lib/Select2/css/select2.min.css" rel="stylesheet" />
+    <link href="~/css/home/phonestyle.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/tickets.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/DomesticFlight/index.css" rel="stylesheet" asp-append-version="true" />
+}
+<div class="bg-page"></div>
+<div>
+    <div class="row w-100">
+        <div class="col-12 col-md-4 col-lg-3 d-none d-md-block ">
+            <div class="card card-ticket shadow-lg w-100 p-3 mx-3" style="position: sticky;
+    top: 90px;
+
+    max-height: 80vh;">
+                @*overflow-y: auto;*@
+                <h3 class="text-primary">اعمال فیلتر</h3>
+                <div class="d-flex flex-column justify-content-md-end justify-content-around align-items-center">
+
+                    <div class="w-100 pb-3 border-bottom">
+                        <h4>فیلتر شهر</h4>
+                        <div class="d-flex flex-column justify-content-md-end justify-content-around align-items-center">
+                            <div class="input-group mb-3">
+                                <select required="required" name="start-city" autocomplete="off" class="select2 cities input form-control">
+                                </select>
+                                <label class="user-label">مبدا</label>
+                            </div>
+
+                            <div class="input-group">
+                                <select required="required" name="end-city" autocomplete="off" class="select2 cities input form-control">
+                                </select><label class="user-label">مقصد</label>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="w-100 pb-2 ">
+                        <h4>فیلتر تاریخ</h4>
+                        <div class="d-flex flex-column justify-content-md-end justify-content-around align-items-center">
+                            <div class="input-group mb-3">
+                                <input required="required" type="text" name="from-date" autocomplete="off" class="from-date-input date-input input form-control">
+                                <label class="user-label">
+                                    @if (Model.TravelType == 2)
+                                    {
+                                        <span>از تاریخ</span>
+                                    }
+                                    else
+                                    {
+
+                                        <span>تاریخ</span>
+                                    }
+                                </label>
+                                <div class="from-date date-div"></div>
+                            </div>
+                            @if (Model.TravelType == 2)
+                            {
+                                <div class="input-group">
+                                    <input required="required" name="to-date" autocomplete="off" class="to-date-input date-input input form-control">
+                                    <label class="user-label">تا تاریخ</label>
+                                    <div class="to-date date-div"></div>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                    <div class="w-100">
+                        <button class="btn text-white btn-search w-100 mx-0" id="search-flight">جستجو</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-8 col-lg-9 px-4">
+            @if (Model.TravelType == 2)
+            {
+                <div class="row">
+                    <div class="col-12 col-md-6 px-2">
+                        <div class="ticket-selected w-100 unselected">
+                            <span>بلیط رفت</span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 px-2">
+                        <div class="ticket-selected w-100 unselected">
+                            <span>بلیط برگشت</span>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div id="show-all-tickets">
+               
+               
+            </div>
+            <div class="d-none" id="no-data">
+                متاسفانه هیچ سفری برای تاریخ مشخص شده یافت نشد
+            </div>
+            <div class="loading">
+                <span> در حال یافتن بلیط</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+
+    <script src="~/lib/persian-date/dist/persian-date.js" asp-append-version="true"></script>
+
+    <script src="~/lib/persian-datepicker/dist/js/persian-datepicker.js"></script>
+    <script src="~/js/DomesticFlight/DomesticFlightJs.js" asp-append-version="true"></script>
+    <script src="~/lib/Select2/js/select2.min.js"></script>
+    <script src="~/js/Home/index.js" asp-append-version="true"></script>
+    <script src="~/lib/Select2/js/select2.full.min.js"></script>
+    <script src="~/lib/Select2/js/select2.full.min.js"></script>
+    <script>
+        let TravelType = @Html.Raw(Model.TravelType);
+        let FromDate = `@Html.Raw(Model.FromDate)`;
+        let ToDate = `@Html.Raw(Model.ToDate)`;
+        let FromCity = @Html.Raw(Model.FromCity);
+        let ToCity = @Html.Raw(Model.ToCity);
+        let SeniorPassengerCount = @Html.Raw(Model.SeniorPassengerCount);
+        let BabyPassengerCount = @Html.Raw(Model.BabyPassengerCount);
+        let TeenagerPassnegerCount = @Html.Raw(Model.TeenagerPassnegerCount);
+        $('.from-date-input').val(FromDate)
+        if (TravelType == 2)
+            $('.to-date-input').val(ToDate)
+    </script>
+    }

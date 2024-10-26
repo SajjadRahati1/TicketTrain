@@ -79,8 +79,8 @@ body {
     }
 
     .btn-header:hover {
-        backdrop-filter: blur( 4px );
-        -webkit-backdrop-filter: blur( 4px );
+       /* backdrop-filter: blur( 4px );
+        -webkit-backdrop-filter: blur( 4px );*/
         border-radius: 10px;
         border: 1px solid rgba( 255, 255, 255, 0.18 );
     }
@@ -125,7 +125,8 @@ body {
     }
 
 .btn.btn-search {
-    background-color: #2d4b9c;
+    background: #2d4b9c !important;
+    background-color: #0638BE;
     border-color: #2c98d3a1;
     min-height: 56px;
     min-width: 150px;
@@ -134,13 +135,15 @@ body {
     -webkit-transition: all 0.2s ease-in;
     -moz-transition: all 0.2s ease-in;
     transition: all 0.2s ease-in;
+    transition: background 0 ease-in;
     text-transform: uppercase;
     font-weight: 600;
-    padding:5px 10px;
+    padding: 5px 10px;
     border-radius: 7px;
 }
     .btn.btn-search:hover {
-        background: #466cd7;
+        
+        background: linear-gradient(270deg, #0638BE 0%, #4173F9 99.99%) !important;
         box-shadow: 0 0 2px 2px #0738c1;
         -webkit-transition: all 0.2s ease-out;
         -moz-transition: all 0.2s ease-out;
@@ -163,6 +166,7 @@ body {
     position: relative;
     margin-bottom: 30px !important;
     transition: all .3s;
+    top:0 !important;
 }
 .btn-outline-blue {
     border-radius: 12px !important;
@@ -894,4 +898,9 @@ li.select2-results__option:last-child {
 }
 .modal-open {
     padding-right: 0px !important;
+}
+
+
+.text-primary {
+    color: #2d4b9c !important;
 }

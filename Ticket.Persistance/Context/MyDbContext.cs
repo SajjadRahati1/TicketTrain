@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ticket.Application.Interfaces.Contexts;
 using Ticket.Domain.Entities.Users;
 using Ticket.Domain.Entities.Common;
@@ -19,8 +14,6 @@ using Ticket.Domain.Entities.Refrences.Train.Ticket;
 using Ticket.Domain.Entities.Refrences.Train;
 using Ticket.Domain.Entities.Refrences;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using System.Reflection.Emit;
 using Ticket.Persistance.Config.User;
 using Ticket.Persistance.Config.Flight;
 using Ticket.Persistance.Config.Flight.DomesticFlight;

@@ -7,5 +7,11 @@
         public long ToCity { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
+
+     
+
+        public int SeniorPassengerCount { get; set; }
+        public int TeenagerPassnegerCount { get; set; }
+        public int BabyPassengerCount { get; set; }
     }
 }

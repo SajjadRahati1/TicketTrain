@@ -25,7 +25,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ticket.Application\Ticket.Application.csproj" />
+    <ProjectReference Include="..\Ticket.Common\Ticket.Common.csproj" />
     <ProjectReference Include="..\Ticket.Domain\Ticket.Domain.csproj" />
+    <ProjectReference Include="..\Ticket.Infrastructure\Ticket.Infrastructure.csproj" />
     <ProjectReference Include="..\Ticket.Persistance\Ticket.Persistance.csproj" />
   </ItemGroup>
 
